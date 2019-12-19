@@ -1,3 +1,19 @@
+import './css/base.scss';
+import './css/styles.css';
+
+import userData from './data/users';
+import activityData from './data/activity';
+import sleepData from './data/sleep';
+import hydrationData from './data/hydration';
+
+import UserRepository from './UserRepository';
+import User from './User';
+import Activity from './Activity';
+import Hydration from './Hydration';
+import Sleep from './Sleep';
+
+
+
 let userRepository = new UserRepository();
 
 userData.forEach(user => {

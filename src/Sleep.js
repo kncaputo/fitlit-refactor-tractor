@@ -14,6 +14,4 @@ class Sleep { // instance for the user's sleep each day
   }
 }
 
-if (typeof module !== 'undefined') {
-  module.exports = Sleep;
-}
+export default Sleep;
