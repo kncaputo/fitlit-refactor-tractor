@@ -1,5 +1,5 @@
 import './css/base.scss';
-import './css/styles.css';
+import './css/styles.scss';
 
 import userData from './data/users';
 import activityData from './data/activity';
