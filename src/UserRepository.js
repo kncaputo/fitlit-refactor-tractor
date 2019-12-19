@@ -1,3 +1,5 @@
+import sleepData from './data/sleep';
+
 class UserRepository {
   constructor() {
     this.users = [];
