@@ -14,4 +14,4 @@ class Sleep { // instance for the user's sleep each day
   }
 }
 
-export default Sleep;
+// export default Sleep;

@@ -29,4 +29,4 @@ class Activity {
   }
 }
 
-export default Activity;
+// export default Activity;
