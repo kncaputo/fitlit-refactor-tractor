@@ -1,4 +1,4 @@
-class Activity {
+export default class Activity {
   constructor(data, userRepository) {
     this.userId = data.userID;
     this.date = data.date;
