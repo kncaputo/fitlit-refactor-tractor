@@ -13,7 +13,7 @@ export default class UserRepository {
 
   createUsers() {
     this.rawUserData.forEach(rawUser => {
-      let userSleepData = filterSleepDataById(rawUser.id);
+      let userSleepData = getUserSleepData(rawUser.id);
       user = new User(rawUser, userSleepData);
       this.users.push(user);
     });

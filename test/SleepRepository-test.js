@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import SleepRepository from '../src/SleepRepository';
 import Sleep from '../src/Sleep';
 
-describe('SleepRepository', () => {
+describe.only('SleepRepository', () => {
   let sleepRepository;
   let sampleSleepData = [{
     "userID": 1,
@@ -23,7 +23,7 @@ describe('SleepRepository', () => {
   }];
 
   beforeEach(() => {
-    sleepRepository = new SleepRepository();
+    sleepRepository = new SleepRepository(sampleSleepData);
     // sleepRepository.logSleeps(sampleSleepData);
   });
 
@@ -31,19 +31,14 @@ describe('SleepRepository', () => {
     expect(SleepRepository).to.be.a('function');
   });
 
-  it('should be an instance of user repository', () => {
+  it('should be an instance of sleep repository', () => {
     expect(sleepRepository).to.be.an.instanceof(SleepRepository);
   });
 
   it('should create instances of sleep', function() {
-    sleepRepository.createSleep(sampleSleepData, userID);
+    sleepRepository.createSleep();
 
     expect(sleepRepository.sleepHistory[0]).to.be.an.instanceof(Sleep);
   });
-
-  it('should hold an array of users', function() {
-    expect(userRepository.users.length).to.equal(3);
-  });
-
 
 });

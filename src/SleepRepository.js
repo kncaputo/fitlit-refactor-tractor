@@ -2,12 +2,16 @@ import Sleep from './Sleep';
 
 export default class SleepRepository {
   constructor(sleepData) {
+    this.rawSleepData = sleepData;
     this.sleepHistory = [];
 
   }
 
-  createSleep(id) {
-
+  createSleep() {
+    this.rawSleepData.forEach(rawSleep => {
+      let sleep = new Sleep(rawSleep);
+      this.sleepHistory.push(sleep)
+    });
   }
 }
 
