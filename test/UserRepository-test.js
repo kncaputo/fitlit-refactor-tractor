@@ -48,6 +48,7 @@ describe('UserRepository', function() {
 
   beforeEach(() => {
     userRepository = new UserRepository();
+    userRepository.createUsers(sampleUserData);
   });
 
   it('should be a function', function() {
@@ -59,18 +60,15 @@ describe('UserRepository', function() {
   });
 
   it('should create instances of user', function() {
-    userRepository.createUsers(sampleUserData);
-
     expect(userRepository.users[0]).to.be.an.instanceof(User);
   });
 
   it('should hold an array of users', function() {
-    expect(userRepository.users).to.deep.equal([user1, user2, user3]);
     expect(userRepository.users.length).to.equal(3);
   });
 
   it('getUser should return user object when given a user id', function() {
-    expect(userRepository.getUser(2)).to.equal(user2);
+    expect(userRepository.getUser(2)).to.equal(userRepository.users[1]);
   });
 
   it('calculateAverageStepGoal should return average step goal for all users', function() {
@@ -78,24 +76,24 @@ describe('UserRepository', function() {
   });
 
   it('calculateAverageSleepQuality should return average sleep quality for all users', function() {
-    user1.sleepQualityAverage = 3.3;
-    user2.sleepQualityAverage = 5;
-    user3.sleepQualityAverage = 1;
+    userRepository.users[0].sleepQualityAverage = 3.3;
+    userRepository.users[1].sleepQualityAverage = 5;
+    userRepository.users[2].sleepQualityAverage = 1;
     expect(userRepository.calculateAverageSleepQuality()).to.equal(3.1);
   });
 
   it('should have a method that calculates friends average ounces of water', function() {
-    user1.ouncesRecord = [
+    userRepository.users[0].ouncesRecord = [
       {"2019/06/15": 1},
       {"2019/06/15": 1},
       {"2019/06/16": 5}
     ]
-    user2.ouncesRecord = [
+    userRepository.users[1].ouncesRecord = [
       {"2019/06/15": 1},
       {"2019/06/15": 1},
       {"2019/06/16": 8}
     ]
-    user3.ouncesRecord = [
+    userRepository.users[2].ouncesRecord = [
       {"2019/06/15": 1},
       {"2019/06/15": 1},
       {"2019/06/16": 4}
