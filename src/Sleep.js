@@ -1,4 +1,4 @@
-class Sleep { // instance for the user's sleep each day
+export default class Sleep { // instance for the user's sleep each day
   constructor(data, userRepository) {
     this.userId = data.userID;
     this.date = data.date;
@@ -6,6 +6,7 @@ class Sleep { // instance for the user's sleep each day
     this.sleepQuality = data.sleepQuality;
     this.sleep(userRepository);
   }
+
   sleep(userRepo) {
     var sleep = this;
     userRepo.users.find(function(user) {
