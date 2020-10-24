@@ -6,7 +6,8 @@ import Sleep from '../src/Sleep';
 
 describe('UserRepository', function() {
   let userRepository;
-  const sampleUserData = [{
+  const sampleUserData = [
+    {
       'id': 1,
       'name': 'Luisa Hane',
       'address': '15195 Nakia Tunnel, Erdmanport VA 19901-1697',
@@ -18,7 +19,8 @@ describe('UserRepository', function() {
         4,
         8
       ]
-    }, {
+    },
+    {
       "id": 2,
       "name": "Jarvis Considine",
       "address": "30086 Kathryn Port, Ciceroland NE 07273",
@@ -31,7 +33,8 @@ describe('UserRepository', function() {
         24,
         19
       ]
-    }, {
+    },
+    {
       "id": 3,
       "name": "Herminia Witting",
       "address": "85823 Bosco Fork, East Oscarstad MI 85126-5660",
@@ -46,9 +49,69 @@ describe('UserRepository', function() {
       ]
     }];
 
+    const sampleSleepData = [
+    {
+      "userID": 1,
+      "date": "2019/06/16",
+      "hoursSlept": 6.1,
+      "sleepQuality": 1000
+    },
+    {
+      "userID": 2,
+      "date": "2019/06/15",
+      "hoursSlept": 7.3,
+      "sleepQuality": 500
+    },
+    {
+      "userID": 3,
+      "date": "2019/06/15",
+      "hoursSlept": 9.3,
+      "sleepQuality": 1.4
+    }];
+
+    const sampleActivityData = [
+    {
+      "userID": 1,
+      "date": "2019/06/15",
+      "numSteps": 3577,
+      "minutesActive": 140,
+      "flightsOfStairs": 16
+    },
+    {
+      "userID": 2,
+      "date": "2019/06/15",
+      "numSteps": 4294,
+      "minutesActive": 138,
+      "flightsOfStairs": 10
+    },
+    {
+      "userID": 3,
+      "date": "2019/06/15",
+      "numSteps": 7402,
+      "minutesActive": 116,
+      "flightsOfStairs": 33
+    }];
+
+    const sampleHydrationData = [
+    {
+      "userID": 1,
+      "date": "2019/06/15",
+      "numOunces": 37
+    },
+    {
+      "userID": 2,
+      "date": "2019/06/15",
+      "numOunces": 75
+    },
+    {
+      "userID": 3,
+      "date": "2019/06/15",
+      "numOunces": 47
+    }];
+
   beforeEach(() => {
-    userRepository = new UserRepository();
-    userRepository.createUsers(sampleUserData);
+    userRepository = new UserRepository(sampleUserData, sampleSleepData, sampleActivityData, sampleHydrationData);
+    // userRepository.createUsers();
   });
 
   it('should be a function', function() {
@@ -58,6 +121,28 @@ describe('UserRepository', function() {
   it('should be an instance of user repository', function() {
     expect(userRepository).to.be.an.instanceof(UserRepository);
   });
+
+  it('should take in an argument of userData first', () => {
+    expect(userRepository.rawUserData).to.equal(sampleUserData);
+  });
+
+  it('should take in an argument of sleepData second', () => {
+    expect(userRepository.rawSleepData).to.equal(sampleSleepData);
+  });
+
+  it ('should take in an argument of activityData third', () => {
+    expect(userRepository.rawActivityData).to.equal(sampleActivityData);
+  });
+
+  it('should take in an argument of hydrationData last', () => {
+    expect(userRepository.rawHydrationData).to.equal(sampleHydrationData);
+  });
+
+  it('should be able to get a user\'s sleep data by ID', () => {
+    const result = userRepository.getUserSleepData(1);
+
+    expect(result).to.include(sampleSleepData[0]);
+  })
 
   it('should create instances of user', function() {
     expect(userRepository.users[0]).to.be.an.instanceof(User);
@@ -101,7 +186,7 @@ describe('UserRepository', function() {
     expect(userRepository.calculateAverageDailyWater("2019/06/16")).to.equal(5)
   });
 
-  it.only('should have a method that finds the best sleepers', function() {
+  it('should have a method that finds the best sleepers', function() {
     sleep1 = new Sleep({
       "userID": 1,
       "date": "2019/06/16",
