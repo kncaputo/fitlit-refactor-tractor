@@ -101,7 +101,7 @@ describe('UserRepository', function() {
     expect(userRepository.calculateAverageDailyWater("2019/06/16")).to.equal(5)
   });
 
-  it('should have a method that finds the best sleepers', function() {
+  it.only('should have a method that finds the best sleepers', function() {
     sleep1 = new Sleep({
       "userID": 1,
       "date": "2019/06/16",
