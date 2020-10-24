@@ -8,17 +8,17 @@ import sleepData from './data/sleep';
 import hydrationData from './data/hydration';
 
 import UserRepository from './UserRepository';
-import User from './User';
-import Activity from './Activity';
-import Hydration from './Hydration';
-import Sleep from './Sleep';
+// import User from './User';
+// import Activity from './Activity';
+// import Hydration from './Hydration';
+// import Sleep from './Sleep';
 
 let userRepository = new UserRepository();
 
-userData.forEach(user => {
-  user = new User(user);
-  userRepository.users.push(user)
-});
+// userData.forEach(user => {
+//   user = new User(user);
+//   userRepository.users.push(user)
+// });
 
 activityData.forEach(activity => {
   activity = new Activity(activity, userRepository);

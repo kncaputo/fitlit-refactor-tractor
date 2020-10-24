@@ -1,8 +1,17 @@
-import sleepData from './data/sleep';
+// import sleepData from './data/sleep';
+// import userData from '../data/user';
+import User from './User';
 
 export default class UserRepository {
   constructor() {
     this.users = [];
+  }
+
+  createUsers(userData) {
+    userData.forEach(user => {
+      user = new User(user);
+      this.users.push(user);
+    });
   }
 
   getUser(id) {
