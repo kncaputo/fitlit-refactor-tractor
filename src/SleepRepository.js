@@ -4,7 +4,10 @@ export default class SleepRepository {
   constructor(sleepData) {
     this.rawSleepData = sleepData;
     this.sleepHistory = [];
-
+    this.hoursSleptAverage = 0;
+    this.sleepQualityAverage = 0;
+    this.sleepHoursRecord = [];
+    this.sleepQualityRecord = [];
   }
 
   createSleep() {
@@ -14,16 +17,3 @@ export default class SleepRepository {
     });
   }
 }
-
-
-
-
-
-// export default SleepRepository {
-//   constructor() {
-//     this.sleepHistory = []; // includes all instantiations of Sleep
-//     this.sleepQualityAverage = 0;
-//     this.sleepHoursRecord = [];
-//     this.sleepQualityRecord = [];
-//   }
-// }

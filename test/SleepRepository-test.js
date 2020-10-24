@@ -35,10 +35,27 @@ describe.only('SleepRepository', () => {
     expect(sleepRepository).to.be.an.instanceof(SleepRepository);
   });
 
+  it('should have a default hoursSleptAverage of 0', function() {
+    expect(sleepRepository.hoursSleptAverage).to.equal(0);
+  });
+
+  it('should have a default sleepQualityAverage of 0', function() {
+    expect(sleepRepository.sleepQualityAverage).to.equal(0);
+  });
+
+  it('should have a default sleepHoursRecord of []', function() {
+    expect(sleepRepository.sleepHoursRecord).to.deep.equal([]);
+  });
+
+  it('should have a default sleepQualityRecord of []', function() {
+    expect(sleepRepository.sleepQualityRecord).to.deep.equal([]);
+  });
+
   it('should create instances of sleep', function() {
     sleepRepository.createSleep();
 
     expect(sleepRepository.sleepHistory[0]).to.be.an.instanceof(Sleep);
   });
+
 
 });
