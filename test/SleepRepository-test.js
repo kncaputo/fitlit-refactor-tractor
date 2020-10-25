@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import SleepRepository from '../src/SleepRepository';
 import Sleep from '../src/Sleep';
 
-describe.only('SleepRepository', () => {
+describe('SleepRepository', () => {
   let sleepRepository;
   let sampleSleepData = [{
     "userID": 1,

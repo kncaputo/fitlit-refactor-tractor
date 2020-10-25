@@ -13,5 +13,3 @@ export default class Sleep { // instance for the user's sleep each day
 //     }).updateSleep(this.date, this.hoursSlept, this.sleepQuality);
 //   }
 }
-
-// export default Sleep;
