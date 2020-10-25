@@ -75,24 +75,23 @@ export default class ActivityRepository {
   }
 
   findTrendingStairsDays() {
-    let positiveDays = [];
-    this.activityHistory.forEach(activity => {
-      if (positiveDays.length === 0) {
-        positiveDays.push(activity)
-      } else if (positiveDays[0].flightsOfStairs < activity.flightsOfStairs) {
-        positiveDays.unshift(activity);
-      } else if (positiveDays[0].flightsOfStairs > activity.flightsOfStairs && positiveDays.length > this.trendingStairsDays.length) {
-        this.trendingStairsDays = positiveDays;
-        positiveDays = [activity]
-      } else if (positiveDays[0].flightsOfStairs > activity.flightsOfStairs) {
-        positiveDays = [activity]
-      }
-    })
-
-    if (this.trendingStairsDays.length > 2) {
-      return `Your most recent positive step streak was ${this.trendingStairsDays[this.trendingStairsDays.length - 1].date} - ${this.trendingStairsDays[0].date}!`
-    }
-  }
+   let positiveDays = [];
+   this.activityHistory.forEach(activity => {
+     if (positiveDays.length === 0) {
+       positiveDays.push(activity)
+     } else if (positiveDays[0].flightsOfStairs < activity.flightsOfStairs) {
+       positiveDays.unshift(activity);
+     } else if (positiveDays[0].flightsOfStairs > activity.flightsOfStairs) {
+       positiveDays = [activity]
+     }
+     if (positiveDays.length > 2) {
+       this.trendingStairsDays = positiveDays;
+     }
+   })
+   if (this.trendingStairsDays.length > 2) {
+     return `Your most recent positive climbing streak was ${this.trendingStairsDays[this.trendingStairsDays.length - 1].date} - ${this.trendingStairsDays[0].date}!`
+   }
+ }
 
   findTrendingStepDays() {
     let positiveDays = [];
@@ -101,14 +100,13 @@ export default class ActivityRepository {
         positiveDays.push(activity)
       } else if (positiveDays[0].steps < activity.steps) {
         positiveDays.unshift(activity);
-      } else if (positiveDays[0].steps > activity.steps && positiveDays.length > this.trendingStepDays.length) {
-        this.trendingStepDays = positiveDays;
-        positiveDays = [activity]
       } else if (positiveDays[0].steps > activity.steps) {
         positiveDays = [activity]
       }
+      if (positiveDays.length > 2) {
+        this.trendingStepDays = positiveDays;
+      }
     })
-
     if (this.trendingStepDays.length > 2) {
       return `Your most recent positive step streak was ${this.trendingStepDays[this.trendingStepDays.length - 1].date} - ${this.trendingStepDays[0].date}!`
     }
