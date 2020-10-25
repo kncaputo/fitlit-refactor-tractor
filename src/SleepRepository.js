@@ -56,13 +56,12 @@ export default class SleepRepository {
   }
 
   averageWeeklySleepQuality(todayDate) {
-      return (this.sleepQualityRecord.reduce((sum, sleepAct) => {
-        let index = this.sleepQualityRecord.indexOf(this.sleepQualityRecord.find(sleep => sleep.date === todayDate));
-        if (index >= this.sleepQualityRecord.indexOf(sleepAct) && this.sleepQualityRecord.indexOf(sleepAct) <= (index + 6)) {
-          sum += sleepAct.sleepQuality;
-        }
-        return sum;
-      }, 0) / 7).toFixed(1);
+    return (this.sleepQualityRecord.reduce((sum, sleepAct) => {
+      let index = this.sleepQualityRecord.indexOf(this.sleepQualityRecord.find(sleep => sleep.date === todayDate));
+      if (index >= this.sleepQualityRecord.indexOf(sleepAct) && this.sleepQualityRecord.indexOf(sleepAct) <= (index + 6)) {
+        sum += sleepAct.sleepQuality;
+      }
+      return sum;
+    }, 0) / 7).toFixed(1);
   }
-
 }
