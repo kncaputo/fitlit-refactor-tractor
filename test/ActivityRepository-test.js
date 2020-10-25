@@ -24,43 +24,58 @@ describe.only('ActivityRepository', () => {
 
   beforeEach(() => {
     activityRepository = new ActivityRepository(sampleActivityData, 4.3, 10000);
-  })
+  });
 
   describe('Constructor', () => {
     it('should be a function', () => {
       expect(ActivityRepository).to.be.a('function');
-    })
+    });
 
     it('should take in an argument of activityData first', () => {
       expect(activityRepository.rawActivityData).to.equal(sampleActivityData);
     });
 
+    it('should take in an argument of a user\'s stride length', () => {
+      expect(activityRepository.userStrideLength).to.deep.equal(4.3);
+    });
+
+    it('should take in an argument of a user\'s daily step goal', () => {
+      expect(activityRepository.userStepGoal).to.deep.equal(10000);
+    });
+
     it('should start with no total steps', () => {
       expect(activityRepository.totalStepsThisWeek).to.deep.equal(0);
-    })
+    });
 
     it('should should have a default activityHistory of []', () => {
       expect(activityRepository.activityHistory).to.deep.equal([]);
-    })
+    });
 
     it('should should have a default accomplishedDays of []', () => {
       expect(activityRepository.accomplishedDays).to.deep.equal([]);
-    })
+    });
 
     it('should should have a default trendingStepDays of []', () => {
       expect(activityRepository.trendingStepDays).to.deep.equal([]);
-    })
+    });
 
     it('should should have a default trendingStairsDays of []', () => {
       expect(activityRepository.trendingStairsDays).to.deep.equal([]);
-    })
-  })
+    });
+  });
 
-  describe('createActivities', () => {
+  describe('Methods', () => {
     it('should create instances of activities', () => {
       activityRepository.createActivities();
 
       expect(activityRepository.activityHistory[0]).to.be.an.instanceof(Activity);
     });
-  })
-})
+
+    it('should calculate the miles a user walked on a given day', () => {
+      activityRepository.createActivities();
+      const result = activityRepository.calculateMilesWalked('2019/06/15')
+
+      expect(result).to.deep.equal('2.9');
+    });
+  });
+});

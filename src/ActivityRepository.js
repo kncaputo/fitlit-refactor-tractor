@@ -19,6 +19,14 @@ export default class ActivityRepository {
     });
   }
 
+  calculateMilesWalked(todayDate) {
+    let todayActivity = this.activityHistory.find(activity => {
+      return activity.date === todayDate
+    })
+
+    return ((todayActivity.steps * this.userStrideLength) / 5280).toFixed(1)
+  }
+
   // updateActivities(activity) {
   //   this.activityRecord.unshift(activity);
   //   if (activity.numSteps >= this.dailyStepGoal) {
