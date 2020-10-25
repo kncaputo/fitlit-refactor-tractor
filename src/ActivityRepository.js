@@ -35,6 +35,16 @@ export default class ActivityRepository {
     return todayActivity.minutesActive;
   }
 
+  averageWeeklyMinutesActive(todayDate) {
+    return (this.activityHistory.reduce((sum, activity) => {
+      let index = this.activityHistory.indexOf(this.activityHistory.find(activity => activity.date === todayDate));
+      if (index <= this.activityHistory.indexOf(activity) && this.activityHistory.indexOf(activity) <= (index + 6)) {
+        sum += activity.minutesActive;
+      }
+      return sum;
+    }, 0) / 7).toFixed(1);
+  }
+
   // updateActivities(activity) {
   //   this.activityRecord.unshift(activity);
   //   if (activity.numSteps >= this.dailyStepGoal) {
@@ -55,16 +65,6 @@ export default class ActivityRepository {
   //     return sumMinutes += activity.minutesActive
   //   }, 0);
   //   return Math.round(totalMinutes * 7.6);
-  // }
-  //
-  // calculateAverageMinutesActiveThisWeek(todayDate) {
-  //   return (this.activityRecord.reduce((sum, activity) => {
-  //     let index = this.activityRecord.indexOf(this.activityRecord.find(activity => activity.date === todayDate));
-  //     if (index <= this.activityRecord.indexOf(activity) && this.activityRecord.indexOf(activity) <= (index + 6)) {
-  //       sum += activity.minutesActive;
-  //     }
-  //     return sum;
-  //   }, 0) / 7).toFixed(0);
   // }
   //
   // calculateAverageStepsThisWeek(todayDate) {

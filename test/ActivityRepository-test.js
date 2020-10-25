@@ -84,5 +84,12 @@ describe.only('ActivityRepository', () => {
 
       expect(result).to.deep.equal(140);
     });
+
+    it('should calculate average active minutes on a given week', () => {
+      activityRepository.createActivities();
+      const result = activityRepository.averageWeeklyMinutesActive('2019/06/15');
+
+      expect(result).to.deep.equal('39.7');
+    });
   });
 });
