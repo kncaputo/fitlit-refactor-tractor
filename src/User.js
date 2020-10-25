@@ -1,25 +1,24 @@
+import SleepRepository from './SleepRepository';
+
  export default class User {
-  constructor(userData) {
+  constructor(userData, sleepData) {
     this.id = userData.id;
     this.name = userData.name;
     this.address = userData.address;
     this.email = userData.email;
     this.strideLength = userData.strideLength;
     this.dailyStepGoal = userData.dailyStepGoal;
-    this.totalStepsThisWeek = 0;
     this.friends = userData.friends;
+    this.sleepRepository = new SleepRepository(sleepData);
+    this.friendsNames = [];
+    this.friendsActivityRecords = []
+    this.totalStepsThisWeek = 0;
     this.ouncesAverage = 0;
     this.ouncesRecord = [];
-    this.hoursSleptAverage = 0;
-    this.sleepQualityAverage = 0;
-    this.sleepHoursRecord = [];
-    this.sleepQualityRecord = [];
     this.activityRecord = [];
     this.accomplishedDays = [];
     this.trendingStepDays = [];
     this.trendingStairsDays = [];
-    this.friendsNames = [];
-    this.friendsActivityRecords = []
   }
 
   getFirstName() {
@@ -65,26 +64,6 @@
     } else {
       this.sleepQualityAverage = quality;
     }
-  }
-
-  calculateAverageHoursThisWeek(todayDate) {
-    return (this.sleepHoursRecord.reduce((sum, sleepAct) => {
-      let index = this.sleepHoursRecord.indexOf(this.sleepHoursRecord.find(sleep => sleep.date === todayDate));
-      if (index <= this.sleepHoursRecord.indexOf(sleepAct) && this.sleepHoursRecord.indexOf(sleepAct) <= (index + 6)) {
-        sum += sleepAct.hours;
-      }
-      return sum;
-    }, 0) / 7).toFixed(1);
-  }
-
-  calculateAverageQualityThisWeek(todayDate) {
-    return (this.sleepQualityRecord.reduce((sum, sleepAct) => {
-      let index = this.sleepQualityRecord.indexOf(this.sleepQualityRecord.find(sleep => sleep.date === todayDate));
-      if (index <= this.sleepQualityRecord.indexOf(sleepAct) && this.sleepQualityRecord.indexOf(sleepAct) <= (index + 6)) {
-        sum += sleepAct.quality;
-      }
-      return sum;
-    }, 0) / 7).toFixed(1);
   }
 
   updateActivities(activity) {

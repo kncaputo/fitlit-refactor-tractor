@@ -3,15 +3,26 @@
 import User from './User';
 
 export default class UserRepository {
-  constructor() {
+  constructor(userData, sleepData, activityData, hydrationData) {
     this.users = [];
+    this.rawUserData = userData;
+    this.rawSleepData = sleepData;
+    this.rawActivityData = activityData;
+    this.rawHydrationData = hydrationData;
   }
 
-  createUsers(userData) {
-    userData.forEach(user => {
-      user = new User(user);
+  createUsers() {
+    this.rawUserData.forEach(rawUser => {
+      let userSleepData = getUserSleepData(rawUser.id);
+      user = new User(rawUser, userSleepData);
       this.users.push(user);
     });
+  }
+
+  getUserSleepData(id) {
+    return this.rawSleepData.filter(sleep => {
+      return sleep.userID === id;
+    })
   }
 
   getUser(id) {
