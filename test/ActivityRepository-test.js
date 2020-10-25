@@ -2,7 +2,7 @@ import { expect } from 'chai'
 import Activity from '../src/Activity';
 import ActivityRepository from '../src/ActivityRepository'
 
-describe('ActivityRepository', () => {
+describe.only('ActivityRepository', () => {
   let activityRepository;
 
   const sampleActivityData = [
@@ -26,10 +26,14 @@ describe('ActivityRepository', () => {
     activityRepository = new ActivityRepository(sampleActivityData, 4.3, 10000);
   })
 
-  describe.only('Constructor', () => {
+  describe('Constructor', () => {
     it('should be a function', () => {
       expect(ActivityRepository).to.be.a('function');
     })
+
+    it('should take in an argument of activityData first', () => {
+      expect(activityRepository.rawActivityData).to.equal(sampleActivityData);
+    });
 
     it('should start with no total steps', () => {
       expect(activityRepository.totalStepsThisWeek).to.deep.equal(0);
@@ -37,10 +41,6 @@ describe('ActivityRepository', () => {
 
     it('should should have a default activityHistory of []', () => {
       expect(activityRepository.activityHistory).to.deep.equal([]);
-    })
-
-    it('should should have a default activityRecord of []', () => {
-      expect(activityRepository.activityRecord).to.deep.equal([]);
     })
 
     it('should should have a default accomplishedDays of []', () => {
@@ -56,7 +56,11 @@ describe('ActivityRepository', () => {
     })
   })
 
-  describe('updateActivities', () => {
+  describe('createActivities', () => {
+    it('should create instances of activities', () => {
+      activityRepository.createActivities();
 
+      expect(activityRepository.activityHistory[0]).to.be.an.instanceof(Activity);
+    });
   })
 })

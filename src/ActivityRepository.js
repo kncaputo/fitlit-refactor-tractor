@@ -1,17 +1,22 @@
+import Activity from './Activity';
+
 export default class ActivityRepository {
   constructor(activityData, userStrideLength, userStepGoal) {
+    this.rawActivityData = activityData
     this.activityHistory = [];
     this.userStepGoal = userStepGoal;
     this.userStrideLength = userStrideLength;
     this.totalStepsThisWeek = 0;
-    this.activityRecord = [];
     this.accomplishedDays = [];
     this.trendingStepDays = [];
     this.trendingStairsDays = [];
   }
 
-  calculateDailyMiles(date) {
-
+  createActivities() {
+    this.rawActivityData.forEach(rawActivity => {
+      let activity = new Activity(rawActivity);
+      this.activityHistory.push(activity);
+    });
   }
 
   // updateActivities(activity) {
