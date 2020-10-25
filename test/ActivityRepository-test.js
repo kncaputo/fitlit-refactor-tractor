@@ -16,9 +16,23 @@ describe.only('ActivityRepository', () => {
     {
       "userID": 1,
       "date": "2019/06/16",
-      "numSteps": 12000,
+      "numSteps": 9872,
       "minutesActive": 138,
       "flightsOfStairs": 10
+    },
+    {
+      "userID": 1,
+      "date": "2019/06/17",
+      "numSteps": 10121,
+      "minutesActive": 148,
+      "flightsOfStairs": 11
+    },
+    {
+      "userID": 1,
+      "date": "2019/06/18",
+      "numSteps": 942,
+      "minutesActive": 138,
+      "flightsOfStairs": 12
     }
   ]
 
@@ -55,12 +69,12 @@ describe.only('ActivityRepository', () => {
       expect(activityRepository.accomplishedDays).to.deep.equal([]);
     });
 
-    it('should should have a default trendingStepDays of []', () => {
-      expect(activityRepository.trendingStepDays).to.deep.equal([]);
+    it('should should have a default trendingStepDays of null', () => {
+      expect(activityRepository.trendingStepDays).to.deep.equal(null);
     });
 
-    it('should should have a default trendingStairsDays of []', () => {
-      expect(activityRepository.trendingStairsDays).to.deep.equal([]);
+    it('should should have a default trendingStairsDays of null', () => {
+      expect(activityRepository.trendingStairsDays).to.deep.equal(null);
     });
   });
 
@@ -89,21 +103,21 @@ describe.only('ActivityRepository', () => {
       activityRepository.createActivities();
       const result = activityRepository.averageWeeklyMinutesActive('2019/06/15');
 
-      expect(result).to.deep.equal('39.7');
+      expect(result).to.deep.equal('80.6');
     });
 
     it('should indicate whether a user met their step goal on a given day', () => {
       activityRepository.createActivities();
       const result = activityRepository.reachStepGoal('2019/06/16');
 
-      expect(result).to.deep.equal(true);
+      expect(result).to.deep.equal(false);
     });
 
     it('should filter days where a user met their step goal', () => {
       activityRepository.createActivities();
       activityRepository.findAccomplishedStepDays();
 
-      expect(activityRepository.accomplishedDays[0]).to.deep.equal({date: "2019/06/16"});
+      expect(activityRepository.accomplishedDays[0]).to.deep.equal({date: "2019/06/17"});
     });
 
     it('should find all-time stair climbing record', () => {
@@ -111,6 +125,15 @@ describe.only('ActivityRepository', () => {
       const result = activityRepository.findStairClimbingRecord();
 
       expect(result).to.deep.equal(16);
+    });
+
+    it('should find trending stair days', () => {
+      activityRepository.createActivities();
+      activityRepository.findTrendingStairsDays();
+      const result = 'Your most recent positive climbing streak was 2019/06/16 - 2019/06/18!'
+
+      expect(activityRepository.trendingStairsDays).to.deep.equal(result)
+
     });
   });
 });

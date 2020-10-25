@@ -8,8 +8,8 @@ export default class ActivityRepository {
     this.userStrideLength = userStrideLength;
     this.totalStepsThisWeek = 0;
     this.accomplishedDays = [];
-    this.trendingStepDays = [];
-    this.trendingStairsDays = [];
+    this.trendingStepDays = null;
+    this.trendingStairsDays = null;
   }
 
   createActivities() {
@@ -69,12 +69,29 @@ export default class ActivityRepository {
     this.activityHistory.forEach(activity => {
       if (activity.flightsOfStairs > record) {
         record = activity.flightsOfStairs;
-      } 
+      }
     })
     return record;
   }
 
+  findTrendingStairsDays() {
+    let positiveDays = [];
+    this.activityHistory.forEach(activity => {
+      if (positiveDays.length === 0) {
+        positiveDays.push(activity)
+      } else if (positiveDays[0].flightsOfStairs < activity.flightsOfStairs) {
+        positiveDays.unshift(activity);
+      } else if (positiveDays[0].flightsOfStairs > activity.flightsOfStairs) {
+        positiveDays = [activity]
+      }
+    })
+
+    if (positiveDays.length > 2) {
+      this.trendingStairsDays = `Your most recent positive climbing streak was ${positiveDays[positiveDays.length - 1].date} - ${positiveDays[0].date}!`
+    }
+  }
 }
+
 
   // updateActivities(activity) {
   //   this.activityRecord.unshift(activity);
