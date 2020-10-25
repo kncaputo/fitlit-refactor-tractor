@@ -50,18 +50,28 @@ export default class ActivityRepository {
       return activity.date === todayDate;
     })
 
-    return (todayActivity.numSteps >= this.userStepGoal) ? true : false;
+    return (todayActivity.steps >= this.userStepGoal) ? true : false;
   }
 
-  findAllStepGoalReached() {
+  findAccomplishedStepDays() {
     let goodStepDays = this.activityHistory.filter(activity => {
       return activity.steps >= this.userStepGoal;
     })
-    return goodStepDays.map(activity => {
+    this.accomplishedDays = goodStepDays.map(activity => {
       return activity = {
         date: activity.date
       }
     })
+  }
+
+  findStairClimbingRecord() {
+    let record = 0;
+    this.activityHistory.forEach(activity => {
+      if (activity.flightsOfStairs > record) {
+        record = activity.flightsOfStairs;
+      } 
+    })
+    return record;
   }
 
 }

@@ -94,16 +94,23 @@ describe.only('ActivityRepository', () => {
 
     it('should indicate whether a user met their step goal on a given day', () => {
       activityRepository.createActivities();
-      const result = activityRepository.reachStepGoal('2019/06/15');
+      const result = activityRepository.reachStepGoal('2019/06/16');
 
-      expect(result).to.deep.equal(false);
+      expect(result).to.deep.equal(true);
     });
 
     it('should filter days where a user met their step goal', () => {
       activityRepository.createActivities();
-      const result = activityRepository.findAllStepGoalReached();
+      activityRepository.findAccomplishedStepDays();
 
-      expect(result[0]).to.deep.equal({date: "2019/06/16"});
-    })
+      expect(activityRepository.accomplishedDays[0]).to.deep.equal({date: "2019/06/16"});
+    });
+
+    it('should find all-time stair climbing record', () => {
+      activityRepository.createActivities();
+      const result = activityRepository.findStairClimbingRecord();
+
+      expect(result).to.deep.equal(16);
+    });
   });
 });
