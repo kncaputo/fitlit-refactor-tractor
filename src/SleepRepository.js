@@ -13,8 +13,14 @@ export default class SleepRepository {
   createSleep() {
     this.rawSleepData.forEach(rawSleep => {
       let sleep = new Sleep(rawSleep);
-      this.sleepHistory.push(sleep)
+      this.sleepHistory.push(sleep);
     });
+  }
+
+  createSleepHoursRecord() {
+    this.sleepHoursRecord = this.sleepHistory.map(sleep => {
+      return sleep = {date: sleep.date, hours: sleep.hoursSlept};
+    })
   }
 
   updateHoursSleptAverage() {
@@ -32,4 +38,25 @@ export default class SleepRepository {
     }, 0)
     this.sleepQualityAverage = (totalSleepQuality / this.sleepHistory.length).toFixed(1);
   }
+
+  averageWeeklySleepHours(todayDate) {
+    return (this.sleepHoursRecord.reduce((sum, sleepAct) => {
+      let index = this.sleepHoursRecord.indexOf(this.sleepHoursRecord.find(sleep => sleep.date === todayDate));
+      if (index >= this.sleepHoursRecord.indexOf(sleepAct) && this.sleepHoursRecord.indexOf(sleepAct) <= (index + 6)) {
+        sum += sleepAct.hours;
+      }
+      return sum;
+    }, 0) / 7).toFixed(1);
+  }
+
+  averageWeeklySleepQuality(todayDate) {
+      return (this.sleepQualityRecord.reduce((sum, sleepAct) => {
+        let index = this.sleepQualityRecord.indexOf(this.sleepQualityRecord.find(sleep => sleep.date === todayDate));
+        if (index >= this.sleepQualityRecord.indexOf(sleepAct) && this.sleepQualityRecord.indexOf(sleepAct) <= (index + 6)) {
+          sum += sleepAct.quality;
+        }
+        return sum;
+      }, 0) / 7).toFixed(1);
+  }
+
 }
