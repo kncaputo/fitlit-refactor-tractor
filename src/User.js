@@ -1,7 +1,7 @@
 import SleepRepository from './SleepRepository';
 
  export default class User {
-  constructor(userData, sleepData) {
+  constructor(userData, sleepData, activityData) {
     this.id = userData.id;
     this.name = userData.name;
     this.address = userData.address;
@@ -10,6 +10,7 @@ import SleepRepository from './SleepRepository';
     this.dailyStepGoal = userData.dailyStepGoal;
     this.friends = userData.friends;
     this.sleepRepository = new SleepRepository(sleepData);
+    this.activityRepository = new ActivityRepository(activityData)
     this.friendsNames = [];
     this.friendsActivityRecords = []
     this.totalStepsThisWeek = 0;
@@ -45,117 +46,31 @@ import SleepRepository from './SleepRepository';
     }, 0)
   }
 
-  updateSleep(date, hours, quality) {
-    this.sleepHoursRecord.unshift({
-      'date': date,
-      'hours': hours
-    });
-    this.sleepQualityRecord.unshift({
-      'date': date,
-      'quality': quality
-    });
-    if(this.sleepHoursRecord.length) {
-      this.hoursSleptAverage = ((hours + (this.hoursSleptAverage * (this.sleepHoursRecord.length - 1))) / this.sleepHoursRecord.length).toFixed(1);
-    } else {
-      this.hoursSleptAverage = hours;
-    }
-    if (this.sleepQualityRecord.length) {
-      this.sleepQualityAverage = ((quality + (this.sleepQualityAverage * (this.sleepQualityRecord.length - 1))) / this.sleepQualityRecord.length).toFixed(1);
-    } else {
-      this.sleepQualityAverage = quality;
-    }
-  }
-
-  updateActivities(activity) {
-    this.activityRecord.unshift(activity);
-    if (activity.numSteps >= this.dailyStepGoal) {
-      this.accomplishedDays.unshift(activity.date);
-    }
-  }
-
-  findClimbingRecord() {
-    return this.activityRecord.sort((a, b) => {
-      return b.flightsOfStairs - a.flightsOfStairs;
-    })[0].flightsOfStairs;
-  }
-
-  calculateDailyCalories(date) {
-    let totalMinutes = this.activityRecord.filter(activity => {
-      return activity.date === date
-    }).reduce((sumMinutes, activity) => {
-      return sumMinutes += activity.minutesActive
-    }, 0);
-    return Math.round(totalMinutes * 7.6);
-  }
-
-  calculateAverageMinutesActiveThisWeek(todayDate) {
-    return (this.activityRecord.reduce((sum, activity) => {
-      let index = this.activityRecord.indexOf(this.activityRecord.find(activity => activity.date === todayDate));
-      if (index <= this.activityRecord.indexOf(activity) && this.activityRecord.indexOf(activity) <= (index + 6)) {
-        sum += activity.minutesActive;
-      }
-      return sum;
-    }, 0) / 7).toFixed(0);
-  }
-
-  calculateAverageStepsThisWeek(todayDate) {
-    return (this.activityRecord.reduce((sum, activity) => {
-      let index = this.activityRecord.indexOf(this.activityRecord.find(activity => activity.date === todayDate));
-      if (index <= this.activityRecord.indexOf(activity) && this.activityRecord.indexOf(activity) <= (index + 6)) {
-        sum += activity.steps;
-      }
-      return sum;
-    }, 0) / 7).toFixed(0);
-  }
-
-  calculateAverageFlightsThisWeek(todayDate) {
-    return (this.activityRecord.reduce((sum, activity) => {
-      let index = this.activityRecord.indexOf(this.activityRecord.find(activity => activity.date === todayDate));
-      if (index <= this.activityRecord.indexOf(activity) && this.activityRecord.indexOf(activity) <= (index + 6)) {
-        sum += activity.flightsOfStairs;
-      }
-      return sum;
-    }, 0) / 7).toFixed(1);
-  }
-
-  findTrendingStepDays() {
-    let positiveDays = [];
-    for (var i = 0; i < this.activityRecord.length; i++) {
-      if (this.activityRecord[i + 1] && this.activityRecord[i].steps > this.activityRecord[i + 1].steps) {
-        positiveDays.unshift(this.activityRecord[i].date);
-      } else if (positiveDays.length > 2) {
-        this.trendingStepDays.push(`Your most recent positive step streak was ${positiveDays[0]} - ${positiveDays[positiveDays.length - 1]}!`);
-        positiveDays = [];
-      }
-    }
-  }
-
-  findTrendingStairsDays() {
-    let positiveDays = [];
-    for (var i = 0; i < this.activityRecord.length; i++) {
-      if (this.activityRecord[i + 1] && this.activityRecord[i].flightsOfStairs > this.activityRecord[i + 1].flightsOfStairs) {
-        positiveDays.unshift(this.activityRecord[i].date);
-      } else if (positiveDays.length > 2) {
-        this.trendingStairsDays.push(`Your most recent positive climbing streak was ${positiveDays[0]} - ${positiveDays[positiveDays.length - 1]}!`);
-        positiveDays = [];
-      }
-    }
-  }
+  // updateSleep(date, hours, quality) {
+  //   this.sleepHoursRecord.unshift({
+  //     'date': date,
+  //     'hours': hours
+  //   });
+  //   this.sleepQualityRecord.unshift({
+  //     'date': date,
+  //     'quality': quality
+  //   });
+  //   if(this.sleepHoursRecord.length) {
+  //     this.hoursSleptAverage = ((hours + (this.hoursSleptAverage * (this.sleepHoursRecord.length - 1))) / this.sleepHoursRecord.length).toFixed(1);
+  //   } else {
+  //     this.hoursSleptAverage = hours;
+  //   }
+  //   if (this.sleepQualityRecord.length) {
+  //     this.sleepQualityAverage = ((quality + (this.sleepQualityAverage * (this.sleepQualityRecord.length - 1))) / this.sleepQualityRecord.length).toFixed(1);
+  //   } else {
+  //     this.sleepQualityAverage = quality;
+  //   }
+  // }
 
   findFriendsNames(users) {
     this.friends.forEach(friend => {
       this.friendsNames.push(users.find(user => user.id === friend).getFirstName());
     })
-  }
-
-  calculateTotalStepsThisWeek(todayDate) {
-    this.totalStepsThisWeek = (this.activityRecord.reduce((sum, activity) => {
-      let index = this.activityRecord.indexOf(this.activityRecord.find(activity => activity.date === todayDate));
-      if (index <= this.activityRecord.indexOf(activity) && this.activityRecord.indexOf(activity) <= (index + 6)) {
-        sum += activity.steps;
-      }
-      return sum;
-    }, 0));
   }
 
   findFriendsTotalStepsForWeek(users, date) {
