@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import SleepRepository from '../src/SleepRepository';
 import Sleep from '../src/Sleep';
 
-describe('SleepRepository', () => {
+describe.only('SleepRepository', () => {
   let sleepRepository;
   let sampleSleepData = [{
     "userID": 1,
@@ -79,16 +79,16 @@ describe('SleepRepository', () => {
 
   it('should create a dated record of sleep hours', () => {
     sleepRepository.createSleepHoursRecord();
-    const result = {date: '2019/06/16', hours: 9.3 };
+    const result = {date: '2019/06/10', hours: 5.4 };
 
-    expect(sleepRepository.sleepHoursRecord[2]).to.deep.equal(result);
+    expect(sleepRepository.sleepHoursRecord[0]).to.deep.equal(result);
   });
 
   it('should create a dated record of sleep quality', () => {
     sleepRepository.createSleepQualityRecord();
-    const result = 
+    const result = {date: '2019/06/10', sleepQuality: 1000};
 
-    expect(sleepRepository.sleepQualityRecord[2]).to.deep.equal(result);
+    expect(sleepRepository.sleepQualityRecord[0]).to.deep.equal(result);
   });
 
 
@@ -99,13 +99,13 @@ describe('SleepRepository', () => {
   it('should update user\'s average hours of sleep', () => {
     sleepRepository.updateHoursSleptAverage();
 
-    expect(sleepRepository.hoursSleptAverage).to.equal('7.6');
+    expect(sleepRepository.hoursSleptAverage).to.equal('7.2');
   });
 
   it('should update user\'s average quality of sleep', () => {
     sleepRepository.updateSleepQualityAverage();
 
-    expect(sleepRepository.sleepQualityAverage).to.equal('500.5');
+    expect(sleepRepository.sleepQualityAverage).to.equal('785.9');
   });
 
 
@@ -115,9 +115,11 @@ describe('SleepRepository', () => {
     expect(sleepRepository.averageWeeklySleepHours('2019/06/16')).to.equal('7.2');
   });
 
-  it('calculateAverageQualityThisWeek should calculate average quality of sleep for week before a given date', function() {
-    sleepRepository.createSleepHoursRecord();
+  it('should calculate the average sleep quality in a given week', function() {
+    sleepRepository.createSleepQualityRecord();
 
-    expect(user.averageWeeklySleepQuality('2019/06/16')).to.equal('8.5')
+    expect(sleepRepository.averageWeeklySleepQuality('2019/06/16')).to.equal('785.9')
 
   });
+
+});
