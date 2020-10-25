@@ -45,6 +45,15 @@ export default class ActivityRepository {
     }, 0) / 7).toFixed(1);
   }
 
+  reachStepGoal(todayDate) {
+    let todayActivity = this.activityHistory.find(activity => {
+      return activity.date === todayDate;
+    })
+
+    return (todayActivity.numSteps >= this.userStepGoal) ? true : false;
+    }
+  }
+
   // updateActivities(activity) {
   //   this.activityRecord.unshift(activity);
   //   if (activity.numSteps >= this.dailyStepGoal) {
@@ -120,5 +129,3 @@ export default class ActivityRepository {
   //     return sum;
   //   }, 0));
   // }
-
-}

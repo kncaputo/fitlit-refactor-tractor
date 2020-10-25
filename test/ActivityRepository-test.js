@@ -91,5 +91,12 @@ describe.only('ActivityRepository', () => {
 
       expect(result).to.deep.equal('39.7');
     });
+
+    it('should indicate whether a user met their step goal on a given day', () => {
+      activityRepository.createActivities();
+      const result = activityRepository.reachStepGoal('2019/06/15');
+
+      expect(result).to.deep.equal(false);
+    });
   });
 });
