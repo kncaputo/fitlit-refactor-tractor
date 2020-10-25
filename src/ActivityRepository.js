@@ -1,11 +1,17 @@
 export default class ActivityRepository {
-  constructor() {
+  constructor(activityData, userStrideLength, userStepGoal) {
     this.activityHistory = [];
+    this.userStepGoal = userStepGoal;
+    this.userStrideLength = userStrideLength;
     this.totalStepsThisWeek = 0;
     this.activityRecord = [];
     this.accomplishedDays = [];
     this.trendingStepDays = [];
     this.trendingStairsDays = [];
+  }
+
+  calculateDailyMiles(date) {
+
   }
 
   // updateActivities(activity) {

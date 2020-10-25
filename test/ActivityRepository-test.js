@@ -5,8 +5,25 @@ import ActivityRepository from '../src/ActivityRepository'
 describe('ActivityRepository', () => {
   let activityRepository;
 
+  const sampleActivityData = [
+    {
+      "userID": 1,
+      "date": "2019/06/15",
+      "numSteps": 3577,
+      "minutesActive": 140,
+      "flightsOfStairs": 16
+    },
+    {
+      "userID": 1,
+      "date": "2019/06/16",
+      "numSteps": 4294,
+      "minutesActive": 138,
+      "flightsOfStairs": 10
+    }
+  ]
+
   beforeEach(() => {
-    activityRepository = new ActivityRepository()
+    activityRepository = new ActivityRepository(sampleActivityData, 4.3, 10000);
   })
 
   describe.only('Constructor', () => {
@@ -39,7 +56,7 @@ describe('ActivityRepository', () => {
     })
   })
 
-  describe('Methods', () => {
-    
+  describe('updateActivities', () => {
+
   })
 })

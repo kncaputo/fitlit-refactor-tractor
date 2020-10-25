@@ -10,16 +10,16 @@ import SleepRepository from './SleepRepository';
     this.dailyStepGoal = userData.dailyStepGoal;
     this.friends = userData.friends;
     this.sleepRepository = new SleepRepository(sleepData);
-    this.activityRepository = new ActivityRepository(activityData)
+    this.activityRepository = new ActivityRepository(activityData, userData.strideLength, userData.dailyStepGoal)
     this.friendsNames = [];
     this.friendsActivityRecords = []
-    this.totalStepsThisWeek = 0;
+    // this.totalStepsThisWeek = 0;
     this.ouncesAverage = 0;
     this.ouncesRecord = [];
-    this.activityRecord = [];
-    this.accomplishedDays = [];
-    this.trendingStepDays = [];
-    this.trendingStairsDays = [];
+    // this.activityRecord = [];
+    // this.accomplishedDays = [];
+    // this.trendingStepDays = [];
+    // this.trendingStairsDays = [];
   }
 
   getFirstName() {
@@ -45,27 +45,6 @@ import SleepRepository from './SleepRepository';
       return sum
     }, 0)
   }
-
-  // updateSleep(date, hours, quality) {
-  //   this.sleepHoursRecord.unshift({
-  //     'date': date,
-  //     'hours': hours
-  //   });
-  //   this.sleepQualityRecord.unshift({
-  //     'date': date,
-  //     'quality': quality
-  //   });
-  //   if(this.sleepHoursRecord.length) {
-  //     this.hoursSleptAverage = ((hours + (this.hoursSleptAverage * (this.sleepHoursRecord.length - 1))) / this.sleepHoursRecord.length).toFixed(1);
-  //   } else {
-  //     this.hoursSleptAverage = hours;
-  //   }
-  //   if (this.sleepQualityRecord.length) {
-  //     this.sleepQualityAverage = ((quality + (this.sleepQualityAverage * (this.sleepQualityRecord.length - 1))) / this.sleepQualityRecord.length).toFixed(1);
-  //   } else {
-  //     this.sleepQualityAverage = quality;
-  //   }
-  // }
 
   findFriendsNames(users) {
     this.friends.forEach(friend => {
