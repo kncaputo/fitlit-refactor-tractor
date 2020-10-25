@@ -16,7 +16,7 @@ describe.only('ActivityRepository', () => {
     {
       "userID": 1,
       "date": "2019/06/16",
-      "numSteps": 4294,
+      "numSteps": 12000,
       "minutesActive": 138,
       "flightsOfStairs": 10
     }
@@ -98,5 +98,12 @@ describe.only('ActivityRepository', () => {
 
       expect(result).to.deep.equal(false);
     });
+
+    it('should filter days where a user met their step goal', () => {
+      activityRepository.createActivities();
+      const result = activityRepository.findAllStepGoalReached();
+
+      expect(result[0]).to.deep.equal({date: "2019/06/16"});
+    })
   });
 });

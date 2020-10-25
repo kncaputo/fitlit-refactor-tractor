@@ -51,8 +51,20 @@ export default class ActivityRepository {
     })
 
     return (todayActivity.numSteps >= this.userStepGoal) ? true : false;
-    }
   }
+
+  findAllStepGoalReached() {
+    let goodStepDays = this.activityHistory.filter(activity => {
+      return activity.steps >= this.userStepGoal;
+    })
+    return goodStepDays.map(activity => {
+      return activity = {
+        date: activity.date
+      }
+    })
+  }
+
+}
 
   // updateActivities(activity) {
   //   this.activityRecord.unshift(activity);
