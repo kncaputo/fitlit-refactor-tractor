@@ -27,6 +27,14 @@ export default class ActivityRepository {
     return ((todayActivity.steps * this.userStrideLength) / 5280).toFixed(1)
   }
 
+  calculateActiveMinutes(todayDate) {
+    let todayActivity = this.activityHistory.find(activity => {
+      return activity.date === todayDate;
+    })
+
+    return todayActivity.minutesActive;
+  }
+
   // updateActivities(activity) {
   //   this.activityRecord.unshift(activity);
   //   if (activity.numSteps >= this.dailyStepGoal) {

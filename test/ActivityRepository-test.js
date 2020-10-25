@@ -77,5 +77,12 @@ describe.only('ActivityRepository', () => {
 
       expect(result).to.deep.equal('2.9');
     });
+
+    it('should calculate the amount of time a user was active on a given day', () => {
+      activityRepository.createActivities();
+      const result = activityRepository.calculateActiveMinutes('2019/06/15');
+
+      expect(result).to.deep.equal(140);
+    });
   });
 });
