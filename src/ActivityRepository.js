@@ -8,8 +8,8 @@ export default class ActivityRepository {
     this.userStrideLength = userStrideLength;
     this.totalStepsThisWeek = 0;
     this.accomplishedDays = [];
-    this.trendingStepDays = null;
-    this.trendingStairsDays = null;
+    this.trendingStepDays = [];
+    this.trendingStairsDays = [];
   }
 
   createActivities() {
@@ -81,13 +81,36 @@ export default class ActivityRepository {
         positiveDays.push(activity)
       } else if (positiveDays[0].flightsOfStairs < activity.flightsOfStairs) {
         positiveDays.unshift(activity);
+      } else if (positiveDays[0].flightsOfStairs > activity.flightsOfStairs && positiveDays.length > this.trendingStairsDays.length) {
+        this.trendingStairsDays = positiveDays;
+        positiveDays = [activity]
       } else if (positiveDays[0].flightsOfStairs > activity.flightsOfStairs) {
         positiveDays = [activity]
       }
     })
 
-    if (positiveDays.length > 2) {
-      this.trendingStairsDays = `Your most recent positive climbing streak was ${positiveDays[positiveDays.length - 1].date} - ${positiveDays[0].date}!`
+    if (this.trendingStairsDays.length > 2) {
+      return `Your most recent positive step streak was ${this.trendingStairsDays[this.trendingStairsDays.length - 1].date} - ${this.trendingStairsDays[0].date}!`
+    }
+  }
+
+  findTrendingStepDays() {
+    let positiveDays = [];
+    this.activityHistory.forEach(activity => {
+      if (positiveDays.length === 0) {
+        positiveDays.push(activity)
+      } else if (positiveDays[0].steps < activity.steps) {
+        positiveDays.unshift(activity);
+      } else if (positiveDays[0].steps > activity.steps && positiveDays.length > this.trendingStepDays.length) {
+        this.trendingStepDays = positiveDays;
+        positiveDays = [activity]
+      } else if (positiveDays[0].steps > activity.steps) {
+        positiveDays = [activity]
+      }
+    })
+
+    if (this.trendingStepDays.length > 2) {
+      return `Your most recent positive step streak was ${this.trendingStepDays[this.trendingStepDays.length - 1].date} - ${this.trendingStepDays[0].date}!`
     }
   }
 }

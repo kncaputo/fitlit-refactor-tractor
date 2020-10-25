@@ -69,12 +69,12 @@ describe.only('ActivityRepository', () => {
       expect(activityRepository.accomplishedDays).to.deep.equal([]);
     });
 
-    it('should should have a default trendingStepDays of null', () => {
-      expect(activityRepository.trendingStepDays).to.deep.equal(null);
+    it('should should have a default trendingStepDays of []', () => {
+      expect(activityRepository.trendingStepDays).to.deep.equal([]);
     });
 
-    it('should should have a default trendingStairsDays of null', () => {
-      expect(activityRepository.trendingStairsDays).to.deep.equal(null);
+    it('should should have a default trendingStairsDays of []', () => {
+      expect(activityRepository.trendingStairsDays).to.deep.equal([]);
     });
   });
 
@@ -129,11 +129,16 @@ describe.only('ActivityRepository', () => {
 
     it('should find trending stair days', () => {
       activityRepository.createActivities();
-      activityRepository.findTrendingStairsDays();
-      const result = 'Your most recent positive climbing streak was 2019/06/16 - 2019/06/18!'
+      const result = activityRepository.findTrendingStairsDays();
 
-      expect(activityRepository.trendingStairsDays).to.deep.equal(result)
+      expect(result).to.deep.equal('Your most recent positive climbing streak was 2019/06/16 - 2019/06/18!')
+    });
 
+    it('should find trending step days', () => {
+      activityRepository.createActivities();
+      const result = activityRepository.findTrendingStepDays();
+
+      expect(result).to.deep.equal('Your most recent positive step streak was 2019/06/15 - 2019/06/17!')
     });
   });
 });
