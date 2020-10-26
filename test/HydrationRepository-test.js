@@ -61,5 +61,12 @@ describe.only('HydrationRepository', () => {
 
       expect(hydrationRepository.ouncesAverage).to.deep.equal('50.7');
     });
+
+    it('should return ounces consumed on a given day', () => {
+      hydrationRepository.createHydration();
+      const result = hydrationRepository.findOunces("2018/06/16");
+
+      expect(result).to.deep.equal(71);
+    });
   });
 })

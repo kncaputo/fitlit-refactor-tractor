@@ -23,6 +23,14 @@ export default class HydrationRepository {
     this.ouncesAverage = (totalDailyOunces / this.hydrationHistory.length).toFixed(1);
   }
 
+  findOunces(todayDate) {
+    let todayHydration = this.hydrationHistory.find(hydration => {
+      return hydration.date === todayDate;
+    })
+
+    return todayHydration.ounces;
+  }
+
 }
 
 // updateHydration(date, amount) {
