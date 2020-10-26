@@ -2,7 +2,7 @@ import { expect } from 'chai'
 import Hydration from '../src/Hydration';
 import HydrationRepository from '../src/HydrationRepository'
 
-describe.only('ActivityRepository', () => {
+describe.only('HydrationRepository', () => {
   let hydrationRepository;
   const sampleHydrationData = [
     {
@@ -30,6 +30,10 @@ describe.only('ActivityRepository', () => {
     it('should be a function', () => {
       expect(HydrationRepository).to.be.a('function');
     });
+
+    it('should take in an argument of hydration data', () => {
+      expect(hydrationRepository.rawHydrationData).to.deep.equal(sampleHydrationData);
+    });
     //
     // it('should take in an argument of activityData first', () => {
     //   expect(activityRepository.rawActivityData).to.equal(sampleActivityData);
@@ -42,5 +46,9 @@ describe.only('ActivityRepository', () => {
     // it('should take in an argument of a user\'s daily step goal', () => {
     //   expect(activityRepository.userStepGoal).to.deep.equal(10000);
     // });
+  });
+
+  describe('Methods', () => {
+
   });
 })

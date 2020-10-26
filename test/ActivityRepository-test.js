@@ -2,7 +2,7 @@ import { expect } from 'chai'
 import Activity from '../src/Activity';
 import ActivityRepository from '../src/ActivityRepository'
 
-describe.only('ActivityRepository', () => {
+describe('ActivityRepository', () => {
   let activityRepository;
 
   const sampleActivityData = [
