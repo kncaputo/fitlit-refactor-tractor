@@ -15,15 +15,14 @@ export default class HydrationRepository {
     });
   }
 
-  // addDailyOunces(date) {
-  //   return this.ouncesRecord.reduce((sum, record) => {
-  //     let amount = record[date];
-  //     if (amount) {
-  //       sum += amount
-  //     }
-  //     return sum
-  //   }, 0)
-  // }
+  averageDailyOunces() {
+    let totalDailyOunces = this.hydrationHistory.reduce((totalOunces, hydration) => {
+      totalOunces += hydration.ounces;
+      return totalOunces;
+    }, 0)
+    this.ouncesAverage = (totalDailyOunces / this.hydrationHistory.length).toFixed(1);
+  }
+
 }
 
 // updateHydration(date, amount) {
@@ -33,4 +32,14 @@ export default class HydrationRepository {
 //   } else {
 //     this.ouncesAverage = amount;
 //   }
+// }
+
+// addDailyOunces(date) {
+//   return this.ouncesRecord.reduce((sum, record) => {
+//     let amount = record[date];
+//     if (amount) {
+//       sum += amount
+//     }
+//     return sum
+//   }, 0)
 // }

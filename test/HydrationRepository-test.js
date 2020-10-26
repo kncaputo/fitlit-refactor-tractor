@@ -11,13 +11,13 @@ describe.only('HydrationRepository', () => {
       "numOunces": 42
     },
     {
-      "userID": 2,
-      "date": "2018/06/15",
+      "userID": 1,
+      "date": "2018/06/16",
       "numOunces": 71
     },
     {
-      "userID": 3,
-      "date": "2018/06/15",
+      "userID": 1,
+      "date": "2018/06/17",
       "numOunces": 39
     }
   ];
@@ -53,6 +53,13 @@ describe.only('HydrationRepository', () => {
       hydrationRepository.createHydration();
 
       expect(hydrationRepository.hydrationHistory[0]).to.be.an.instanceof(Hydration);
+    });
+
+    it('should average daily ounces', () => {
+      hydrationRepository.createHydration();
+      hydrationRepository.averageDailyOunces();
+
+      expect(hydrationRepository.ouncesAverage).to.deep.equal('50.7');
     });
   });
 })
