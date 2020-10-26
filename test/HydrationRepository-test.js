@@ -34,18 +34,14 @@ describe.only('HydrationRepository', () => {
     it('should take in an argument of hydration data', () => {
       expect(hydrationRepository.rawHydrationData).to.deep.equal(sampleHydrationData);
     });
-    //
-    // it('should take in an argument of activityData first', () => {
-    //   expect(activityRepository.rawActivityData).to.equal(sampleActivityData);
-    // });
-    //
-    // it('should take in an argument of a user\'s stride length', () => {
-    //   expect(activityRepository.userStrideLength).to.deep.equal(4.3);
-    // });
-    //
-    // it('should take in an argument of a user\'s daily step goal', () => {
-    //   expect(activityRepository.userStepGoal).to.deep.equal(10000);
-    // });
+
+    it('should have a default oz average of 0', () => {
+      expect(hydrationRepository.ouncesAverage).to.deep.equal(0);
+    });
+
+    it('should have a default oz record of []', () => {
+      expect(hydrationRepository.ouncesRecord).to.deep.equal([]);
+    });
   });
 
   describe('Methods', () => {

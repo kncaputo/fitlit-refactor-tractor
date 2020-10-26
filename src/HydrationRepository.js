@@ -6,6 +6,20 @@ export default class HydrationRepository {
     this.ouncesAverage = 0;
     this.ouncesRecord = [];
   }
+
+  createHydration() {
+    
+  }
+
+  // addDailyOunces(date) {
+  //   return this.ouncesRecord.reduce((sum, record) => {
+  //     let amount = record[date];
+  //     if (amount) {
+  //       sum += amount
+  //     }
+  //     return sum
+  //   }, 0)
+  // }
 }
 
 // updateHydration(date, amount) {
@@ -15,14 +29,4 @@ export default class HydrationRepository {
 //   } else {
 //     this.ouncesAverage = amount;
 //   }
-// }
-//
-// addDailyOunces(date) {
-//   return this.ouncesRecord.reduce((sum, record) => {
-//     let amount = record[date];
-//     if (amount) {
-//       sum += amount
-//     }
-//     return sum
-//   }, 0)
 // }
