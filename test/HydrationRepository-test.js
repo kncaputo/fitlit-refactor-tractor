@@ -2,7 +2,7 @@ import { expect } from 'chai'
 import Hydration from '../src/Hydration';
 import HydrationRepository from '../src/HydrationRepository'
 
-describe.only('HydrationRepository', () => {
+describe('HydrationRepository', () => {
   let hydrationRepository;
   const sampleHydrationData = [
     {

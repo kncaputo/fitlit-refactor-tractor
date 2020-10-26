@@ -5,7 +5,7 @@ import Sleep from '../src/Sleep';
 
 describe('SleepRepository', () => {
   let sleepRepository;
-  let sampleSleepData = [{
+  const sampleSleepData = [{
     "userID": 1,
     "date": "2019/06/10",
     "hoursSlept": 5.4,

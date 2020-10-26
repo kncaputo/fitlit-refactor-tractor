@@ -126,4 +126,24 @@ export default class UserRepository {
       return a.hoursSlept - b.hoursSlept;
     })[0].userID;
   }
+
+  // findFriendsTotalStepsForWeek(users, date) {
+  //   this.friends.map(friend => {
+  //     let matchedFriend = users.find(user => user.id === friend);
+  //     matchedFriend.calculateTotalStepsThisWeek(date);
+  //     this.friendsActivityRecords.push(
+  //       {
+  //         'id': matchedFriend.id,
+  //         'firstName': matchedFriend.name.toUpperCase().split(' ')[0],
+  //         'totalWeeklySteps': matchedFriend.totalStepsThisWeek
+  //       })
+  //   })
+  //   this.calculateTotalStepsThisWeek(date);
+  //   this.friendsActivityRecords.push({
+  //     'id': this.id,
+  //     'firstName': 'YOU',
+  //     'totalWeeklySteps': this.totalStepsThisWeek
+  //   });
+  //   this.friendsActivityRecords = this.friendsActivityRecords.sort((a, b) => b.totalWeeklySteps - a.totalWeeklySteps);
+  // }
 }
