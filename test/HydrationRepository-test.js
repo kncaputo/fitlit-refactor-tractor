@@ -55,6 +55,15 @@ describe.only('HydrationRepository', () => {
       expect(hydrationRepository.hydrationHistory[0]).to.be.an.instanceof(Hydration);
     });
 
+    it('should create a record of all ounces consumed', () => {
+      hydrationRepository.createHydration();
+      hydrationRepository.createOuncesRecord();
+
+      expect(hydrationRepository.ouncesRecord.length).to.deep.equal(3);
+      expect(hydrationRepository.ouncesRecord[0]).to.deep.equal(42);
+      expect(hydrationRepository.ouncesRecord[1]).to.be.a('number');
+    });
+
     it('should average daily ounces', () => {
       hydrationRepository.createHydration();
       hydrationRepository.averageDailyOunces();

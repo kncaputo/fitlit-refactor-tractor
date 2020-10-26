@@ -15,6 +15,12 @@ export default class HydrationRepository {
     });
   }
 
+  createOuncesRecord() {
+    this.ouncesRecord = this.hydrationHistory.map(hydration => {
+      return hydration = hydration.ounces
+    })
+  }
+
   averageDailyOunces() {
     let totalDailyOunces = this.hydrationHistory.reduce((totalOunces, hydration) => {
       totalOunces += hydration.ounces;
@@ -30,6 +36,8 @@ export default class HydrationRepository {
 
     return todayHydration.ounces;
   }
+
+
 
 }
 
