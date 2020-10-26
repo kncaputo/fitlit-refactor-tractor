@@ -35,6 +35,10 @@ describe.only('HydrationRepository', () => {
       expect(hydrationRepository.rawHydrationData).to.deep.equal(sampleHydrationData);
     });
 
+    it('should start with no hydration history', () => {
+      expect(hydrationRepository.hydrationHistory).to.deep.equal([]);
+    });
+
     it('should have a default oz average of 0', () => {
       expect(hydrationRepository.ouncesAverage).to.deep.equal(0);
     });
@@ -45,6 +49,10 @@ describe.only('HydrationRepository', () => {
   });
 
   describe('Methods', () => {
+    it('should create instances of hydration', () => {
+      hydrationRepository.createHydration();
 
+      expect(hydrationRepository.hydrationHistory[0]).to.be.an.instanceof(Hydration);
+    });
   });
 })

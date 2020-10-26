@@ -3,12 +3,16 @@ import Hydration from './Hydration';
 export default class HydrationRepository {
   constructor(hydrationData) {
     this.rawHydrationData = hydrationData
+    this.hydrationHistory = [];
     this.ouncesAverage = 0;
     this.ouncesRecord = [];
   }
 
   createHydration() {
-    
+    this.rawHydrationData.forEach(rawHydration => {
+      let hydration = new Hydration(rawHydration);
+      this.hydrationHistory.push(hydration);
+    });
   }
 
   // addDailyOunces(date) {
