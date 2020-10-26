@@ -1,4 +1,6 @@
 import SleepRepository from './SleepRepository';
+import ActivityRepository from './ActivityRepository';
+import HydrationRepository from './HydrationRepository';
 
  export default class User {
   constructor(userData, sleepData, activityData) {
@@ -11,15 +13,9 @@ import SleepRepository from './SleepRepository';
     this.friends = userData.friends;
     this.sleepRepository = new SleepRepository(sleepData);
     this.activityRepository = new ActivityRepository(activityData, userData.strideLength, userData.dailyStepGoal)
+    this.hydrationRepository = new HydrationRepository(hydrationData)
     this.friendsNames = [];
     this.friendsActivityRecords = []
-    // this.totalStepsThisWeek = 0;
-    this.ouncesAverage = 0;
-    this.ouncesRecord = [];
-    // this.activityRecord = [];
-    // this.accomplishedDays = [];
-    // this.trendingStepDays = [];
-    // this.trendingStairsDays = [];
   }
 
   getFirstName() {
@@ -27,24 +23,24 @@ import SleepRepository from './SleepRepository';
     return names[0].toUpperCase();
   }
 
-  updateHydration(date, amount) {
-    this.ouncesRecord.unshift({[date]: amount});
-    if (this.ouncesRecord.length) {
-      this.ouncesAverage = Math.round((amount + (this.ouncesAverage * (this.ouncesRecord.length - 1))) / this.ouncesRecord.length);
-    } else {
-      this.ouncesAverage = amount;
-    }
-  }
-
-  addDailyOunces(date) {
-    return this.ouncesRecord.reduce((sum, record) => {
-      let amount = record[date];
-      if (amount) {
-        sum += amount
-      }
-      return sum
-    }, 0)
-  }
+  // updateHydration(date, amount) {
+  //   this.ouncesRecord.unshift({[date]: amount});
+  //   if (this.ouncesRecord.length) {
+  //     this.ouncesAverage = Math.round((amount + (this.ouncesAverage * (this.ouncesRecord.length - 1))) / this.ouncesRecord.length);
+  //   } else {
+  //     this.ouncesAverage = amount;
+  //   }
+  // }
+  //
+  // addDailyOunces(date) {
+  //   return this.ouncesRecord.reduce((sum, record) => {
+  //     let amount = record[date];
+  //     if (amount) {
+  //       sum += amount
+  //     }
+  //     return sum
+  //   }, 0)
+  // }
 
   findFriendsNames(users) {
     this.friends.forEach(friend => {
