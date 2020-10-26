@@ -77,5 +77,12 @@ describe.only('HydrationRepository', () => {
 
       expect(result).to.deep.equal(71);
     });
+
+    it('should return all ounces consumed on a given week', () => {
+      hydrationRepository.createHydration();
+      const result = hydrationRepository.findWeeklyOunces("2018/06/16");
+
+      expect(result[0]).to.deep.equal({"2018/06/16": 71})
+    });
   });
 })

@@ -37,7 +37,16 @@ export default class HydrationRepository {
     return todayHydration.ounces;
   }
 
-
+  findWeeklyOunces(todayDate) {
+    return this.hydrationHistory.reduce((acc, hydration) => {
+      let index = this.hydrationHistory.indexOf(this.hydrationHistory.find(hydration => hydration.date === todayDate));
+      if (index >= this.hydrationHistory.indexOf(hydration) && this.hydrationHistory.indexOf(hydration) <= (index + 6)) {
+        hydration = {[hydration.date]: hydration.ounces}
+        acc.unshift(hydration);
+      }
+      return acc
+    }, [])
+  }
 
 }
 
