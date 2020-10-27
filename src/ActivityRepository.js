@@ -10,7 +10,7 @@ export default class ActivityRepository {
     this.accomplishedDays = [];
     this.trendingStepDays = [];
     this.trendingStairsDays = [];
-    this.start();
+    // this.start();
   }
 
   start() {

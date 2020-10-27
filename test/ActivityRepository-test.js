@@ -79,63 +79,55 @@ describe('ActivityRepository', () => {
   });
 
   describe('Methods', () => {
-    it('should create instances of activities', () => {
-      activityRepository.createActivities();
+    beforeEach(() => {
+      activityRepository.start();
+    });
 
+    it('should create instances of activities', () => {
       expect(activityRepository.activityHistory[0]).to.be.an.instanceof(Activity);
     });
 
     it('should calculate the miles a user walked on a given day', () => {
-      activityRepository.createActivities();
       const result = activityRepository.calculateMilesWalked('2019/06/15')
 
       expect(result).to.deep.equal('2.9');
     });
 
     it('should calculate the amount of time a user was active on a given day', () => {
-      activityRepository.createActivities();
       const result = activityRepository.calculateActiveMinutes('2019/06/15');
 
       expect(result).to.deep.equal(140);
     });
 
     it('should calculate average active minutes on a given week', () => {
-      activityRepository.createActivities();
       const result = activityRepository.averageWeeklyMinutesActive('2019/06/15');
 
       expect(result).to.deep.equal('80.6');
     });
 
     it('should indicate whether a user met their step goal on a given day', () => {
-      activityRepository.createActivities();
       const result = activityRepository.reachStepGoal('2019/06/16');
 
       expect(result).to.deep.equal(false);
     });
 
     it('should filter days where a user met their step goal', () => {
-      activityRepository.createActivities();
-      activityRepository.findAccomplishedStepDays();
-
       expect(activityRepository.accomplishedDays[0]).to.deep.equal({date: "2019/06/17"});
     });
 
     it('should find all-time stair climbing record', () => {
-      activityRepository.createActivities();
       const result = activityRepository.findStairClimbingRecord();
 
       expect(result).to.deep.equal(16);
     });
 
     it('should find trending stair days', () => {
-      activityRepository.createActivities();
       const result = activityRepository.findTrendingStairsDays();
 
       expect(result).to.deep.equal('Your most recent positive climbing streak was 2019/06/16 - 2019/06/18!')
     });
 
     it('should find trending step days', () => {
-      activityRepository.createActivities();
       const result = activityRepository.findTrendingStepDays();
 
       expect(result).to.deep.equal('Your most recent positive step streak was 2019/06/15 - 2019/06/17!')

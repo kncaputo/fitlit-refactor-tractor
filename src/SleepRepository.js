@@ -8,7 +8,7 @@ export default class SleepRepository {
     this.sleepQualityAverage = 0;
     this.sleepHoursRecord = [];
     this.sleepQualityRecord = [];
-    this.start();
+    // this.start();
   }
 
   start() {

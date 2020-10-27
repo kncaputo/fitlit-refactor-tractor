@@ -143,7 +143,7 @@ describe('UserRepository', () => {
     });
   });
 
-  describe.only('Methods', () => {
+  describe('Methods', () => {
     it('should filter sleep data by user', () => {
       const result = {
         "userID": 1,

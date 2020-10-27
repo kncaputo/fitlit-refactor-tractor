@@ -6,7 +6,7 @@ export default class HydrationRepository {
     this.hydrationHistory = [];
     this.ouncesAverage = 0;
     this.ouncesRecord = [];
-    this.start()
+    // this.start()
   }
 
   start() {
