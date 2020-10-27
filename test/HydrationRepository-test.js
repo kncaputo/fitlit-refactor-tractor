@@ -22,12 +22,12 @@ describe('HydrationRepository', () => {
     },
     {
       "userID": 1,
-      "date": "2018/06/16",
+      "date": "2018/06/18",
       "numOunces": 33
     },
     {
       "userID": 1,
-      "date": "2018/06/16",
+      "date": "2018/06/19",
       "numOunces": 99
     }
   ];
@@ -68,13 +68,13 @@ describe('HydrationRepository', () => {
     });
 
     it('should create a record of all ounces consumed', () => {
-      expect(hydrationRepository.ouncesRecord.length).to.deep.equal(3);
+      expect(hydrationRepository.ouncesRecord.length).to.deep.equal(5);
       expect(hydrationRepository.ouncesRecord[0]).to.deep.equal({ '2018/06/15': 42 });
       expect(hydrationRepository.ouncesRecord[1]).to.be.an('object');
     });
 
     it('should average daily ounces', () => {
-      expect(hydrationRepository.ouncesAverage).to.deep.equal('50.7');
+      expect(hydrationRepository.ouncesAverage).to.deep.equal('56.8');
     });
 
     it('should return ounces consumed on a given day', () => {
@@ -87,12 +87,6 @@ describe('HydrationRepository', () => {
       const result = hydrationRepository.findWeeklyOunces("2018/06/16");
 
       expect(result[0]).to.deep.equal({"2018/06/16": 71})
-    });
-
-    it('should be able to total daily ounces by date', () => {
-      const result = hydrationRepository.findDailyOunces("2018/06/16");
-
-      expect(result).to.deep.equal(203);
     });
   });
 })

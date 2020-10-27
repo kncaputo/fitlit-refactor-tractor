@@ -4,7 +4,7 @@ import Hydration from '../src/Hydration';
 import UserRepository from '../src/UserRepository';
 import User from '../src/User';
 
-describe('Hydration', function() {
+describe.skip('Hydration', function() {
   let hydration;
   let user1;
   let user2;

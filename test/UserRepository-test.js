@@ -143,7 +143,7 @@ describe('UserRepository', () => {
     });
   });
 
-  describe.only('Methods', () => {
+  describe('Methods', () => {
     beforeEach(() => {
       userRepository.start();
     })

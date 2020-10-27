@@ -123,11 +123,11 @@ export default class UserRepository {
       return user.hydrationRepository.findOunces(date) > 0;
     });
 
-    let sumDrankOnDate = todaysDrinkers.reduce((sum, drinker) => {
-      return sum += drinker.hydrationRepository.findOunces(date);
+    let ouncesConsumed = todaysDrinkers.reduce((sum, user) => {
+      return sum += user.hydrationRepository.findOunces(date);
     }, 0);
 
-    return Math.floor(parseInt(sumDrankOnDate) / todaysDrinkers.length);
+    return Math.floor(parseInt(ouncesConsumed) / todaysDrinkers.length);
   }
 
   findBestSleepers(date) {
