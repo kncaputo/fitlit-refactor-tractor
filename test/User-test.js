@@ -5,7 +5,7 @@ import SleepRepository from '../src/SleepRepository';
 import ActivityRepository from '../src/ActivityRepository';
 import HydrationRepository from '../src/HydrationRepository';
 
-describe.only('User', () => {
+describe('User', () => {
   let user;
   const sampleUserData = {
     'id': 1,
@@ -121,5 +121,4 @@ describe.only('User', () => {
       expect(user.friendsNames).to.deep.equal(['BEN', 'JOHN', 'NICK']);
     });
   });
-
 });

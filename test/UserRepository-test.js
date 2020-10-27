@@ -4,7 +4,7 @@ import UserRepository from '../src/UserRepository';
 import User from '../src/User';
 import Sleep from '../src/Sleep';
 
-describe('UserRepository', function() {
+describe('UserRepository', () => {
   let userRepository;
   const sampleUserData = [
     {
@@ -111,82 +111,132 @@ describe('UserRepository', function() {
 
   beforeEach(() => {
     userRepository = new UserRepository(sampleUserData, sampleSleepData, sampleActivityData, sampleHydrationData);
-    // userRepository.createUsers();
   });
 
-  it('should be a function', function() {
-    expect(UserRepository).to.be.a('function');
+  describe('Constructor', () => {
+    it('should be a function', () => {
+      expect(UserRepository).to.be.a('function');
+    });
+
+    it('should be an instance of user repository', () => {
+      expect(userRepository).to.be.an.instanceof(UserRepository);
+    });
+
+    it('should have a users property with a default of an empty array', () => {
+      expect(userRepository.users).to.deep.equal([]);
+    });
+
+    it('should take in an argument of userData first', () => {
+      expect(userRepository.rawUserData).to.equal(sampleUserData);
+    });
+
+    it('should take in an argument of sleepData second', () => {
+      expect(userRepository.rawSleepData).to.equal(sampleSleepData);
+    });
+
+    it ('should take in an argument of activityData third', () => {
+      expect(userRepository.rawActivityData).to.equal(sampleActivityData);
+    });
+
+    it('should take in an argument of hydrationData last', () => {
+      expect(userRepository.rawHydrationData).to.equal(sampleHydrationData);
+    });
   });
 
-  it('should be an instance of user repository', function() {
-    expect(userRepository).to.be.an.instanceof(UserRepository);
+  describe.only('Methods', () => {
+    it('should filter sleep data by user', () => {
+      const result = {
+        "userID": 1,
+        "date": "2019/06/16",
+        "hoursSlept": 6.1,
+        "sleepQuality": 1000
+      };
+
+      expect(userRepository.filterUserSleepData(1)).to.deep.equal([result]);
+    });
+
+    it('should filter activity data by user', () => {
+      const result = {
+        "userID": 1,
+        "date": "2019/06/15",
+        "numSteps": 3577,
+        "minutesActive": 140,
+        "flightsOfStairs": 16
+      };
+
+      expect(userRepository.filterUserActivityData(1)).to.deep.equal([result]);
+    });
+
+    it('should filter hydration data by user', () => {
+      const result = {
+        "userID": 1,
+        "date": "2019/06/15",
+        "numOunces": 37
+      };
+
+      expect(userRepository.filterUserHydrationData(1)).to.deep.equal([result]);
+    });
+
+    it('should create instances of user', () => {
+      userRepository.createUsers();
+
+      expect(userRepository.users[0]).to.be.an.instanceof(User);
+    });
+
+    it('should hold an array of users', () => {
+      userRepository.createUsers();
+
+      expect(userRepository.users.length).to.equal(3);
+    });
+
+    it('should return user object when given a user id', () => {
+      userRepository.createUsers();
+
+      expect(userRepository.getUser(2)).to.equal(userRepository.users[1]);
+    });
+
+    it('calculateAverageStepGoal should return average step goal for all users', () => {
+      userRepository.createUsers();
+
+      expect(userRepository.calculateAverageStepGoal()).to.equal(10000);
+    });
+
+    it('calculateAverageSleepQuality should return average sleep quality for all users', () => {
+      userRepository.createUsers();
+      userRepository.users[0].sleepRepository.sleepQualityAverage = 3.3;
+      userRepository.users[1].sleepRepository.sleepQualityAverage = 5;
+      userRepository.users[2].sleepRepository.sleepQualityAverage = 1;
+
+      expect(userRepository.calculateAverageSleepQuality()).to.equal(3.1);
+    });
+
+    it.skip('should have a method that calculates friends average ounces of water', () => {
+      userRepository.createUsers();
+
+      userRepository.users[0].ouncesRecord = [
+        {"2019/06/15": 1},
+        {"2019/06/15": 1},
+        {"2019/06/16": 5}
+      ]
+      userRepository.users[1].ouncesRecord = [
+        {"2019/06/15": 1},
+        {"2019/06/15": 1},
+        {"2019/06/16": 8}
+      ]
+      userRepository.users[2].ouncesRecord = [
+        {"2019/06/15": 1},
+        {"2019/06/15": 1},
+        {"2019/06/16": 4}
+      ]
+      expect(userRepository.calculateAverageDailyWater("2019/06/16")).to.equal(5)
+    });
   });
 
-  it('should take in an argument of userData first', () => {
-    expect(userRepository.rawUserData).to.equal(sampleUserData);
-  });
 
-  it('should take in an argument of sleepData second', () => {
-    expect(userRepository.rawSleepData).to.equal(sampleSleepData);
-  });
 
-  it ('should take in an argument of activityData third', () => {
-    expect(userRepository.rawActivityData).to.equal(sampleActivityData);
-  });
 
-  it('should take in an argument of hydrationData last', () => {
-    expect(userRepository.rawHydrationData).to.equal(sampleHydrationData);
-  });
 
-  it('should be able to get a user\'s sleep data by ID', () => {
-    const result = userRepository.getUserSleepData(1);
-
-    expect(result).to.include(sampleSleepData[0]);
-  })
-
-  it('should create instances of user', function() {
-    expect(userRepository.users[0]).to.be.an.instanceof(User);
-  });
-
-  it('should hold an array of users', function() {
-    expect(userRepository.users.length).to.equal(3);
-  });
-
-  it('getUser should return user object when given a user id', function() {
-    expect(userRepository.getUser(2)).to.equal(userRepository.users[1]);
-  });
-
-  it('calculateAverageStepGoal should return average step goal for all users', function() {
-    expect(userRepository.calculateAverageStepGoal()).to.equal(10000);
-  });
-
-  it('calculateAverageSleepQuality should return average sleep quality for all users', function() {
-    userRepository.users[0].sleepQualityAverage = 3.3;
-    userRepository.users[1].sleepQualityAverage = 5;
-    userRepository.users[2].sleepQualityAverage = 1;
-    expect(userRepository.calculateAverageSleepQuality()).to.equal(3.1);
-  });
-
-  it('should have a method that calculates friends average ounces of water', function() {
-    userRepository.users[0].ouncesRecord = [
-      {"2019/06/15": 1},
-      {"2019/06/15": 1},
-      {"2019/06/16": 5}
-    ]
-    userRepository.users[1].ouncesRecord = [
-      {"2019/06/15": 1},
-      {"2019/06/15": 1},
-      {"2019/06/16": 8}
-    ]
-    userRepository.users[2].ouncesRecord = [
-      {"2019/06/15": 1},
-      {"2019/06/15": 1},
-      {"2019/06/16": 4}
-    ]
-    expect(userRepository.calculateAverageDailyWater("2019/06/16")).to.equal(5)
-  });
-
-  it('should have a method that finds the best sleepers', function() {
+  it('should have a method that finds the best sleepers', () => {
     sleep1 = new Sleep({
       "userID": 1,
       "date": "2019/06/16",
@@ -208,7 +258,7 @@ describe('UserRepository', function() {
     expect(userRepository.findBestSleepers("2019/06/16")).to.deep.equal([user1, user2]);
   });
 
-  it('should have a method that finds the longest sleepers', function() {
+  it('should have a method that finds the longest sleepers', () => {
     sleepData = [{
       "userID": 1,
       "date": "2019/06/15",
@@ -228,7 +278,7 @@ describe('UserRepository', function() {
     expect(userRepository.getLongestSleepers("2019/06/15")).to.equal(3);
   });
 
-  it('should have a method that finds the worst sleepers', function() {
+  it('should have a method that finds the worst sleepers', () => {
     sleepData = [{
       "userID": 1,
       "date": "2019/06/15",
@@ -248,19 +298,19 @@ describe('UserRepository', function() {
     expect(userRepository.getWorstSleepers("2019/06/15")).to.equal(1);
   });
 
-  it('should have a method that calculates average number of stairs for users', function() {
+  it('should have a method that calculates average number of stairs for users', () => {
     user1.activityRecord = [{date: "2019/09/17", flightsOfStairs: 10}, {date: "2019/09/17", flightsOfStairs: 15}];
     user2.activityRecord = [{date: "2019/09/16", flightsOfStairs: 8}, {date: "2019/09/17", flightsOfStairs: 4}];
     expect(userRepository.calculateAverageStairs("2019/09/17")).to.equal(10);
   });
 
-  it('should have a method that calculates average number of steps for users', function() {
+  it('should have a method that calculates average number of steps for users', () => {
     user1.activityRecord = [{date: "2019/09/17", steps: 100}, {date: "2019/09/17", steps: 2000}];
     user2.activityRecord = [{date: "2019/09/16", steps: 9820}, {date: "2019/09/17", steps: 234}];
     expect(userRepository.calculateAverageSteps("2019/09/17")).to.equal(778);
   });
 
-  it('should have a method that calculates average number of active minutes for users', function() {
+  it('should have a method that calculates average number of active minutes for users', () => {
     user1.activityRecord = [{date: "2019/09/17", minutesActive: 100}, {date: "2019/09/17", minutesActive: 20}];
     user2.activityRecord = [{date: "2019/09/16", minutesActive: 78}, {date: "2019/09/17", minutesActive: 12}];
     expect(userRepository.calculateAverageMinutesActive("2019/09/17")).to.equal(44);

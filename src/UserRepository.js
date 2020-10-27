@@ -13,15 +13,29 @@ export default class UserRepository {
 
   createUsers() {
     this.rawUserData.forEach(rawUser => {
-      let userSleepData = getUserSleepData(rawUser.id);
-      user = new User(rawUser, userSleepData);
+      let userSleepData = this.filterUserSleepData(rawUser.id);
+      let userActivityData = this.filterUserActivityData(rawUser.id);
+      let userHydrationData = this.filterUserHydrationData(rawUser.id);
+      let user = new User(rawUser, userSleepData, userActivityData, userHydrationData);
       this.users.push(user);
     });
   }
 
-  getUserSleepData(id) {
+  filterUserSleepData(id) {
     return this.rawSleepData.filter(sleep => {
       return sleep.userID === id;
+    })
+  }
+
+  filterUserActivityData(id) {
+    return this.rawActivityData.filter(activity => {
+      return activity.userID === id;
+    })
+  }
+
+  filterUserHydrationData(id) {
+    return this.rawHydrationData.filter(hydration => {
+      return hydration.userID === id;
     })
   }
 
@@ -44,7 +58,7 @@ export default class UserRepository {
 
   calculateAverageSleepQuality() {
     let totalSleepQuality = this.users.reduce((sum, user) => {
-      sum += user.sleepQualityAverage;
+      sum += user.sleepRepository.sleepQualityAverage;
       return sum;
     }, 0);
     return totalSleepQuality / this.users.length;
@@ -52,7 +66,7 @@ export default class UserRepository {
 
   calculateAverageSteps(date) {
     let allUsersStepsCount = this.users.map(user => {
-      return user.activityRecord.filter(activity => {
+      return user.activityRepository.activityHistory.filter(activity => {
         return activity.date === date;
       });
     })
@@ -67,7 +81,7 @@ export default class UserRepository {
 
   calculateAverageStairs(date) {
     let allUsersStairsCount = this.users.map(user => {
-      return user.activityRecord.filter(activity => {
+      return user.activityRepository.activityHistory.filter(activity => {
         return activity.date === date;
       });
     })
@@ -82,7 +96,7 @@ export default class UserRepository {
 
   calculateAverageMinutesActive(date) {
     let allUsersMinutesActiveCount = this.users.map(user => {
-      return user.activityRecord.filter(activity => {
+      return user.activityRepository.activityHistory.filter(activity => {
         return activity.date === date;
       });
     })
@@ -95,15 +109,15 @@ export default class UserRepository {
     return Math.round(sumOfMinutesActive / allUsersMinutesActiveCount.length);
   }
 
-  calculateAverageDailyWater(date) {
-    let todaysDrinkers = this.users.filter(user => {
-      return user.addDailyOunces(date) > 0;
-    });
-    let sumDrankOnDate = todaysDrinkers.reduce((sum, drinker) => {
-      return sum += drinker.addDailyOunces(date);
-    }, 0)
-    return Math.floor(sumDrankOnDate / todaysDrinkers.length);
-  }
+  // calculateAverageDailyWater(date) {
+  //   let todaysDrinkers = this.users.filter(user => {
+  //     return user.hydrationRepository.addDailyOunces(date) > 0;
+  //   });
+  //   let sumDrankOnDate = todaysDrinkers.reduce((sum, drinker) => {
+  //     return sum += drinker.addDailyOunces(date);
+  //   }, 0)
+  //   return Math.floor(sumDrankOnDate / todaysDrinkers.length);
+  // }
 
   findBestSleepers(date) {
     return this.users.filter(user => {
