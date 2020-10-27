@@ -109,15 +109,17 @@ export default class UserRepository {
     return Math.round(sumOfMinutesActive / allUsersMinutesActiveCount.length);
   }
 
-  // calculateAverageDailyWater(date) {
-  //   let todaysDrinkers = this.users.filter(user => {
-  //     return user.hydrationRepository.addDailyOunces(date) > 0;
-  //   });
-  //   let sumDrankOnDate = todaysDrinkers.reduce((sum, drinker) => {
-  //     return sum += drinker.addDailyOunces(date);
-  //   }, 0)
-  //   return Math.floor(sumDrankOnDate / todaysDrinkers.length);
-  // }
+  calculateAverageDailyWater(date) {
+    let todaysDrinkers = this.users.filter(user => {
+      return user.hydrationRepository.findDailyOunces(date) > 0;
+    });
+
+    let sumDrankOnDate = todaysDrinkers.reduce((sum, drinker) => {
+      return sum += drinker.findDailyOunces(date);
+    }, 0);
+
+    return Math.floor(parseInt(sumDrankOnDate) / todaysDrinkers.length);
+  }
 
   findBestSleepers(date) {
     return this.users.filter(user => {

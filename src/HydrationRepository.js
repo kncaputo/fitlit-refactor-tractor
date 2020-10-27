@@ -55,7 +55,7 @@ export default class HydrationRepository {
     }, [])
   }
 
-  addDailyOunces(date) {
+  findDailyOunces(date) {
     return this.ouncesRecord.reduce((sum, record) => {
       let amount = record[date];
       if (amount) {

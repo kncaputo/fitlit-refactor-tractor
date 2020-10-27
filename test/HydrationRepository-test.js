@@ -84,5 +84,14 @@ describe('HydrationRepository', () => {
 
       expect(result[0]).to.deep.equal({"2018/06/16": 71})
     });
+
+    it('should be able to find daily ounces by date', () => {
+      hydrationRepository.createHydration();
+      hydrationRepository.createOuncesRecord();
+
+      const result = hydrationRepository.findDailyOunces("2018/06/16");
+
+      expect(result).to.deep.equal(71);
+    });
   });
 })

@@ -210,7 +210,7 @@ describe('UserRepository', () => {
       expect(userRepository.calculateAverageSleepQuality()).to.equal(3.1);
     });
 
-    it.skip('should have a method that calculates friends average ounces of water', () => {
+    it('should have a method that calculates friends average ounces of water', () => {
       userRepository.createUsers();
 
       userRepository.users[0].ouncesRecord = [
@@ -315,5 +315,4 @@ describe('UserRepository', () => {
     user2.activityRecord = [{date: "2019/09/16", minutesActive: 78}, {date: "2019/09/17", minutesActive: 12}];
     expect(userRepository.calculateAverageMinutesActive("2019/09/17")).to.equal(44);
   });
-
 });
