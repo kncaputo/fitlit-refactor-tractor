@@ -6,7 +6,6 @@ export default class HydrationRepository {
     this.hydrationHistory = [];
     this.ouncesAverage = 0;
     this.ouncesRecord = [];
-    // this.start()
   }
 
   start() {
@@ -37,11 +36,12 @@ export default class HydrationRepository {
   }
 
   findOunces(todayDate) {
-    let todayHydration = this.hydrationHistory.find(hydration => {
-      return hydration.date === todayDate;
+    let todayHydration = this.ouncesRecord.find(hydration => {
+      console.log('hydration: ', hydration)
+      let dateKey = Object.keys(hydration)
+      return dateKey[0] === todayDate
     })
-
-    return todayHydration.ounces;
+    return todayHydration[todayDate];
   }
 
   findWeeklyOunces(todayDate) {
@@ -55,15 +55,15 @@ export default class HydrationRepository {
     }, [])
   }
 
-  findDailyOunces(date) {
-    return this.ouncesRecord.reduce((sum, record) => {
-      let amount = record[date];
-      if (amount) {
-        sum += amount
-      }
-      return sum
-    }, 0)
-  }
+  // findDailyOunces(date) {
+  //   return this.ouncesRecord.reduce((sum, record) => {
+  //     let amount = record[date];
+  //     if (amount) {
+  //       sum += amount
+  //     }
+  //     return sum
+  //   }, 0)
+  // }
 }
 
 // updateHydration(date, amount) {

@@ -120,11 +120,11 @@ export default class UserRepository {
 
   calculateAverageDailyWater(date) {
     let todaysDrinkers = this.users.filter(user => {
-      return user.hydrationRepository.findDailyOunces(date) > 0;
+      return user.hydrationRepository.findOunces(date) > 0;
     });
 
     let sumDrankOnDate = todaysDrinkers.reduce((sum, drinker) => {
-      return sum += drinker.findDailyOunces(date);
+      return sum += drinker.hydrationRepository.findOunces(date);
     }, 0);
 
     return Math.floor(parseInt(sumDrankOnDate) / todaysDrinkers.length);
