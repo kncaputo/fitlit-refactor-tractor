@@ -2,18 +2,52 @@ import './css/base.scss';
 import './css/styles.scss';
 // import '/hydration-calendar.png', '/hydration-friends.png', '/hydration-goback.png' from './images'
 
-import userData from './data/users';
-import activityData from './data/activity';
-import sleepData from './data/sleep';
-import hydrationData from './data/hydration';
+// import userData from './data/users';
+// import activityData from './data/activity';
+// import sleepData from './data/sleep';
+// import hydrationData from './data/hydration';
 
+let userData;
+let sleepData;
+let activityData;
+let hydrationData;
+
+const userPromise = fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/users/userData')
+  .then(response => response.json())
+  .then(data => {
+    userData = data
+  })
+  .catch(err => console.log(err))
+
+const sleepPromise = fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/sleep/sleepData')
+  .then(response => response.json())
+  .then(data => {
+    sleepData = data
+  })
+  .catch(err => console.log(err))
+
+const activityPromise = fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/activity/activityData')
+  .then(response => response.json())
+  .then(data => {
+    activityData = data
+  })
+  .catch(err => console.log(err))
+
+const hydrationPromise = fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData')
+  .then(response => response.json())
+  .then(data => {
+    hydrationData = data
+  })
+  .catch(err => console.log(err))
+
+//Promise.all
 import UserRepository from './UserRepository';
 // import User from './User';
 // import Activity from './Activity';
 // import Hydration from './Hydration';
 // import Sleep from './Sleep';
 
-let userRepository = new UserRepository();
+let userRepository = new UserRepository(userData, sleepData, activityData, hydrationData);
 
 // userData.forEach(user => {
 //   user = new User(user);
@@ -181,7 +215,7 @@ function updateTrendingStepDays() {
   user.findTrendingStepDays();
   trendingStepsPhraseContainer.innerHTML = `<p class='trend-line'>${user.trendingStepDays[0]}</p>`;
 }
-
+// do after fetch is done
 for (var i = 0; i < dailyOz.length; i++) {
   dailyOz[i].innerText = user.addDailyOunces(Object.keys(sortedHydrationDataByDate[i])[0])
 }

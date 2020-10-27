@@ -143,7 +143,11 @@ describe('UserRepository', () => {
     });
   });
 
-  describe('Methods', () => {
+  describe.only('Methods', () => {
+    beforeEach(() => {
+      userRepository.start();
+    })
+
     it('should filter sleep data by user', () => {
       const result = {
         "userID": 1,
@@ -178,31 +182,22 @@ describe('UserRepository', () => {
     });
 
     it('should create instances of user', () => {
-      userRepository.createUsers();
-
       expect(userRepository.users[0]).to.be.an.instanceof(User);
     });
 
     it('should hold an array of users', () => {
-      userRepository.createUsers();
-
       expect(userRepository.users.length).to.equal(3);
     });
 
     it('should return user object when given a user id', () => {
-      userRepository.createUsers();
-
       expect(userRepository.getUser(2)).to.equal(userRepository.users[1]);
     });
 
     it('calculateAverageStepGoal should return average step goal for all users', () => {
-      userRepository.createUsers();
-
       expect(userRepository.calculateAverageStepGoal()).to.equal(10000);
     });
 
     it('calculateAverageSleepQuality should return average sleep quality for all users', () => {
-      userRepository.createUsers();
       userRepository.users[0].sleepRepository.sleepQualityAverage = 3.3;
       userRepository.users[1].sleepRepository.sleepQualityAverage = 5;
       userRepository.users[2].sleepRepository.sleepQualityAverage = 1;
@@ -211,8 +206,6 @@ describe('UserRepository', () => {
     });
 
     it('should have a method that calculates friends average ounces of water', () => {
-      userRepository.createUsers();
-
       userRepository.users[0].ouncesRecord = [
         {"2019/06/15": 1},
         {"2019/06/15": 1},

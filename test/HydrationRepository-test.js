@@ -19,6 +19,16 @@ describe('HydrationRepository', () => {
       "userID": 1,
       "date": "2018/06/17",
       "numOunces": 39
+    },
+    {
+      "userID": 1,
+      "date": "2018/06/16",
+      "numOunces": 33
+    },
+    {
+      "userID": 1,
+      "date": "2018/06/16",
+      "numOunces": 99
     }
   ];
 
@@ -79,10 +89,10 @@ describe('HydrationRepository', () => {
       expect(result[0]).to.deep.equal({"2018/06/16": 71})
     });
 
-    it('should be able to find daily ounces by date', () => {
+    it('should be able to total daily ounces by date', () => {
       const result = hydrationRepository.findDailyOunces("2018/06/16");
 
-      expect(result).to.deep.equal(71);
+      expect(result).to.deep.equal(203);
     });
   });
 })

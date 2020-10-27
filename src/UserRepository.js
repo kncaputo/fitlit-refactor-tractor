@@ -11,6 +11,15 @@ export default class UserRepository {
     this.rawHydrationData = hydrationData;
   }
 
+  start() {
+    this.createUsers();
+    this.users.forEach(user => {
+      user.sleepRepository.start()
+      user.activityRepository.start()
+      user.hydrationRepository.start()
+    })
+  }
+
   createUsers() {
     this.rawUserData.forEach(rawUser => {
       let userSleepData = this.filterUserSleepData(rawUser.id);
