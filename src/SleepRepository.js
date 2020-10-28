@@ -10,6 +10,14 @@ export default class SleepRepository {
     this.sleepQualityRecord = [];
   }
 
+  start() {
+    this.createSleep();
+    this.createSleepHoursRecord();
+    this.createSleepQualityRecord();
+    this.updateHoursSleptAverage();
+    this.updateSleepQualityAverage();
+  }
+
   createSleep() {
     this.rawSleepData.forEach(rawSleep => {
       let sleep = new Sleep(rawSleep);

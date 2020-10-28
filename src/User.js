@@ -3,7 +3,7 @@ import ActivityRepository from './ActivityRepository';
 import HydrationRepository from './HydrationRepository';
 
  export default class User {
-  constructor(userData, sleepData, activityData) {
+  constructor(userData, sleepData, activityData, hydrationData) {
     this.id = userData.id;
     this.name = userData.name;
     this.address = userData.address;
@@ -15,7 +15,6 @@ import HydrationRepository from './HydrationRepository';
     this.activityRepository = new ActivityRepository(activityData, userData.strideLength, userData.dailyStepGoal)
     this.hydrationRepository = new HydrationRepository(hydrationData)
     this.friendsNames = [];
-    this.friendsActivityRecords = []
   }
 
   getFirstName() {
@@ -46,26 +45,6 @@ import HydrationRepository from './HydrationRepository';
     this.friends.forEach(friend => {
       this.friendsNames.push(users.find(user => user.id === friend).getFirstName());
     })
-  }
-
-  findFriendsTotalStepsForWeek(users, date) {
-    this.friends.map(friend => {
-      let matchedFriend = users.find(user => user.id === friend);
-      matchedFriend.calculateTotalStepsThisWeek(date);
-      this.friendsActivityRecords.push(
-        {
-          'id': matchedFriend.id,
-          'firstName': matchedFriend.name.toUpperCase().split(' ')[0],
-          'totalWeeklySteps': matchedFriend.totalStepsThisWeek
-        })
-    })
-    this.calculateTotalStepsThisWeek(date);
-    this.friendsActivityRecords.push({
-      'id': this.id,
-      'firstName': 'YOU',
-      'totalWeeklySteps': this.totalStepsThisWeek
-    });
-    this.friendsActivityRecords = this.friendsActivityRecords.sort((a, b) => b.totalWeeklySteps - a.totalWeeklySteps);
   }
 }
 

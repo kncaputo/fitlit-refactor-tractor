@@ -11,17 +11,40 @@ export default class UserRepository {
     this.rawHydrationData = hydrationData;
   }
 
+  start() {
+    this.createUsers();
+    this.users.forEach(user => {
+      user.sleepRepository.start()
+      user.activityRepository.start()
+      user.hydrationRepository.start()
+    })
+  }
+
   createUsers() {
     this.rawUserData.forEach(rawUser => {
-      let userSleepData = getUserSleepData(rawUser.id);
-      user = new User(rawUser, userSleepData);
+      let userSleepData = this.filterUserSleepData(rawUser.id);
+      let userActivityData = this.filterUserActivityData(rawUser.id);
+      let userHydrationData = this.filterUserHydrationData(rawUser.id);
+      let user = new User(rawUser, userSleepData, userActivityData, userHydrationData);
       this.users.push(user);
     });
   }
 
-  getUserSleepData(id) {
+  filterUserSleepData(id) {
     return this.rawSleepData.filter(sleep => {
       return sleep.userID === id;
+    })
+  }
+
+  filterUserActivityData(id) {
+    return this.rawActivityData.filter(activity => {
+      return activity.userID === id;
+    })
+  }
+
+  filterUserHydrationData(id) {
+    return this.rawHydrationData.filter(hydration => {
+      return hydration.userID === id;
     })
   }
 
@@ -44,7 +67,7 @@ export default class UserRepository {
 
   calculateAverageSleepQuality() {
     let totalSleepQuality = this.users.reduce((sum, user) => {
-      sum += user.sleepQualityAverage;
+      sum += user.sleepRepository.sleepQualityAverage;
       return sum;
     }, 0);
     return totalSleepQuality / this.users.length;
@@ -52,7 +75,7 @@ export default class UserRepository {
 
   calculateAverageSteps(date) {
     let allUsersStepsCount = this.users.map(user => {
-      return user.activityRecord.filter(activity => {
+      return user.activityRepository.activityHistory.filter(activity => {
         return activity.date === date;
       });
     })
@@ -67,7 +90,7 @@ export default class UserRepository {
 
   calculateAverageStairs(date) {
     let allUsersStairsCount = this.users.map(user => {
-      return user.activityRecord.filter(activity => {
+      return user.activityRepository.activityHistory.filter(activity => {
         return activity.date === date;
       });
     })
@@ -82,7 +105,7 @@ export default class UserRepository {
 
   calculateAverageMinutesActive(date) {
     let allUsersMinutesActiveCount = this.users.map(user => {
-      return user.activityRecord.filter(activity => {
+      return user.activityRepository.activityHistory.filter(activity => {
         return activity.date === date;
       });
     })
@@ -97,33 +120,52 @@ export default class UserRepository {
 
   calculateAverageDailyWater(date) {
     let todaysDrinkers = this.users.filter(user => {
-      return user.addDailyOunces(date) > 0;
+      return user.hydrationRepository.findOunces(date) > 0;
     });
-    let sumDrankOnDate = todaysDrinkers.reduce((sum, drinker) => {
-      return sum += drinker.addDailyOunces(date);
-    }, 0)
-    return Math.floor(sumDrankOnDate / todaysDrinkers.length);
+
+    let ouncesConsumed = todaysDrinkers.reduce((sum, user) => {
+      return sum += user.hydrationRepository.findOunces(date);
+    }, 0);
+
+    return Math.floor(parseInt(ouncesConsumed) / todaysDrinkers.length);
   }
 
   findBestSleepers(date) {
-    return this.users.filter(user => {
-      return user.calculateAverageQualityThisWeek(date) > 3;
-    })
+    let bestSleepers = this.users.filter(user => {
+      return user.sleepRepository.averageWeeklySleepQuality(date) > 3;
+    });
+
+    return bestSleepers.map(user => {
+      let avgSleepQuality = user.sleepRepository.averageWeeklySleepQuality(date);
+      return user = {name: user.name, averageWeekSleepQuality: avgSleepQuality};
+    });
   }
 
-  getLongestSleepers(date) {
-    return sleepData.filter(sleep => {
-      return sleep.date === date;
-    }).sort((a, b) => {
+  getLongestSleeper(date) {
+    let sleepsOnDate = this.users.map(user => {
+      return user.sleepRepository.sleepHistory.find(sleep => {
+        return sleep.date === date;
+      })
+    });
+
+    let longestSleepers = sleepsOnDate.sort((a, b) => {
       return b.hoursSlept - a.hoursSlept;
-    })[0].userID;
+    });
+
+    return longestSleepers[0];
   }
 
-  getWorstSleepers(date) {
-    return sleepData.filter(sleep => {
-      return sleep.date === date;
-    }).sort((a, b) => {
+  getWorstSleeper(date) {
+    let sleepsOnDate = this.users.map(user => {
+      return user.sleepRepository.sleepHistory.find(sleep => {
+        return sleep.date === date;
+      })
+    });
+
+    let shortestSleepers = sleepsOnDate.sort((a, b) => {
       return a.hoursSlept - b.hoursSlept;
-    })[0].userID;
+    });
+
+    return shortestSleepers[0];
   }
 }

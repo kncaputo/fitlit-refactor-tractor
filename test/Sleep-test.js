@@ -4,7 +4,7 @@ import Sleep from '../src/Sleep';
 import UserRepository from '../src/UserRepository';
 import User from '../src/User';
 
-describe('Sleep', function() {
+describe.skip('Sleep', function() {
   let sleep;
   let user1;
   let user2;

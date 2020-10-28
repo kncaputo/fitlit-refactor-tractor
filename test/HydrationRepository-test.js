@@ -2,7 +2,7 @@ import { expect } from 'chai'
 import Hydration from '../src/Hydration';
 import HydrationRepository from '../src/HydrationRepository'
 
-describe.only('HydrationRepository', () => {
+describe('HydrationRepository', () => {
   let hydrationRepository;
   const sampleHydrationData = [
     {
@@ -19,6 +19,16 @@ describe.only('HydrationRepository', () => {
       "userID": 1,
       "date": "2018/06/17",
       "numOunces": 39
+    },
+    {
+      "userID": 1,
+      "date": "2018/06/18",
+      "numOunces": 33
+    },
+    {
+      "userID": 1,
+      "date": "2018/06/19",
+      "numOunces": 99
     }
   ];
 
@@ -49,37 +59,31 @@ describe.only('HydrationRepository', () => {
   });
 
   describe('Methods', () => {
-    it('should create instances of hydration', () => {
-      hydrationRepository.createHydration();
+    beforeEach(() => {
+      hydrationRepository.start();
+    });
 
+    it('should create instances of hydration', () => {
       expect(hydrationRepository.hydrationHistory[0]).to.be.an.instanceof(Hydration);
     });
 
     it('should create a record of all ounces consumed', () => {
-      hydrationRepository.createHydration();
-      hydrationRepository.createOuncesRecord();
-
-      expect(hydrationRepository.ouncesRecord.length).to.deep.equal(3);
-      expect(hydrationRepository.ouncesRecord[0]).to.deep.equal(42);
-      expect(hydrationRepository.ouncesRecord[1]).to.be.a('number');
+      expect(hydrationRepository.ouncesRecord.length).to.deep.equal(5);
+      expect(hydrationRepository.ouncesRecord[0]).to.deep.equal({ '2018/06/15': 42 });
+      expect(hydrationRepository.ouncesRecord[1]).to.be.an('object');
     });
 
     it('should average daily ounces', () => {
-      hydrationRepository.createHydration();
-      hydrationRepository.averageDailyOunces();
-
-      expect(hydrationRepository.ouncesAverage).to.deep.equal('50.7');
+      expect(hydrationRepository.ouncesAverage).to.deep.equal('56.8');
     });
 
     it('should return ounces consumed on a given day', () => {
-      hydrationRepository.createHydration();
       const result = hydrationRepository.findOunces("2018/06/16");
 
       expect(result).to.deep.equal(71);
     });
 
     it('should return all ounces consumed on a given week', () => {
-      hydrationRepository.createHydration();
       const result = hydrationRepository.findWeeklyOunces("2018/06/16");
 
       expect(result[0]).to.deep.equal({"2018/06/16": 71})

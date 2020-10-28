@@ -12,6 +12,14 @@ export default class ActivityRepository {
     this.trendingStairsDays = [];
   }
 
+  start() {
+    this.createActivities();
+    this.findAccomplishedStepDays();
+    this.findStairClimbingRecord();
+    this.findTrendingStairsDays();
+    this.findTrendingStepDays();
+  }
+
   createActivities() {
     this.rawActivityData.forEach(rawActivity => {
       let activity = new Activity(rawActivity);

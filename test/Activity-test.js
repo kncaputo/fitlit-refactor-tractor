@@ -3,7 +3,7 @@ import Activity from '../src/Activity';
 import UserRepository from '../src/UserRepository';
 import User from '../src/User';
 
-describe('Activity', function() {
+describe.skip('Activity', function() {
   let activity;
   let user;
   let userRepository;
