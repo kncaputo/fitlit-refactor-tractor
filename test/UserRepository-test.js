@@ -226,11 +226,19 @@ describe('UserRepository', () => {
     });
 
     it('should find the best sleepers', () => {
-      // expect an array of users
+      expect(userRepository.findBestSleepers("2019/06/15")).to.deep.equal([{
+        "name": "Jarvis Considine",
+        "averageWeekSleepQuality": "71.4"
+      }]);
     });
 
-    it('should find the longest sleepers', () => {
-
+    it.only('should find the longest sleepers', () => {
+      expect(userRepository.getLongestSleeper("2019/06/15")).to.deep.equal({
+        "userID": 3,
+        "date": "2019/06/15",
+        "hoursSlept": 9.3,
+        "sleepQuality": 1.4
+      });
     });
 
     it('should find the worst sleepers', () => {
@@ -244,6 +252,7 @@ describe('UserRepository', () => {
   it('should calculate the average number of active minutes for users', () => {
 
   });
+});
 });
 
 

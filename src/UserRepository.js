@@ -131,18 +131,30 @@ export default class UserRepository {
   }
 
   findBestSleepers(date) {
-    return this.users.filter(user => {
-      return user.calculateAverageQualityThisWeek(date) > 3;
-    })
+    let bestSleepers = this.users.filter(user => {
+      return user.sleepRepository.averageWeeklySleepQuality(date) > 3;
+    });
+
+    return bestSleepers.map(user => {
+      let avgSleepQuality = user.sleepRepository.averageWeeklySleepQuality(date);
+      return user = {name: user.name, averageWeekSleepQuality: avgSleepQuality};
+    });
   }
 
-  getLongestSleepers(date) {
-    return sleepData.filter(sleep => {
-      return sleep.date === date;
-    }).sort((a, b) => {
+  getLongestSleeper(date) {
+    let sleepsOnDate = this.users.map(user => {
+      return user.sleepRepository.sleepHistory.find(sleep => {
+        return sleep.date === date;
+      })
+    });
+
+    let longestSleepers = sleepsOnDate.sort((a, b) => {
       return b.hoursSlept - a.hoursSlept;
-    })[0].userID;
+    });
+
+    return longestSleepers[0];
   }
+
 
   getWorstSleepers(date) {
     return sleepData.filter(sleep => {

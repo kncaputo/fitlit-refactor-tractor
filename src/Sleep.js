@@ -1,6 +1,6 @@
 export default class Sleep { // instance for the user's sleep each day
   constructor(userSleepData) {
-    this.userId = userSleepData.userID;
+    this.userID = userSleepData.userID;
     this.date = userSleepData.date;
     this.hoursSlept = userSleepData.hoursSlept;
     this.sleepQuality = userSleepData.sleepQuality;
