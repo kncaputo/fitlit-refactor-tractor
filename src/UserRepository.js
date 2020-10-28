@@ -155,32 +155,17 @@ export default class UserRepository {
     return longestSleepers[0];
   }
 
+  getWorstSleeper(date) {
+    let sleepsOnDate = this.users.map(user => {
+      return user.sleepRepository.sleepHistory.find(sleep => {
+        return sleep.date === date;
+      })
+    });
 
-  getWorstSleepers(date) {
-    return sleepData.filter(sleep => {
-      return sleep.date === date;
-    }).sort((a, b) => {
+    let shortestSleepers = sleepsOnDate.sort((a, b) => {
       return a.hoursSlept - b.hoursSlept;
-    })[0].userID;
-  }
+    });
 
-  // findFriendsTotalStepsForWeek(users, date) {
-  //   this.friends.map(friend => {
-  //     let matchedFriend = users.find(user => user.id === friend);
-  //     matchedFriend.calculateTotalStepsThisWeek(date);
-  //     this.friendsActivityRecords.push(
-  //       {
-  //         'id': matchedFriend.id,
-  //         'firstName': matchedFriend.name.toUpperCase().split(' ')[0],
-  //         'totalWeeklySteps': matchedFriend.totalStepsThisWeek
-  //       })
-  //   })
-  //   this.calculateTotalStepsThisWeek(date);
-  //   this.friendsActivityRecords.push({
-  //     'id': this.id,
-  //     'firstName': 'YOU',
-  //     'totalWeeklySteps': this.totalStepsThisWeek
-  //   });
-  //   this.friendsActivityRecords = this.friendsActivityRecords.sort((a, b) => b.totalWeeklySteps - a.totalWeeklySteps);
-  // }
+    return shortestSleepers[0];
+  }
 }
