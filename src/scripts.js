@@ -12,7 +12,7 @@ import UserRepository from './UserRepository';
 
 window.onload = loadData();
 
-let user;
+let userRepository;
 
 function loadData() {
   let userPromise = apiCalls.fetchUserData();
@@ -21,15 +21,15 @@ function loadData() {
   let hydrationPromise = apiCalls.fetchHydrationData();
 
   Promise.all([userPromise, sleepPromise, activityPromise, hydrationPromise])
-  .then(data => user = new UserRepository(data[0], data[1], data[2], data[3]))
+  .then(data => userRepository = new UserRepository(data[0], data[1], data[2], data[3]))
   .then(response => loadPage())
   .catch(err => console.log(err))
 }
 
 
 function loadPage() {
-  // let user = UserRepository.users;
-  console.log(user)
+  console.log(userRepository);
+  userRepository.start();
 }
 
 // let todayDate = "2019/09/22";
