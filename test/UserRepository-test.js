@@ -224,6 +224,25 @@ describe('UserRepository', () => {
 
       expect(userRepository.calculateAverageDailyWater("2019/06/16")).to.equal(5)
     });
+
+    it('should find the best sleepers', () => {
+      // expect an array of users
+    });
+
+    it('should find the longest sleepers', () => {
+
+    });
+
+    it('should find the worst sleepers', () => {
+
+    });
+
+    it('should calculate the average number of stairs for users', () => {
+
+  });
+
+  it('should calculate the average number of active minutes for users', () => {
+
   });
 });
 
