@@ -7,45 +7,17 @@ import './css/styles.scss';
 // import sleepData from './data/sleep';
 // import hydrationData from './data/hydration';
 
-let userData;
-let sleepData;
-let activityData;
-let hydrationData;
-
-const userPromise = fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/users/userData')
-  .then(response => response.json())
-  .then(data => {
-    userData = data
-  })
-  .catch(err => console.log(err))
-
-const sleepPromise = fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/sleep/sleepData')
-  .then(response => response.json())
-  .then(data => {
-    sleepData = data
-  })
-  .catch(err => console.log(err))
-
-const activityPromise = fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/activity/activityData')
-  .then(response => response.json())
-  .then(data => {
-    activityData = data
-  })
-  .catch(err => console.log(err))
-
-const hydrationPromise = fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData')
-  .then(response => response.json())
-  .then(data => {
-    hydrationData = data
-  })
-  .catch(err => console.log(err))
-
-//Promise.all
 import UserRepository from './UserRepository';
-// import User from './User';
-// import Activity from './Activity';
-// import Hydration from './Hydration';
-// import Sleep from './Sleep';
+
+const userPromise = apiCalls.fetchUserData();
+const sleepPromise = apiCalls.fetchSleepData();
+const activityPromise = apiCalls.fetchActivityData();
+const hydrationPromise = apiCalls.fetchHydrationData();
+
+Promise.all([userPromise, sleepPromise, activityPromise, hydrationPromise])
+.then(data => new UserRepository(data[0] data[1], data[2], data[3]))
+.then(response => loadPage())
+.catch(err => console.log(err))
 
 let userRepository = new UserRepository(userData, sleepData, activityData, hydrationData);
 
@@ -53,18 +25,6 @@ let userRepository = new UserRepository(userData, sleepData, activityData, hydra
 //   user = new User(user);
 //   userRepository.users.push(user)
 // });
-
-activityData.forEach(activity => {
-  activity = new Activity(activity, userRepository);
-});
-
-hydrationData.forEach(hydration => {
-  hydration = new Hydration(hydration, userRepository);
-});
-
-sleepData.forEach(sleep => {
-  sleep = new Sleep(sleep, userRepository);
-});
 
 let user = userRepository.users[0];
 let todayDate = "2019/09/22";
