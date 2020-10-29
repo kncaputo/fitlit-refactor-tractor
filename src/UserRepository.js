@@ -1,5 +1,3 @@
-// import sleepData from './data/sleep';
-// import userData from '../data/user';
 import User from './User';
 
 export default class UserRepository {

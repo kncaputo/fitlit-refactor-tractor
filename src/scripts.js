@@ -3,16 +3,20 @@ import './css/styles.scss';
 import apiCalls from './apiCalls.js';
 // import '/hydration-calendar.png', '/hydration-friends.png', '/hydration-goback.png' from './images'
 
-// import userData from './data/users';
-// import activityData from './data/activity';
-// import sleepData from './data/sleep';
-// import hydrationData from './data/hydration';
+import {dailyOz, dropdownEmail, dropdownFriendsStepsContainer, dropdownGoal, dropdownName, headerName, hydrationCalendarCard, hydrationFriendOuncesToday, hydrationFriendsCard, hydrationInfoCard, hydrationInfoGlassesToday, hydrationMainCard, hydrationUserOuncesToday, mainPage, profileButton, sleepCalendarCard, sleepCalendarHoursAverageWeekly, sleepCalendarQualityAverageWeekly, sleepFriendLongestSleeper, sleepFriendsCard, sleepFriendWorstSleeper, sleepInfoCard, sleepInfoHoursAverageAlltime, sleepInfoQualityAverageAlltime, sleepInfoQualityToday, sleepMainCard, sleepUserHoursToday, stairsCalendarCard, stairsCalendarFlightsAverageWeekly, stairsCalendarStairsAverageWeekly, stepsMainCard, stepsInfoCard, stepsFriendsCard, stepsTrendingCard, stepsCalendarCard, stairsFriendFlightsAverageToday, stairsFriendsCard, stairsInfoCard, stairsInfoFlightsToday, stairsMainCard, stairsTrendingButton, stairsTrendingCard, stairsUserStairsToday, stepsCalendarTotalActiveMinutesWeekly, stepsCalendarTotalStepsWeekly, stepsFriendAverageStepGoal, stepsInfoActiveMinutesToday, stepsInfoMilesWalkedToday, stepsFriendActiveMinutesAverageToday, stepsFriendStepsAverageToday, stepsTrendingButton, stepsUserStepsToday, trendingStepsPhraseContainer, trendingStairsPhraseContainer, userInfoDropdown } from './DOMelements.js'
+
 
 import UserRepository from './UserRepository';
 
 window.onload = loadData();
 
 let userRepository;
+let user;
+
+mainPage.addEventListener('click', showInfo);
+profileButton.addEventListener('click', showDropdown);
+stairsTrendingButton.addEventListener('click', updateTrendingStairsDays());
+stepsTrendingButton.addEventListener('click', updateTrendingStepDays());
 
 function loadData() {
   let userPromise = apiCalls.fetchUserData();
@@ -26,85 +30,25 @@ function loadData() {
   .catch(err => console.log(err))
 }
 
-
 function loadPage() {
-  console.log(userRepository);
   userRepository.start();
+  getRandomUser();
+}
+
+function getRandomUser() {
+  let randomIndex = Math.floor(Math.random() * 50);
+  user = userRepository.users[randomIndex];
 }
 
 // let todayDate = "2019/09/22";
 // user.findFriendsNames(userRepository.users);
-//
-// let dailyOz = document.querySelectorAll('.daily-oz');
-// let dropdownEmail = document.querySelector('#dropdown-email');
-// let dropdownFriendsStepsContainer = document.querySelector('#dropdown-friends-steps-container');
-// let dropdownGoal = document.querySelector('#dropdown-goal');
-// let dropdownName = document.querySelector('#dropdown-name');
-// let headerName = document.querySelector('#header-name');
-// let hydrationCalendarCard = document.querySelector('#hydration-calendar-card');
-// let hydrationFriendOuncesToday = document.querySelector('#hydration-friend-ounces-today');
-// let hydrationFriendsCard = document.querySelector('#hydration-friends-card');
-// let hydrationInfoCard = document.querySelector('#hydration-info-card');
-// let hydrationInfoGlassesToday = document.querySelector('#hydration-info-glasses-today');
-// let hydrationMainCard = document.querySelector('#hydration-main-card');
-// let hydrationUserOuncesToday = document.querySelector('#hydration-user-ounces-today');
-// let mainPage = document.querySelector('main');
-// let profileButton = document.querySelector('#profile-button');
-// let sleepCalendarCard = document.querySelector('#sleep-calendar-card');
-// let sleepCalendarHoursAverageWeekly = document.querySelector('#sleep-calendar-hours-average-weekly');
-// let sleepCalendarQualityAverageWeekly = document.querySelector('#sleep-calendar-quality-average-weekly');
-// let sleepFriendLongestSleeper = document.querySelector('#sleep-friend-longest-sleeper');
-// let sleepFriendsCard = document.querySelector('#sleep-friends-card');
-// let sleepFriendWorstSleeper = document.querySelector('#sleep-friend-worst-sleeper');
-// let sleepInfoCard = document.querySelector('#sleep-info-card');
-// let sleepInfoHoursAverageAlltime = document.querySelector('#sleep-info-hours-average-alltime');
-// let sleepInfoQualityAverageAlltime = document.querySelector('#sleep-info-quality-average-alltime');
-// let sleepInfoQualityToday = document.querySelector('#sleep-info-quality-today');
-// let sleepMainCard = document.querySelector('#sleep-main-card');
-// let sleepUserHoursToday = document.querySelector('#sleep-user-hours-today');
-// let sortedHydrationDataByDate = user.ouncesRecord.sort((a, b) => {
-//   if (Object.keys(a)[0] > Object.keys(b)[0]) {
-//     return -1;
-//   }
-//   if (Object.keys(a)[0] < Object.keys(b)[0]) {
-//     return 1;
-//   }
-//   return 0;
-// });
-// let stairsCalendarCard = document.querySelector('#stairs-calendar-card');
-// let stairsCalendarFlightsAverageWeekly = document.querySelector('#stairs-calendar-flights-average-weekly');
-// let stairsCalendarStairsAverageWeekly = document.querySelector('#stairs-calendar-stairs-average-weekly');
-// let stepsMainCard = document.querySelector('#steps-main-card');
-// let stepsInfoCard = document.querySelector('#steps-info-card');
-// let stepsFriendsCard = document.querySelector('#steps-friends-card');
-// let stepsTrendingCard = document.querySelector('#steps-trending-card');
-// let stepsCalendarCard = document.querySelector('#steps-calendar-card');
-// let stairsFriendFlightsAverageToday = document.querySelector('#stairs-friend-flights-average-today');
-// let stairsFriendsCard = document.querySelector('#stairs-friends-card');
-// let stairsInfoCard = document.querySelector('#stairs-info-card');
-// let stairsInfoFlightsToday = document.querySelector('#stairs-info-flights-today');
-// let stairsMainCard = document.querySelector('#stairs-main-card');
-// let stairsTrendingButton = document.querySelector('.stairs-trending-button');
-// let stairsTrendingCard = document.querySelector('#stairs-trending-card');
-// let stairsUserStairsToday = document.querySelector('#stairs-user-stairs-today');
-// let stepsCalendarTotalActiveMinutesWeekly = document.querySelector('#steps-calendar-total-active-minutes-weekly');
-// let stepsCalendarTotalStepsWeekly = document.querySelector('#steps-calendar-total-steps-weekly');
-// let stepsFriendAverageStepGoal = document.querySelector('#steps-friend-average-step-goal');
-// let stepsInfoActiveMinutesToday = document.querySelector('#steps-info-active-minutes-today');
-// let stepsInfoMilesWalkedToday = document.querySelector('#steps-info-miles-walked-today');
-// let stepsFriendActiveMinutesAverageToday = document.querySelector('#steps-friend-active-minutes-average-today');
-// let stepsFriendStepsAverageToday = document.querySelector('#steps-friend-steps-average-today');
-// let stepsTrendingButton = document.querySelector('.steps-trending-button');
-// let stepsUserStepsToday = document.querySelector('#steps-user-steps-today');
-// let trendingStepsPhraseContainer = document.querySelector('.trending-steps-phrase-container');
-// let trendingStairsPhraseContainer = document.querySelector('.trending-stairs-phrase-container');
-// let userInfoDropdown = document.querySelector('#user-info-dropdown');
-//
-// mainPage.addEventListener('click', showInfo);
-// profileButton.addEventListener('click', showDropdown);
-// stairsTrendingButton.addEventListener('click', updateTrendingStairsDays());
-// stepsTrendingButton.addEventListener('click', updateTrendingStepDays());
-//
+
+
+
+
+
+
+
 // function flipCard(cardToHide, cardToShow) {
 //   cardToHide.classList.add('hide');
 //   cardToShow.classList.remove('hide');
@@ -297,4 +241,15 @@ function loadPage() {
 //   if (paragraph.innerText.includes('YOU')) {
 //     paragraph.classList.add('yellow-text');
 //   }
+// });
+
+
+// let sortedHydrationDataByDate = user.ouncesRecord.sort((a, b) => {
+//   if (Object.keys(a)[0] > Object.keys(b)[0]) {
+//     return -1;
+//   }
+//   if (Object.keys(a)[0] < Object.keys(b)[0]) {
+//     return 1;
+//   }
+//   return 0;
 // });
