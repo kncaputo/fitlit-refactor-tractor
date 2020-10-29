@@ -8,17 +8,17 @@ import {dailyOz, dropdownEmail, dropdownFriendsStepsContainer, dropdownGoal, dro
 
 import UserRepository from './UserRepository';
 
-window.onload = loadData();
+window.onload = fetchData();
 
 let userRepository;
 let user;
 
 mainPage.addEventListener('click', showInfo);
 profileButton.addEventListener('click', showDropdown);
-stairsTrendingButton.addEventListener('click', updateTrendingStairsDays());
-stepsTrendingButton.addEventListener('click', updateTrendingStepDays());
+stairsTrendingButton.addEventListener('click', updateTrendingStairsDays);
+stepsTrendingButton.addEventListener('click', updateTrendingStepDays);
 
-function loadData() {
+function fetchData() {
   let userPromise = apiCalls.fetchUserData();
   let sleepPromise = apiCalls.fetchSleepData();
   let activityPromise = apiCalls.fetchActivityData();
@@ -116,7 +116,6 @@ function showInfo() {
 }
 
 function updateTrendingStairsDays() {
-  console.log(user.activityRepository)
   user.activityRepository.findTrendingStairsDays();
   trendingStairsPhraseContainer.innerHTML = `<p class='trend-line'>${user.activityRepository.trendingStairsDays[0]}</p>`;
 }
