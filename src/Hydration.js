@@ -3,7 +3,6 @@ export default class Hydration {
     this.userId = data.userID;
     this.date = data.date;
     this.ounces = data.numOunces;
-    // this.drink(userRepository);
   }
   // drink(userRepo) {
   //   var hydrate = this;
