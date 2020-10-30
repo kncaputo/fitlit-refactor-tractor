@@ -192,6 +192,14 @@ function updateUserStepFriendsCard() {
 function updateUserStairDisplay() {
   updateTrendingStairsDays();
   stairsCalendarFlightsAverageWeekly.innerText = user.activityRepository.calculateAverageStairsThisWeek(todayDate);
+  stairsUserStairsToday.innerText = user.activityRepository.activityHistory.find(activity => {
+    return activity.date === todayDate;
+  }).flightsOfStairs * 12;
+  stairsInfoFlightsToday.innerText = user.activityRepository.activityHistory.find(activity => {
+    return activity.date === todayDate;
+  }).flightsOfStairs;
+  stairsCalendarStairsAverageWeekly.innerText = (userRepository.calculateAverageStairs(todayDate) * 12).toFixed(0);
+  stairsFriendFlightsAverageToday.innerText = userRepository.calculateAverageStairs(todayDate).toFixed(0);
 }
 
 function updateUserHydrationDisplay() {
@@ -202,7 +210,6 @@ function updateUserHydrationDisplay() {
   hydrationUserOuncesToday.innerText = user.hydrationRepository.hydrationHistory.find(hydration => {
     return hydration.date === todayDate;
   }).ounces;
-  console.log('all user ounces: ', userRepository.calculateAllOunces(todayDate))
   hydrationFriendOuncesToday.innerText = userRepository.calculateAllOunces(todayDate);
 }
 
@@ -240,16 +247,15 @@ function updateTrendingStepDays() {
 //   dailyOz[i].innerText = user.hydrationRepository.addDailyOunces(Object.keys(sortedHydrationDataByDate[i])[0])
 // }
 
-
-
+//
+// stepsInfoMilesWalkedToday.innerText = user.activityRepository.activityHistory.find(activity => {
+//   return (activity.date === todayDate && activity.userId === user.id)
+// }).calculateMiles(userRepository);
 
 
 
   //
 
-  // stepsInfoMilesWalkedToday.innerText = user.activityRepository.activityHistory.find(activity => {
-  //   return (activity.date === todayDate && activity.userId === user.id)
-  // }).calculateMiles(userRepository);
 
   // sleepInfoQualityToday.innerText = sleepData.find(sleep => {
   //   return sleep.userID === user.id && sleep.date === todayDate;
@@ -269,11 +275,8 @@ function updateTrendingStepDays() {
   //   return activity.userID === user.id && activity.date === todayDate;
   // }).flightsOfStairs;
   //
-  // stairsUserStairsToday.innerText = activityData.find(activity => {
-  //   return activity.userID === user.id && activity.date === todayDate;
-  // }).flightsOfStairs * 12;
 
-  // stairsCalendarStairsAverageWeekly.innerText = (user.calculateAverageStairs(todayDate) * 12).toFixed(0);
+
   //
   //
   //
