@@ -133,6 +133,10 @@ describe('ActivityRepository', () => {
       expect(result).to.deep.equal('Your most recent positive step streak was 2019/06/15 - 2019/06/17!')
     });
 
+    it.only('should find average steps this week when given a date', () => {
+     const result = activityRepository.calculateAverageStepsThisWeek("2019/06/18");
+     expect(result).to.deep.equal(3502);
+    });
     // it('should have a method that calculates daily calories burned', () => {
     //   user.activityRecord = [{date: "2019/09/16", activityRecord: 78}, {date: "2019/09/17", minutesActive: 100}, {date: "2019/09/17", minutesActive: 20}];
     //   expect(user.calculateDailyCalories("2019/09/17")).to.equal(912)

@@ -120,6 +120,16 @@ export default class ActivityRepository {
       return `Your most recent positive step streak was ${this.trendingStepDays[this.trendingStepDays.length - 1].date} - ${this.trendingStepDays[0].date}!`
     }
   }
+
+  calculateAverageStepsThisWeek(todayDate) {
+    return (this.activityHistory.reduce((sum, activity) => {
+      let index = this.activityHistory.indexOf(this.activityHistory.find(activity => activity.date === todayDate));
+      if (index >= this.activityHistory.indexOf(activity) && this.activityHistory.indexOf(activity) <= (index + 6)) {
+        sum += activity.steps;
+      }
+      return sum;
+    }, 0) / 7).toFixed(0);
+  }
 }
 
 
