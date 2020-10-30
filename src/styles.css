@@ -23,7 +23,7 @@ button:active {
 }
 
 #profile-button {
-  background-image: url(../images/profile.png);
+  /* background-image: url(../images/profile.png); */
   background-position: center;
   background-size: 5.6vw;
   border: none;
@@ -227,19 +227,19 @@ main {
   width: 3.4vw;
 }
 
-.steps-go-back-button {
+/* .steps-go-back-button {
   background-image: url(../images/steps-goback.png);
-}
+} */
 
-.steps-info-button {
+/* .steps-info-button {
   background-image: url(../images/steps-info.png);
-}
+} */
 
-.steps-friends-button {
+/* .steps-friends-button {
   background-image: url(../images/steps-friends.png);
-}
+} */
 
-.steps-calendar-button {
+/* .steps-calendar-button {
   background-image: url(../images/steps-calendar.png);
 }
 
@@ -298,7 +298,7 @@ main {
 
 .stairs-trending-button {
   background-image: url(../images/stairs-trending.png);
-}
+} */
 
 /* CHANGING CLASSES */
 .hide {
