@@ -9,16 +9,20 @@ export default class HydrationRepository {
   }
 
   start() {
-    this.createHydration();
-    this.createOuncesRecord();
-    this.averageDailyOunces();
+    this.rawHydrationData.forEach(rawHydration => {
+      this.createNewHydration(rawHydration);
+    });
   }
 
-  createHydration() {
-    this.rawHydrationData.forEach(rawHydration => {
-      let hydration = new Hydration(rawHydration);
-      this.hydrationHistory.push(hydration);
-    });
+  createNewHydration(rawHydration) {
+    let hydration = new Hydration(rawHydration);
+    this.hydrationHistory.push(hydration);
+    this.updateStats();
+  }
+
+  updateStats() {
+    this.createOuncesRecord();
+    this.averageDailyOunces();
   }
 
   createOuncesRecord() {
@@ -53,23 +57,4 @@ export default class HydrationRepository {
       return acc
     }, [])
   }
-
-  // totalDailyOunces(date) {
-  //   return this.ouncesRecord.reduce((sum, record) => {
-  //     let amount = record[date];
-  //     if (amount) {
-  //       sum += amount
-  //     }
-  //     return sum
-  //   }, 0)
-  // }
 }
-
-// updateHydration(date, amount) {
-//   this.ouncesRecord.unshift({[date]: amount});
-//   if (this.ouncesRecord.length) {
-//     this.ouncesAverage = Math.round((amount + (this.ouncesAverage * (this.ouncesRecord.length - 1))) / this.ouncesRecord.length);
-//   } else {
-//     this.ouncesAverage = amount;
-//   }
-// }

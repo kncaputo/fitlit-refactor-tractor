@@ -102,15 +102,27 @@ describe('SleepRepository', () => {
     expect(sleepRepository.sleepQualityAverage).to.equal('785.9');
   });
 
-  it('should calculate the average sleep hours in a given week', () => {
-    sleepRepository.start();
+  describe('Start', () => {
+    it('should have a start method that populates sleep history from raw data', () => {
+      expect(sleepRepository.sleepHistory).to.deep.equal([]);
 
-    expect(sleepRepository.averageWeeklySleepHours('2019/06/16')).to.equal('7.2');
+      sleepRepository.start();
+
+      expect(sleepRepository.sleepHistory.length).to.deep.equal(7);
+    });
   });
 
-  it('should calculate the average sleep quality in a given week', () => {
-    sleepRepository.start();
+  describe('Methods', () => {
+    it('should calculate the average sleep hours in a given week', () => {
+      sleepRepository.start();
 
-    expect(sleepRepository.averageWeeklySleepQuality('2019/06/16')).to.equal('785.9')
+      expect(sleepRepository.averageWeeklySleepHours('2019/06/16')).to.equal('7.2');
+    });
+
+    it('should calculate the average sleep quality in a given week', () => {
+      sleepRepository.start();
+
+      expect(sleepRepository.averageWeeklySleepQuality('2019/06/16')).to.equal('785.9')
+    });
   });
 });

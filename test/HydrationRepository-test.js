@@ -58,6 +58,16 @@ describe('HydrationRepository', () => {
     });
   });
 
+  describe('Start', () => {
+    it('should have a start method that populates hydration history from raw data', () => {
+      expect(hydrationRepository.hydrationHistory).to.deep.equal([]);
+
+      hydrationRepository.start();
+
+      expect(hydrationRepository.hydrationHistory.length).to.deep.equal(5);
+    });
+  });
+
   describe('Methods', () => {
     beforeEach(() => {
       hydrationRepository.start();
@@ -65,6 +75,21 @@ describe('HydrationRepository', () => {
 
     it('should create instances of hydration', () => {
       expect(hydrationRepository.hydrationHistory[0]).to.be.an.instanceof(Hydration);
+    });
+
+    it('should be able to create new instances of activities from a data object', () => {
+      const history = hydrationRepository.hydrationHistory
+      expect(history.length).to.deep.equal(5);
+      const newHydration = {
+        "userID": 1,
+        "date": "2018/06/20",
+        "numOunces": 50
+      }
+
+      const result = hydrationRepository.createNewHydration(newHydration);
+
+      expect(history[history.length - 1]).to.be.an.instanceof(Hydration);
+      expect(history.length).to.deep.equal(6);
     });
 
     it('should create a record of all ounces consumed', () => {
