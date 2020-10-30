@@ -52,9 +52,6 @@ function launchApp() {
   updateUserActivityDisplay();
   updateUserHydrationDisplay();
   updateUserFriendsDisplay();
-  updateTrendingStairsDays();
-  updateTrendingStepDays();
-  showInfo();
 }
 
 function getRandomUser() {
@@ -71,13 +68,13 @@ function showDropdown() {
   userInfoDropdown.classList.toggle('hide');
 }
 
-function showInfo(event) {
-  displaySleepInfo(event);
-  displayActivityInfo(event);
-  displayHydrationInfo(event);
+function showInfo() {
+  displaySleepInfo();
+  displayActivityInfo();
+  displayHydrationInfo();
 }
 
-function displaySleepInfo(event) {
+function displaySleepInfo() {
   if (event.target.classList.contains('sleep-info-button')) {
     flipCard(sleepMainCard, sleepInfoCard);
   }
@@ -92,7 +89,7 @@ function displaySleepInfo(event) {
   }
 }
 
-function displayActivityInfo(event) {
+function displayActivityInfo() {
   if (event.target.classList.contains('steps-info-button')) {
     flipCard(stepsMainCard, stepsInfoCard);
   }
@@ -125,7 +122,7 @@ function displayActivityInfo(event) {
   }
 }
 
-function displayHydrationInfo(event) {
+function displayHydrationInfo() {
   if (event.target.classList.contains('hydration-info-button')) {
     flipCard(hydrationMainCard, hydrationInfoCard);
   }
@@ -160,6 +157,9 @@ function updateUserDisplay() {
 }
 
 function updateUserSleepDisplay() {
+  sleepUserHoursToday.innerText = user.sleepRepository.sleepHistory.find(sleep => {
+    return sleep.date === todayDate;
+  }).hoursSlept;
   sleepInfoHoursAverageAlltime.innerText = user.sleepRepository.hoursSleptAverage;
 
   // sleepFriendLongestSleeper.innerText = userRepository.users.find(user => {
@@ -174,7 +174,7 @@ function updateUserSleepDisplay() {
 
     sleepCalendarHoursAverageWeekly.innerText = user.sleepRepository.averageWeeklySleepHours(todayDate);
 
-    sleepCalendarQualityAverageWeekly.innerText = user.sleepRepository.averageWeeklySleepHours(todayDate);
+    sleepCalendarQualityAverageWeekly.innerText = user.sleepRepository.averageWeeklySleepQuality(todayDate);
 }
 
 function updateUserActivityDisplay() {
@@ -182,6 +182,8 @@ function updateUserActivityDisplay() {
     // stepsCalendarTotalActiveMinutesWeekly.innerText = user.activityRepository.averageWeeklyMinutesActive(todayDate);
     // stepsFriendAverageStepGoal.innerText = `${userRepository.activityRepository.calculateAverageStepGoal()}`;
     // stepsCalendarTotalStepsWeekly.innerText = user.activityRepository.calculateAverageStepsThisWeek(todayDate);
+    updateTrendingStairsDays();
+    updateTrendingStepDays();
 }
 
 function updateUserHydrationDisplay() {
