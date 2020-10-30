@@ -139,12 +139,6 @@ function updateTrendingStepDays() {
 // do after fetch is done
 
 function updateUserDisplay() {
-  for (var i = 0; i < dailyOz.length; i++) {
-    dailyOz[i].innerText = user.hydrationRepository.addDailyOunces(Object.keys(sortedHydrationDataByDate[i])[0])
-  }
-  for (var i = 0; i < dailyOz.length; i++) {
-    dailyOz[i].innerText = user.hydrationRepository.addDailyOunces(Object.keys(sortedHydrationDataByDate[i])[0])
-  }
   dropdownGoal.innerText = `DAILY STEP GOAL | ${user.dailyStepGoal}`;
   dropdownEmail.innerText = `EMAIL | ${user.email}`;
   dropdownName.innerText = user.name.toUpperCase();
@@ -153,16 +147,20 @@ function updateUserDisplay() {
 
 function updateUserSleepDisplay() {
   sleepInfoHoursAverageAlltime.innerText = user.sleepRepository.hoursSleptAverage;
-  sleepFriendLongestSleeper.innerText = userRepository.users.find(user => {
-    return user.id === userRepository.getLongestSleepers(todayDate)
-  }).getFirstName();
 
-  sleepFriendWorstSleeper.innerText = userRepository.users.find(user => {
-    return user.id === userRepository.getWorstSleepers(todayDate)
-  }).getFirstName();
+  // sleepFriendLongestSleeper.innerText = userRepository.users.find(user => {
+  //   return user.id === userRepository.getLongestSleeper(todayDate)
+  // }).getFirstName();
+
+  // sleepFriendWorstSleeper.innerText = userRepository.users.find(user => {
+  //   return user.id === userRepository.getWorstSleeper(todayDate)
+  // }).getFirstName();
+
     sleepInfoQualityAverageAlltime.innerText = user.sleepRepository.sleepQualityAverage;
-    sleepCalendarHoursAverageWeekly.innerText = user.sleepRepository.calculateAverageHoursThisWeek(todayDate);
-    sleepCalendarQualityAverageWeekly.innerText = user.sleepRepository.calculateAverageQualityThisWeek(todayDate);
+
+    sleepCalendarHoursAverageWeekly.innerText = user.sleepRepository.averageWeeklySleepHours(todayDate);
+
+    sleepCalendarQualityAverageWeekly.innerText = user.sleepRepository.averageWeeklySleepHours(todayDate);
 }
 
 function updateUserActivityDisplay() {
@@ -201,6 +199,12 @@ function updateUserFriendsDisplay() {
   });
 }
 
+// for (var i = 0; i < dailyOz.length; i++) {
+//   dailyOz[i].innerText = user.hydrationRepository.addDailyOunces(Object.keys(sortedHydrationDataByDate[i])[0])
+// }
+// for (var i = 0; i < dailyOz.length; i++) {
+//   dailyOz[i].innerText = user.hydrationRepository.addDailyOunces(Object.keys(sortedHydrationDataByDate[i])[0])
+// }
 
   // hydrationUserOuncesToday.innerText = userRepository.hydrationData.find(hydration => {
   //   return hydration.userID === user.id && hydration.date === todayDate;
