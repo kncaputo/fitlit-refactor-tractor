@@ -169,7 +169,6 @@ function updateUserStepDisplay() {
   updateUserStepInfoCard();
   updateUserStepFriendsCard();
   updateTrendingStepDays();
-
   stepsCalendarTotalActiveMinutesWeekly.innerText = user.activityRepository.averageWeeklyMinutesActive(todayDate);
   stepsCalendarTotalStepsWeekly.innerText = user.activityRepository.calculateAverageStepsThisWeek(todayDate);
   stepsInfoActiveMinutesToday.innerText = user.activityRepository.activityHistory.find(activity => {
@@ -193,14 +192,22 @@ function updateUserStepFriendsCard() {
 }
 
 function updateUserStairDisplay() {
+  updateUserStairInfoCard();
+  updateUserStairFriendsCard();
   updateTrendingStairsDays();
   stairsCalendarFlightsAverageWeekly.innerText = user.activityRepository.calculateAverageStairsThisWeek(todayDate);
+}
+
+function updateUserStairInfoCard() {
   stairsUserStairsToday.innerText = user.activityRepository.activityHistory.find(activity => {
     return activity.date === todayDate;
   }).flightsOfStairs * 12;
   stairsInfoFlightsToday.innerText = user.activityRepository.activityHistory.find(activity => {
     return activity.date === todayDate;
   }).flightsOfStairs;
+}
+
+function updateUserStairFriendsCard() {
   stairsCalendarStairsAverageWeekly.innerText = (userRepository.calculateAverageStairs(todayDate) * 12).toFixed(0);
   stairsFriendFlightsAverageToday.innerText = userRepository.calculateAverageStairs(todayDate).toFixed(0);
 }
