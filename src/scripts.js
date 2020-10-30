@@ -176,6 +176,7 @@ function updateUserSleepDisplay() {
 function updateUserActivityDisplay() {
   updateTrendingStairsDays();
   updateTrendingStepDays();
+  let avgStepGoals = userRepository.calculateAverageStepGoal()
   stepsInfoActiveMinutesToday.innerText = user.activityRepository.activityHistory.find(activity => {
     return activity.date === todayDate;
   }).minutesActive;
@@ -183,6 +184,8 @@ function updateUserActivityDisplay() {
   stepsUserStepsToday.innerText = user.activityRepository.activityHistory.find(activity => {
     return activity.date === todayDate;
   }).steps;
+
+  stepsFriendActiveMinutesAverageToday.innerText = avgStepGoals;
     // stairsCalendarFlightsAverageWeekly.innerText = user.activityRepository.calculateAverageStairs(todayDate);
     // stepsCalendarTotalActiveMinutesWeekly.innerText = user.activityRepository.averageWeeklyMinutesActive(todayDate);
     // stepsFriendAverageStepGoal.innerText = `${userRepository.activityRepository.calculateAverageStepGoal()}`;
