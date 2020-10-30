@@ -22,13 +22,18 @@ export default class ActivityRepository {
 
   createActivities() {
     this.rawActivityData.forEach(rawActivity => {
-      this.createInstance(rawActivity);
+      this.createNewInstance(rawActivity);
     });
   }
 
-  createInstance(rawActivity) {
+  createNewInstance(rawActivity) {
     let activity = new Activity(rawActivity);
+    this.updateActivities(activity);
+  }
+
+  updateActivities(activity) {
     this.activityHistory.push(activity);
+    this.findAccomplishedStepDays()
   }
 
   calculateMilesWalked(todayDate) {
@@ -134,7 +139,7 @@ export default class ActivityRepository {
     }, 0) / 7).toFixed(0);
   }
 
-  calculateAverageFlightsThisWeek(todayDate) {
+  calculateAverageStairsThisWeek(todayDate) {
     return (this.activityHistory.reduce((sum, activity) => {
       let index = this.activityHistory.indexOf(this.activityHistory.find(activity => activity.date === todayDate));
       if (index >= this.activityHistory.indexOf(activity) && this.activityHistory.indexOf(activity) <= (index + 6)) {
@@ -146,12 +151,7 @@ export default class ActivityRepository {
 }
 
 
-  // updateActivities(activity) {
-  //   this.activityRecord.unshift(activity);
-  //   if (activity.numSteps >= this.dailyStepGoal) {
-  //     this.accomplishedDays.unshift(activity.date);
-  //   }
-  // }
+
 
   // calculateDailyCalories(date) {
   //   let totalMinutes = this.activityRecord.filter(activity => {

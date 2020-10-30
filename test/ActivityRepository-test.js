@@ -83,8 +83,24 @@ describe('ActivityRepository', () => {
       activityRepository.start();
     });
 
-    it('should create instances of activities', () => {
+    it('should create instances of activities from raw data', () => {
       expect(activityRepository.activityHistory[0]).to.be.an.instanceof(Activity);
+    });
+
+    it('should be able to create new instances of activities from a data object', () => {
+      const act = activityRepository.activityHistory
+      expect(act.length).to.deep.equal(4);
+      const newActivity = {
+        "userID": 1,
+        "date": "2019/06/19",
+        "numSteps": 800,
+        "minutesActive": 90,
+        "flightsOfStairs": 7
+      }
+      const result = activityRepository.createNewInstance(newActivity);
+
+      expect(act[act.length - 1]).to.be.an.instanceof(Activity);
+      expect(act.length).to.deep.equal(5);
     });
 
     it('should calculate the miles a user walked on a given day', () => {
@@ -140,10 +156,12 @@ describe('ActivityRepository', () => {
     });
 
     it('should find average flights this week when given a date', () => {
-     const result = activityRepository.calculateAverageFlightsThisWeek("2019/06/18");
+     const result = activityRepository.calculateAverageStairsThisWeek("2019/06/18");
 
      expect(result).to.deep.equal('7');
     });
+
+
     // it('should have a method that calculates daily calories burned', () => {
     //   user.activityRecord = [{date: "2019/09/16", activityRecord: 78}, {date: "2019/09/17", minutesActive: 100}, {date: "2019/09/17", minutesActive: 20}];
     //   expect(user.calculateDailyCalories("2019/09/17")).to.equal(912)
