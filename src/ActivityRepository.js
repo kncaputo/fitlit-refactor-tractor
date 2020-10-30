@@ -23,9 +23,13 @@ export default class ActivityRepository {
 
   createActivities() {
     this.rawActivityData.forEach(rawActivity => {
-      let activity = new Activity(rawActivity);
-      this.activityHistory.push(activity);
+      this.createInstance(rawActivity);
     });
+  }
+
+  createInstance(rawActivity) {
+    let activity = new Activity(rawActivity);
+    this.activityHistory.push(activity);
   }
 
   calculateMilesWalked(todayDate) {
