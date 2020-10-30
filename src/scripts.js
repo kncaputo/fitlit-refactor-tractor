@@ -184,18 +184,14 @@ function updateUserStepInfoCard() {
 }
 
 function updateUserStepFriendsCard() {
-//   ALL USERS' AVERAGE ACTIVE MINUTES TODAY:
-stepsFriendActiveMinutesAverageToday.innerText = userRepository.calculateAverageMinutesActive(todayDate);
-// ALL USERS' AVERAGE STEPS TODAY:
-stepsFriendStepsAverageToday.innerText = userRepository.calculateAverageSteps(todayDate);
-
+  stepsFriendActiveMinutesAverageToday.innerText = userRepository.calculateAverageMinutesActive(todayDate);
+  stepsFriendStepsAverageToday.innerText = userRepository.calculateAverageSteps(todayDate);
   stepsFriendAverageStepGoal.innerText = userRepository.calculateAverageStepGoal();
 }
 
 function updateUserStairDisplay() {
   updateTrendingStairsDays();
   stairsCalendarFlightsAverageWeekly.innerText = user.activityRepository.calculateAverageStairsThisWeek(todayDate);
-  console.log(user.activityRepository.calculateAverageStairsThisWeek(todayDate))
 }
 
 function updateUserHydrationDisplay() {
@@ -205,10 +201,9 @@ function updateUserHydrationDisplay() {
   }).ounces / 8;
   hydrationUserOuncesToday.innerText = user.hydrationRepository.hydrationHistory.find(hydration => {
     return hydration.date === todayDate;
-  }).numOunces;
-  hydrationUserOuncesToday.innerText = user.hydrationRepository.hydrationHistory.find(hydration => {
-    return hydration.date === todayDate;
   }).ounces;
+  console.log('all user ounces: ', userRepository.calculateAllOunces(todayDate))
+  hydrationFriendOuncesToday.innerText = userRepository.calculateAllOunces(todayDate);
 }
 
 function updateUserFriendsDisplay() {

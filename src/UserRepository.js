@@ -128,6 +128,16 @@ export default class UserRepository {
     return Math.floor(parseInt(ouncesConsumed) / todaysDrinkers.length);
   }
 
+  calculateAllOunces(date) {
+    let todaysDrinkers = this.users.filter(user => {
+      return user.hydrationRepository.findOunces(date) > 0;
+    });
+
+    return todaysDrinkers.reduce((sum, user) => {
+      return sum += user.hydrationRepository.findOunces(date);
+    }, 0);
+  }
+
   findBestSleepers(date) {
     let bestSleepers = this.users.filter(user => {
       return user.sleepRepository.averageWeeklySleepQuality(date) > 3;
