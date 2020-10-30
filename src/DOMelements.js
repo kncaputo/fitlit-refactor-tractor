@@ -53,3 +53,4 @@ export let stepsUserStepsToday = document.querySelector('#steps-user-steps-today
 export let trendingStepsPhraseContainer = document.querySelector('.trending-steps-phrase-container');
 export let trendingStairsPhraseContainer = document.querySelector('.trending-stairs-phrase-container');
 export let userInfoDropdown = document.querySelector('#user-info-dropdown');
+export let friendsStepsParagraphs = document.querySelectorAll('.friends-steps');
