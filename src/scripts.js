@@ -54,6 +54,7 @@ function launchApp() {
   updateUserFriendsDisplay();
   updateTrendingStairsDays();
   updateTrendingStepDays();
+  showInfo();
 }
 
 function getRandomUser() {
@@ -70,7 +71,28 @@ function showDropdown() {
   userInfoDropdown.classList.toggle('hide');
 }
 
-function showInfo() {
+function showInfo(event) {
+  displaySleepInfo(event);
+  displayActivityInfo(event);
+  displayHydrationInfo(event);
+}
+
+function displaySleepInfo(event) {
+  if (event.target.classList.contains('sleep-info-button')) {
+    flipCard(sleepMainCard, sleepInfoCard);
+  }
+  if (event.target.classList.contains('sleep-friends-button')) {
+    flipCard(sleepMainCard, sleepFriendsCard);
+  }
+  if (event.target.classList.contains('sleep-calendar-button')) {
+    flipCard(sleepMainCard, sleepCalendarCard);
+  }
+  if (event.target.classList.contains('sleep-go-back-button')) {
+    flipCard(event.target.parentNode, sleepMainCard);
+  }
+}
+
+function displayActivityInfo(event) {
   if (event.target.classList.contains('steps-info-button')) {
     flipCard(stepsMainCard, stepsInfoCard);
   }
@@ -82,15 +104,6 @@ function showInfo() {
   }
   if (event.target.classList.contains('steps-calendar-button')) {
     flipCard(stepsMainCard, stepsCalendarCard);
-  }
-  if (event.target.classList.contains('hydration-info-button')) {
-    flipCard(hydrationMainCard, hydrationInfoCard);
-  }
-  if (event.target.classList.contains('hydration-friends-button')) {
-    flipCard(hydrationMainCard, hydrationFriendsCard);
-  }
-  if (event.target.classList.contains('hydration-calendar-button')) {
-    flipCard(hydrationMainCard, hydrationCalendarCard);
   }
   if (event.target.classList.contains('stairs-info-button')) {
     flipCard(stairsMainCard, stairsInfoCard);
@@ -104,28 +117,29 @@ function showInfo() {
   if (event.target.classList.contains('stairs-calendar-button')) {
     flipCard(stairsMainCard, stairsCalendarCard);
   }
-  if (event.target.classList.contains('sleep-info-button')) {
-    flipCard(sleepMainCard, sleepInfoCard);
-  }
-  if (event.target.classList.contains('sleep-friends-button')) {
-    flipCard(sleepMainCard, sleepFriendsCard);
-  }
-  if (event.target.classList.contains('sleep-calendar-button')) {
-    flipCard(sleepMainCard, sleepCalendarCard);
-  }
   if (event.target.classList.contains('steps-go-back-button')) {
     flipCard(event.target.parentNode, stepsMainCard);
-  }
-  if (event.target.classList.contains('hydration-go-back-button')) {
-    flipCard(event.target.parentNode, hydrationMainCard);
   }
   if (event.target.classList.contains('stairs-go-back-button')) {
     flipCard(event.target.parentNode, stairsMainCard);
   }
-  if (event.target.classList.contains('sleep-go-back-button')) {
-    flipCard(event.target.parentNode, sleepMainCard);
+}
+
+function displayHydrationInfo(event) {
+  if (event.target.classList.contains('hydration-info-button')) {
+    flipCard(hydrationMainCard, hydrationInfoCard);
+  }
+  if (event.target.classList.contains('hydration-friends-button')) {
+    flipCard(hydrationMainCard, hydrationFriendsCard);
+  }
+  if (event.target.classList.contains('hydration-calendar-button')) {
+    flipCard(hydrationMainCard, hydrationCalendarCard);
+  }
+  if (event.target.classList.contains('hydration-go-back-button')) {
+    flipCard(event.target.parentNode, hydrationMainCard);
   }
 }
+
 
 function updateTrendingStairsDays() {
   user.activityRepository.findTrendingStairsDays();
@@ -164,14 +178,13 @@ function updateUserSleepDisplay() {
 }
 
 function updateUserActivityDisplay() {
-    stairsCalendarFlightsAverageWeekly.innerText = user.calculateAverageStairs(todayDate);
-    stepsCalendarTotalActiveMinutesWeekly.innerText = user.activityRepository.averageWeeklyMinutesActive(todayDate);
-    stepsFriendAverageStepGoal.innerText = `${userRepository.calculateAverageStepGoal()}`;
-    stepsCalendarTotalStepsWeekly.innerText = user.calculateAverageStepsThisWeek(todayDate);
+    // stairsCalendarFlightsAverageWeekly.innerText = user.activityRepository.calculateAverageStairs(todayDate);
+    // stepsCalendarTotalActiveMinutesWeekly.innerText = user.activityRepository.averageWeeklyMinutesActive(todayDate);
+    // stepsFriendAverageStepGoal.innerText = `${userRepository.activityRepository.calculateAverageStepGoal()}`;
+    // stepsCalendarTotalStepsWeekly.innerText = user.activityRepository.calculateAverageStepsThisWeek(todayDate);
 }
 
 function updateUserHydrationDisplay() {
-  hydrationFriendOuncesToday.innerText = userRepository.calculateAverageDailyWater(todayDate);
   let sortedHydrationDataByDate = user.hydrationRepository.ouncesRecord.sort((a, b) => {
     if (Object.keys(a)[0] > Object.keys(b)[0]) {
       return -1;
@@ -186,6 +199,7 @@ function updateUserHydrationDisplay() {
 function updateUserFriendsDisplay() {
   stepsFriendActiveMinutesAverageToday.innerText = userRepository.calculateAverageMinutesActive(todayDate);
   stepsFriendStepsAverageToday.innerText = userRepository.calculateAverageSteps(todayDate);
+  hydrationFriendOuncesToday.innerText = userRepository.calculateAverageDailyWater(todayDate);
   friendsStepsParagraphs.forEach(paragraph => {
     if (friendsStepsParagraphs[0] === paragraph) {
       paragraph.classList.add('green-text');
