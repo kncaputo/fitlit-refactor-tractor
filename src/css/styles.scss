@@ -13,8 +13,6 @@ body {
 
 /* HEADER */
 header {
-  display: flex;
-  justify-content: space-between;
   text-align: center;
   height: 9vw;
 }
@@ -37,11 +35,11 @@ button:active {
   width: 5.6vw;
 }
 
-#calendar {
-  height: 30px;
-  margin-left: 15px;
-  margin-top: 40px;
-}
+// #calendar {
+//   height: 30px;
+//   margin-left: 15px;
+//   margin-top: 40px;
+// }
 
 #user-info-dropdown {
   background-color: #1F1F1F;
@@ -68,6 +66,13 @@ button:active {
   font-size: 14px;
   color: white;
   width: 250px;
+  outline: none;
+}
+
+.add-buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 15px;
 }
 
 label {
@@ -91,7 +96,6 @@ form {
 input {
   width: 140px;
 }
-
 /* TEXT ELEMENTS */
 h1 {
   color: #fff;
