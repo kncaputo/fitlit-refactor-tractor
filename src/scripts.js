@@ -157,24 +157,20 @@ function updateUserDisplay() {
 }
 
 function updateUserSleepDisplay() {
+  let longestSleeper = userRepository.getLongestSleeper(todayDate);
+  let worstSleeper = userRepository.getWorstSleeper(todayDate);
   sleepUserHoursToday.innerText = user.sleepRepository.sleepHistory.find(sleep => {
     return sleep.date === todayDate;
   }).hoursSlept;
   sleepInfoHoursAverageAlltime.innerText = user.sleepRepository.hoursSleptAverage;
+  sleepFriendLongestSleeper.innerText = longestSleeper.getFirstName();
+  sleepFriendWorstSleeper.innerText = worstSleeper.getFirstName();
 
-  // sleepFriendLongestSleeper.innerText = userRepository.users.find(user => {
-  //   return user.id === userRepository.getLongestSleeper(todayDate)
-  // }).getFirstName();
+  sleepInfoQualityAverageAlltime.innerText = user.sleepRepository.sleepQualityAverage;
 
-  // sleepFriendWorstSleeper.innerText = userRepository.users.find(user => {
-  //   return user.id === userRepository.getWorstSleeper(todayDate)
-  // }).getFirstName();
+  sleepCalendarHoursAverageWeekly.innerText = user.sleepRepository.averageWeeklySleepHours(todayDate);
 
-    sleepInfoQualityAverageAlltime.innerText = user.sleepRepository.sleepQualityAverage;
-
-    sleepCalendarHoursAverageWeekly.innerText = user.sleepRepository.averageWeeklySleepHours(todayDate);
-
-    sleepCalendarQualityAverageWeekly.innerText = user.sleepRepository.averageWeeklySleepQuality(todayDate);
+  sleepCalendarQualityAverageWeekly.innerText = user.sleepRepository.averageWeeklySleepQuality(todayDate);
 }
 
 function updateUserActivityDisplay() {
