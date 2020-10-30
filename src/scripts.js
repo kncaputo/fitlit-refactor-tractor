@@ -160,6 +160,9 @@ function updateUserSleepDisplay() {
   sleepUserHoursToday.innerText = user.sleepRepository.sleepHistory.find(sleep => {
     return sleep.date === todayDate;
   }).hoursSlept;
+  sleepInfoQualityToday.innerText = user.sleepRepository.sleepHistory.find(sleep => {
+    return sleep.date === todayDate;
+  }).sleepQuality;
 }
 
 function updateUserStepDisplay() {
