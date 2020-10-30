@@ -9,7 +9,7 @@
   </head>
   <body>
     <header>
-      <input type="date" min="2019-06-15"></input>
+      <input type="date" min="2019-06-15"id="calendar"></input>
       <h1><span id='header-name'></span>FITLIT</h1>
       <button type='button' name='button' id='profile-button'><img src="./images/profile.png" class="info-button"></button>
       <section class='hide' id='user-info-dropdown'>
@@ -23,8 +23,8 @@
       </section>
     </header>
     <section class="add-information">
-      <form class='activity-form'>
-        <button type='button' name='button' class='add-activity-button add-button'>ADD ACTIVITY INFO</button>
+      <button type='button' name='button' class='add-activity-button add-button'>ADD ACTIVITY INFO</button>
+        <form class='activity-form hide'>
         <label for="activity-steps">Total Steps Today:</label>
         <input type="number" name="activity-steps" value="">
         </input>
@@ -37,23 +37,25 @@
         <label for="activity-mins-active">Miles Walked Today:</label>
         <input type="number" name="activity-miles-walked" value="">
         </input>
-        <button type="button" name="submit-activity-button" class="button">SUBMIT ACTIVITY</button>
+        <button type="button" name="submit-activity-button" class="submit-button">SUBMIT ACTIVITY</button>
       </form>
-      <form class="hydration-form">
-        <button type='button' name='button' class='add-hydration-button add-button'>ADD HYDRATION INFO</button>
+      <button type='button' name='button' class='add-hydration-button add-button'>ADD HYDRATION INFO</button>
+        <form class="hydration-form hide">
         <label for="activity-mins-active">Ounces Drank Today:</label>
         <input type="number" name="hydration-ounces" value="">
         </input>
-        <button type="button" name="submit-hydration-button" class="button">SUBMIT HYDRATION</button>
+        <button type="button" name="submit-hydration-button" class="submit-button">SUBMIT HYDRATION</button>
       </form>
       <button type='button' name='button' class='add-sleep-button add-button'>ADD SLEEP INFO</button>
-      <label for="activity-mins-active">Hours Slept Today:</label>
-      <input type="number" name="sleep-hours" value="">
-      </input>
-      <label for="activity-mins-active">Sleep Quality Today:</label>
-      <input type="number" name="sleep-quality" value="">
-      </input>
-      <button type="button" name="submit-activity-button" class="button">SUBMIT SLEEP</button>
+        <form class="sleep-form hide">
+        <label for="activity-mins-active">Hours Slept Today:</label>
+        <input type="number" name="sleep-hours" value="">
+        </input>
+        <label for="activity-mins-active">Sleep Quality Today:</label>
+        <input type="number" name="sleep-quality" value="">
+        </input>
+        <button type="button" name="submit-activity-button" class="submit-button">SUBMIT SLEEP</button>
+      </form>
     </section>
     <main>
       <section class='card-container' id='steps-card-container'>
