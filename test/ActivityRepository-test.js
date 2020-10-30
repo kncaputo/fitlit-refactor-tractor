@@ -98,19 +98,19 @@ describe('ActivityRepository', () => {
     });
 
     it('should be able to create new instances of activities from a data object', () => {
-      const hisotry = activityRepository.activityHistory
-      expect(hisotry.length).to.deep.equal(4);
+      const history = activityRepository.activityHistory
+      expect(history.length).to.deep.equal(4);
       const newActivity = {
         "userID": 1,
         "date": "2019/06/19",
         "numSteps": 800,
         "minutesActive": 90,
         "flightsOfStairs": 7
-      }
+      };
       const result = activityRepository.createNewActivity(newActivity);
 
-      expect(hisotry[hisotry.length - 1]).to.be.an.instanceof(Activity);
-      expect(hisotry.length).to.deep.equal(5);
+      expect(history[history.length - 1]).to.be.an.instanceof(Activity);
+      expect(history.length).to.deep.equal(5);
     });
 
     it('should calculate the miles a user walked on a given day', () => {

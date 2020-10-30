@@ -84,7 +84,7 @@ describe('HydrationRepository', () => {
         "userID": 1,
         "date": "2018/06/20",
         "numOunces": 50
-      }
+      };
 
       const result = hydrationRepository.createNewHydration(newHydration);
 
