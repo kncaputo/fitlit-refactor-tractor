@@ -174,12 +174,20 @@ function updateUserSleepDisplay() {
 }
 
 function updateUserActivityDisplay() {
+  updateTrendingStairsDays();
+  updateTrendingStepDays();
+  stepsInfoActiveMinutesToday.innerText = user.activityRepository.activityHistory.find(activity => {
+    return activity.date === todayDate;
+  }).minutesActive;
+
+  stepsUserStepsToday.innerText = user.activityRepository.activityHistory.find(activity => {
+    return activity.date === todayDate;
+  }).steps;
     // stairsCalendarFlightsAverageWeekly.innerText = user.activityRepository.calculateAverageStairs(todayDate);
     // stepsCalendarTotalActiveMinutesWeekly.innerText = user.activityRepository.averageWeeklyMinutesActive(todayDate);
     // stepsFriendAverageStepGoal.innerText = `${userRepository.activityRepository.calculateAverageStepGoal()}`;
     // stepsCalendarTotalStepsWeekly.innerText = user.activityRepository.calculateAverageStepsThisWeek(todayDate);
-    updateTrendingStairsDays();
-    updateTrendingStepDays();
+
 }
 
 function updateUserHydrationDisplay() {
@@ -258,13 +266,9 @@ function updateUserFriendsDisplay() {
 
   // stairsCalendarStairsAverageWeekly.innerText = (user.calculateAverageStairs(todayDate) * 12).toFixed(0);
   //
-  // stepsInfoActiveMinutesToday.innerText = activityData.find(activity => {
-  //   return activity.userID === user.id && activity.date === todayDate;
-  // }).minutesActive;
   //
-  // stepsUserStepsToday.innerText = activityData.find(activity => {
-  //   return activity.userID === user.id && activity.date === todayDate;
-  // }).numSteps;
+  //
+
 
   // userRepository.findFriendsTotalStepsForWeek(userRepository.users, todayDate);
 
