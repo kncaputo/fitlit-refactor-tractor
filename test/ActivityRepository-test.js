@@ -161,10 +161,16 @@ describe('ActivityRepository', () => {
      expect(result).to.deep.equal('7');
     });
 
+    it('should have a method that calculates daily calories burned', () => {
+      const result = activityRepository.calculateDailyCalories("2019/06/18");
 
-    // it('should have a method that calculates daily calories burned', () => {
-    //   user.activityRecord = [{date: "2019/09/16", activityRecord: 78}, {date: "2019/09/17", minutesActive: 100}, {date: "2019/09/17", minutesActive: 20}];
-    //   expect(user.calculateDailyCalories("2019/09/17")).to.equal(912)
-    // });
+      expect(result).to.equal(1049);
+    });
+
+    it('should have a method that calculates total steps this week when given a date', () => {
+      const result = activityRepository.calculateTotalStepsThisWeek("2019/06/18");
+
+      expect(activityRepository.totalStepsThisWeek).to.equal(24512);
+    });
   });
 });
