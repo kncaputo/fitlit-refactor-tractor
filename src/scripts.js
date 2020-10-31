@@ -1,27 +1,36 @@
-import './css/base.scss';
+import './css/_base.scss';
 import './css/styles.scss';
-import apiCalls from './apiCalls.js';
+// import apiCalls from './apiCalls.js';
 // import '/hydration-calendar.png', '/hydration-friends.png', '/hydration-goback.png' from './images'
-
-import {dailyOz, dropdownEmail, dropdownFriendsStepsContainer, dropdownGoal, dropdownName, headerName, hydrationCalendarCard, hydrationFriendOuncesToday, hydrationFriendsCard, hydrationInfoCard, hydrationInfoGlassesToday, hydrationMainCard, hydrationUserOuncesToday, mainPage, profileButton, sleepCalendarCard, sleepCalendarHoursAverageWeekly, sleepCalendarQualityAverageWeekly, sleepFriendLongestSleeper, sleepFriendsCard, sleepFriendWorstSleeper, sleepInfoCard, sleepInfoHoursAverageAlltime, sleepInfoQualityAverageAlltime, sleepInfoQualityToday, sleepMainCard, sleepUserHoursToday, stairsCalendarCard, stairsCalendarFlightsAverageWeekly, stairsCalendarStairsAverageWeekly, stepsMainCard, stepsInfoCard, stepsFriendsCard, stepsTrendingCard, stepsCalendarCard, stairsFriendFlightsAverageToday, stairsFriendsCard, stairsInfoCard, stairsInfoFlightsToday, stairsMainCard, stairsTrendingButton, stairsTrendingCard, stairsUserStairsToday, stepsCalendarTotalActiveMinutesWeekly, stepsCalendarTotalStepsWeekly, stepsFriendAverageStepGoal, stepsInfoActiveMinutesToday, stepsInfoMilesWalkedToday, stepsFriendActiveMinutesAverageToday, stepsFriendStepsAverageToday, stepsTrendingButton, stepsUserStepsToday, trendingStepsPhraseContainer, trendingStairsPhraseContainer, userInfoDropdown, friendsStepsParagraphs, addActivityButton, addHydrationButton, addSleepButton, submitActivityButton, submitSleepButton, submitHydrationButton, activityStepsInput, activityMinutesInput, flightStairsInput, milesWalkedInput, ouncesDrankInput, hoursSleptInput, sleepQualityInput, calendarInput, activityForm, sleepForm, hydrationForm, dropdownCalories} from './DOMelements.js'
+import {dailyOz, dropdownEmail, dropdownFriendsStepsContainer, dropdownGoal, dropdownName, headerName, hydrationCalendarCard, hydrationFriendOuncesToday, hydrationFriendsCard, hydrationInfoCard, hydrationInfoGlassesToday, hydrationMainCard, hydrationUserOuncesToday, mainPage, profileButton, sleepCalendarCard, sleepCalendarHoursAverageWeekly, sleepCalendarQualityAverageWeekly, sleepFriendLongestSleeper, sleepFriendsCard, sleepFriendWorstSleeper, sleepInfoCard, sleepInfoHoursAverageAlltime, sleepInfoQualityAverageAlltime, sleepInfoQualityToday, sleepMainCard, sleepUserHoursToday, stairsCalendarCard, stairsCalendarFlightsAverageWeekly, stairsCalendarStairsAverageWeekly, stepsMainCard, stepsInfoCard, stepsFriendsCard, stepsTrendingCard, stepsCalendarCard, stairsFriendFlightsAverageToday, stairsFriendsCard, stairsInfoCard, stairsInfoFlightsToday, stairsMainCard, stairsTrendingButton, stairsTrendingCard, stairsUserStairsToday, stepsCalendarTotalActiveMinutesWeekly, stepsCalendarTotalStepsWeekly, stepsFriendAverageStepGoal, stepsInfoActiveMinutesToday, stepsInfoMilesWalkedToday, stepsFriendActiveMinutesAverageToday, stepsFriendStepsAverageToday, stepsTrendingButton, stepsUserStepsToday, trendingStepsPhraseContainer, trendingStairsPhraseContainer, userInfoDropdown, friendsStepsParagraphs, addActivityButton, addHydrationButton, addSleepButton, submitActivityButton, submitSleepButton, submitHydrationButton, activityStepsInput, activityMinutesInput, flightStairsInput, milesWalkedInput, ouncesDrankInput, hoursSleptInput, sleepQualityInput, calendarInput, activityForm, sleepForm, hydrationForm, dropdownCalories, inputDate} from './DOMelements.js'
 
 import UserRepository from './UserRepository';
-
-window.onload = fetchData();
+import Service from './Service';
+import UserService from './UserService';
+import SleepService from './SleepService';
+import ActivityService from './ActivityService';
+import HydrationService from './HydrationService';
 
 let userRepository;
 let user;
 let todayDate = "2019/06/15";
+let userDateInput;
+let service = new Service();
+let userService;
+let sleepService;
+let activityService;
+let hydrationService;
+window.onload = instantiateServices();
 
+addActivityButton.addEventListener('click', showActivityForm);
+addHydrationButton.addEventListener('click', showHydrationForm);
+addSleepButton.addEventListener('click', showSleepData);
 mainPage.addEventListener('click', showInfo);
 profileButton.addEventListener('click', showDropdown);
 stairsTrendingButton.addEventListener('click', updateTrendingStairsDays);
 stepsTrendingButton.addEventListener('click', updateTrendingStepDays);
-addActivityButton.addEventListener('click', inputActivityData);
-addHydrationButton.addEventListener('click', inputHydrationData);
-addSleepButton.addEventListener('click', inputSleepData);
-submitActivityButton.addEventListener('click',postActivityData);
-submitHydrationButton.addEventListener('click',postHydrationData);
+submitActivityButton.addEventListener('click', postActivityData);
+submitHydrationButton.addEventListener('click', postHydrationData);
 submitSleepButton.addEventListener('click',postSleepData);
 calendarInput.addEventListener('change', (event) => {
   let formatDate = `${event.target.value}`.split('-');
@@ -29,20 +38,24 @@ calendarInput.addEventListener('change', (event) => {
   console.log(todayDate)
   updateAllDisplays();
 });
-// stairsTrendingButton.addEventListener('click', function() {
-//   user.findTrendingStairsDays();
-//   trendingStairsPhraseContainer.innerHTML = `<p class='trend-line'>${user.trendingStairsDays[0]}</p>`;
-// });
-// stepsTrendingButton.addEventListener('click', function() {
-//   user.findTrendingStepDays();
-//   trendingStepsPhraseContainer.innerHTML = `<p class='trend-line'>${user.trendingStepDays[0]}</p>`;
-// });
+inputDate.addEventListener('change', (event) => {
+  let formatDate = `${event.target.value}`.split('-');
+  userDateInput = formatDate.join('/');
+});
 
-function fetchData() {
-  let userPromise = apiCalls.fetchUserData();
-  let sleepPromise = apiCalls.fetchSleepData();
-  let activityPromise = apiCalls.fetchActivityData();
-  let hydrationPromise = apiCalls.fetchHydrationData();
+function instantiateServices() {
+  userService = new UserService('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/users/userData', 'userData');
+  sleepService = new SleepService('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/sleep/sleepData', 'sleepData');
+  activityService = new ActivityService('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/activity/activityData', 'activityData');
+  hydrationService = new HydrationService('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData', 'hydrationData');
+  fetchAllData();
+}
+
+function fetchAllData() {
+  let userPromise = userService.fetchData();
+  let sleepPromise = sleepService.fetchData();
+  let activityPromise = activityService.fetchData();
+  let hydrationPromise = hydrationService.fetchData();
 
   Promise.all([userPromise, sleepPromise, activityPromise, hydrationPromise])
   .then(data => userRepository = new UserRepository(data[0], data[1], data[2], data[3]))
@@ -262,100 +275,65 @@ function updateTrendingStepDays() {
   trendingStepsPhraseContainer.innerHTML = `<p class='trend-line'>${user.activityRepository.trendingStepDays[0]}</p>`;
 }
 
-function inputActivityData() {
+function showHomePage() {
+  mainPage.classList.remove('hide');
+  addActivityButton.classList.remove('hide');
+  addHydrationButton.classList.remove('hide');
+  addSleepButton.classList.remove('hide');
+  calendarInput.classList.remove('hide');
+  inputDate.classList.add('hide');
+}
+
+function hideHomePage() {
   mainPage.classList.add('hide');
   addActivityButton.classList.add('hide');
   addHydrationButton.classList.add('hide');
   addSleepButton.classList.add('hide');
+  calendarInput.classList.add('hide');
+  inputDate.classList.remove('hide');
+}
+
+function showActivityForm() {
+  hideHomePage();
   activityForm.classList.remove('hide');
 }
 
-function postActivityData() {
-  mainPage.classList.remove('hide');
-  addActivityButton.classList.remove('hide');
-  addHydrationButton.classList.remove('hide');
-  addSleepButton.classList.remove('hide');
-  activityForm.classList.add('hide');
-}
-
-function inputHydrationData() {
-  mainPage.classList.add('hide');
-  addActivityButton.classList.add('hide');
-  addHydrationButton.classList.add('hide');
-  addSleepButton.classList.add('hide');
-  hydrationForm.classList.remove('hide');
-}
-
-function postHydrationData() {
-  mainPage.classList.remove('hide');
-  addActivityButton.classList.remove('hide');
-  addHydrationButton.classList.remove('hide');
-  addSleepButton.classList.remove('hide');
-  hydrationForm.classList.add('hide');
-}
-
-function inputSleepData() {
-  mainPage.classList.add('hide');
-  addActivityButton.classList.add('hide');
-  addHydrationButton.classList.add('hide');
-  addSleepButton.classList.add('hide');
+function showSleepData() {
+  hideHomePage();
   sleepForm.classList.remove('hide');
 }
 
-function postSleepData() {
-  mainPage.classList.remove('hide');
-  addActivityButton.classList.remove('hide');
-  addHydrationButton.classList.remove('hide');
-  addSleepButton.classList.remove('hide');
-  sleepForm.classList.add('hide');
+function showHydrationForm() {
+  hideHomePage();
+  hydrationForm.classList.remove('hide');
 }
 
-// for (var i = 0; i < dailyOz.length; i++) {
-//   dailyOz[i].innerText = user.hydrationRepository.addDailyOunces(Object.keys(sortedHydrationDataByDate[i])[0])
-// }
-// for (var i = 0; i < dailyOz.length; i++) {
-//   dailyOz[i].innerText = user.hydrationRepository.addDailyOunces(Object.keys(sortedHydrationDataByDate[i])[0])
-// }
+function postActivityData() {
+  let onSuccess = () => {
+    showHomePage();
+    activityForm.classList.add('hide');
+  }
+  let rawActivity = {userID: user.id, date: userDateInput, numSteps: activityStepsInput.value, minutesActive: activityMinutesInput.value, flightsOfStairs: flightStairsInput.value};
+  user.activityRepository.createNewActivity(rawActivity);
+  activityService.postData(rawActivity, onSuccess);
+}
 
-//
-// stepsInfoMilesWalkedToday.innerText = user.activityRepository.activityHistory.find(activity => {
-//   return (activity.date === todayDate && activity.userId === user.id)
-// }).calculateMiles(userRepository);
+function postHydrationData() {
+  let onSuccess = () => {
+    showHomePage();
+    hydrationForm.classList.add('hide');
+  }
+  let rawHydration = {userID: user.id, date: userDateInput, numOunces: ouncesDrankInput.value}
+  user.hydrationRepository.createNewHydration(rawHydration);
+  hydrationService.postData(rawHydration, onSuccess);
+}
 
-
-
-  //
-
-
-  // sleepInfoQualityToday.innerText = sleepData.find(sleep => {
-  //   return sleep.userID === user.id && sleep.date === todayDate;
-  // }).sleepQuality;
-  //
-  // sleepUserHoursToday.innerText = sleepData.find(sleep => {
-  //   return sleep.userID === user.id && sleep.date === todayDate;
-  // }).hoursSlept;
-
-  // stairsCalendarFlightsAverageWeekly.innerText = user.activityRepository.calculateAverageFlightsThisWeek(todayDate);
-  //
-  // stairsCalendarStairsAverageWeekly.innerText = (user.calculateAverageFlightsThisWeek(todayDate) * 12).toFixed(0);
-  //
-  // stairsFriendFlightsAverageToday.innerText = (userRepository.calculateAverageStairs(todayDate) / 12).toFixed(1);
-
-  // stairsInfoFlightsToday.innerText = activityData.find(activity => {
-  //   return activity.userID === user.id && activity.date === todayDate;
-  // }).flightsOfStairs;
-  //
-
-
-  //
-  //
-  //
-
-
-  // userRepository.findFriendsTotalStepsForWeek(userRepository.users, todayDate);
-
-  // user.friendsActivityRecords.forEach(friend => {
-  //   dropdownFriendsStepsContainer.innerHTML += `
-  //   <p class='dropdown-p friends-steps'>${friend.firstName} |  ${friend.totalWeeklySteps}</p>
-  //   `;
-  // });
+function postSleepData() {
+  let onSuccess = () => {
+    showHomePage();
+    sleepForm.classList.add('hide');
+  }
+  let rawSleep = {userID: user.id, date: userDateInput, hoursSlept: hoursSleptInput.value, sleepQuality: sleepQualityInput.value}
+  user.sleepRepository.createNewSleep(rawSleep);
+  sleepService.postData(rawSleep, onSuccess);
+}
