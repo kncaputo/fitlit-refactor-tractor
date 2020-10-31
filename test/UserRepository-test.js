@@ -222,32 +222,32 @@ describe('UserRepository', () => {
         {"2019/06/16": 4}
       ]
 
-      expect(userRepository.calculateAverageDailyWater("2019/06/16")).to.equal(5)
+      expect(userRepository.calculateAverageDailyWater("2019/06/16")).to.deep.equal(5)
+    });
+
+    it('should calculate all ounces drank by users when given a date', () => {
+      expect(userRepository.calculateAllOunces("2019/06/15")).to.deep.equal(159);
     });
 
     it('should find the best sleepers', () => {
-      expect(userRepository.findBestSleepers("2019/06/15")).to.deep.equal([{
+      const bestSleepers = [{
         "name": "Jarvis Considine",
         "averageWeekSleepQuality": "71.4"
-      }]);
+      }];
+
+      expect(userRepository.findBestSleepers("2019/06/15")).to.deep.equal(bestSleepers);
     });
 
     it('should find the longest sleepers', () => {
-      expect(userRepository.getLongestSleeper("2019/06/15")).to.deep.equal({
-        "userID": 3,
-        "date": "2019/06/15",
-        "hoursSlept": 9.3,
-        "sleepQuality": 1.4
-      });
+      const longestSleeper = userRepository.getLongestSleeper("2019/06/15")
+
+      expect(longestSleeper.id).to.deep.equal(3);
     });
 
-    it('should find the worst sleepers', () => {
-      expect(userRepository.getWorstSleeper("2019/06/15")).to.deep.equal({
-        "userID": 2,
-        "date": "2019/06/15",
-        "hoursSlept": 7.3,
-        "sleepQuality": 500
-      });
+    it('should find the worst sleeper', () => {
+      const worstSleeper = userRepository.getWorstSleeper("2019/06/15");
+
+      expect(worstSleeper.id).to.deep.equal(2);
     });
 
     it('should calculate the average number of stairs for users', () => {

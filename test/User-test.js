@@ -120,5 +120,7 @@ describe('User', () => {
       user.findFriendsNames(users);
       expect(user.friendsNames).to.deep.equal(['BEN', 'JOHN', 'NICK']);
     });
+
+    
   });
 });
