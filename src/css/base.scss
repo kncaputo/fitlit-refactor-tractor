@@ -1,5 +1,7 @@
-/* This is an example of using Sass, otherwise plain CSS works too*/
-$primary-background: pink;
+$primary-color: white;
+$background-color: #1F1F1F;
+$primary-font: 'Oswald', sans-serif;
+$secondary-font: 'Work Sans', sans-serif;
 
 body {
   background-color: $primary-background;
