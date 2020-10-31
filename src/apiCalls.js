@@ -25,6 +25,22 @@ let apiCalls = {
       .then(response => response.json())
       .then(data => data.hydrationData)
       .catch(err => console.log(err))
+  },
+
+  postHydrationData(object, onSuccess) {
+    return fetch('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData', {
+      method: 'POST',
+      headers: {
+  	    'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(object)
+    })
+    .then(response => response.json())
+    .then(json => {
+      console.log(json)
+      onSuccess()
+    })
+    .catch(err => console.log(err))
   }
 }
 

@@ -1,4 +1,4 @@
-import './css/base.scss';
+import './css/_base.scss';
 import './css/styles.scss';
 import apiCalls from './apiCalls.js';
 // import '/hydration-calendar.png', '/hydration-friends.png', '/hydration-goback.png' from './images'
@@ -13,15 +13,15 @@ let userRepository;
 let user;
 let todayDate = "2019/06/15";
 
+addActivityButton.addEventListener('click', inputActivityData);
+addHydrationButton.addEventListener('click', inputHydrationData);
+addSleepButton.addEventListener('click', inputSleepData);
 mainPage.addEventListener('click', showInfo);
 profileButton.addEventListener('click', showDropdown);
 stairsTrendingButton.addEventListener('click', updateTrendingStairsDays);
 stepsTrendingButton.addEventListener('click', updateTrendingStepDays);
-addActivityButton.addEventListener('click', inputActivityData);
-addHydrationButton.addEventListener('click', inputHydrationData);
-addSleepButton.addEventListener('click', inputSleepData);
-submitActivityButton.addEventListener('click',postActivityData);
-submitHydrationButton.addEventListener('click',postHydrationData);
+submitActivityButton.addEventListener('click', postActivityData);
+submitHydrationButton.addEventListener('click', postHydrationData);
 submitSleepButton.addEventListener('click',postSleepData);
 calendarInput.addEventListener('change', (event) => {
   let formatDate = `${event.target.value}`.split('-');
@@ -29,14 +29,6 @@ calendarInput.addEventListener('change', (event) => {
   console.log(todayDate)
   updateAllDisplays();
 });
-// stairsTrendingButton.addEventListener('click', function() {
-//   user.findTrendingStairsDays();
-//   trendingStairsPhraseContainer.innerHTML = `<p class='trend-line'>${user.trendingStairsDays[0]}</p>`;
-// });
-// stepsTrendingButton.addEventListener('click', function() {
-//   user.findTrendingStepDays();
-//   trendingStepsPhraseContainer.innerHTML = `<p class='trend-line'>${user.trendingStepDays[0]}</p>`;
-// });
 
 function fetchData() {
   let userPromise = apiCalls.fetchUserData();
@@ -287,11 +279,16 @@ function inputHydrationData() {
 }
 
 function postHydrationData() {
-  mainPage.classList.remove('hide');
-  addActivityButton.classList.remove('hide');
-  addHydrationButton.classList.remove('hide');
-  addSleepButton.classList.remove('hide');
-  hydrationForm.classList.add('hide');
+  let onSuccess = () => {
+    mainPage.classList.remove('hide');
+    addActivityButton.classList.remove('hide');
+    addHydrationButton.classList.remove('hide');
+    addSleepButton.classList.remove('hide');
+    hydrationForm.classList.add('hide');
+  }
+  let rawHydration = {userID: user.id, date: todayDate, numOunces: 9}
+  user.hydrationRepository.createNewHydration(rawHydration);
+  apiCalls.postHydrationData(rawHydration, onSuccess);
 }
 
 function inputSleepData() {
