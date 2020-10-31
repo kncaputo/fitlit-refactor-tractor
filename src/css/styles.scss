@@ -35,6 +35,12 @@ button:active {
   width: 5.6vw;
 }
 
+// #calendar {
+//   height: 30px;
+//   margin-left: 15px;
+//   margin-top: 40px;
+// }
+
 #user-info-dropdown {
   background-color: #1F1F1F;
   color: white;
@@ -54,6 +60,42 @@ button:active {
   width: 100%;
 }
 
+.add-button {
+  background-color: #1F1F1F;
+  font-family: 'Oswald', sans-serif;
+  font-size: 14px;
+  color: white;
+  width: 250px;
+  outline: none;
+}
+
+.add-buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 15px;
+}
+
+label {
+  color: white;
+}
+
+.submit-button {
+  background-color: #1F1F1F;
+  font-family: 'Oswald', sans-serif;
+  font-size: 14px;
+  color: white;
+  width: 250px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+input {
+  width: 140px;
+}
 /* TEXT ELEMENTS */
 h1 {
   color: #fff;
