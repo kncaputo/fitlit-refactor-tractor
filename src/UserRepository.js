@@ -128,6 +128,16 @@ export default class UserRepository {
     return Math.floor(parseInt(ouncesConsumed) / todaysDrinkers.length);
   }
 
+  calculateAllOunces(date) {
+    let todaysDrinkers = this.users.filter(user => {
+      return user.hydrationRepository.findOunces(date) > 0;
+    });
+
+    return todaysDrinkers.reduce((sum, user) => {
+      return sum += user.hydrationRepository.findOunces(date);
+    }, 0);
+  }
+
   findBestSleepers(date) {
     let bestSleepers = this.users.filter(user => {
       return user.sleepRepository.averageWeeklySleepQuality(date) > 3;
@@ -149,8 +159,8 @@ export default class UserRepository {
     let longestSleepers = sleepsOnDate.sort((a, b) => {
       return b.hoursSlept - a.hoursSlept;
     });
-
-    return longestSleepers[0];
+    let longestSleeper = this.getUser(longestSleepers[0].userID);
+    return longestSleeper
   }
 
   getWorstSleeper(date) {
@@ -164,6 +174,7 @@ export default class UserRepository {
       return a.hoursSlept - b.hoursSlept;
     });
 
-    return shortestSleepers[0];
+    let shortestSleeper = this.getUser(shortestSleepers[0].userID);
+    return shortestSleeper
   }
 }
