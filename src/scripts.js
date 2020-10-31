@@ -3,8 +3,7 @@ import './css/styles.scss';
 import apiCalls from './apiCalls.js';
 // import '/hydration-calendar.png', '/hydration-friends.png', '/hydration-goback.png' from './images'
 
-import {dailyOz, dropdownEmail, dropdownFriendsStepsContainer, dropdownGoal, dropdownName, headerName, hydrationCalendarCard, hydrationFriendOuncesToday, hydrationFriendsCard, hydrationInfoCard, hydrationInfoGlassesToday, hydrationMainCard, hydrationUserOuncesToday, mainPage, profileButton, sleepCalendarCard, sleepCalendarHoursAverageWeekly, sleepCalendarQualityAverageWeekly, sleepFriendLongestSleeper, sleepFriendsCard, sleepFriendWorstSleeper, sleepInfoCard, sleepInfoHoursAverageAlltime, sleepInfoQualityAverageAlltime, sleepInfoQualityToday, sleepMainCard, sleepUserHoursToday, stairsCalendarCard, stairsCalendarFlightsAverageWeekly, stairsCalendarStairsAverageWeekly, stepsMainCard, stepsInfoCard, stepsFriendsCard, stepsTrendingCard, stepsCalendarCard, stairsFriendFlightsAverageToday, stairsFriendsCard, stairsInfoCard, stairsInfoFlightsToday, stairsMainCard, stairsTrendingButton, stairsTrendingCard, stairsUserStairsToday, stepsCalendarTotalActiveMinutesWeekly, stepsCalendarTotalStepsWeekly, stepsFriendAverageStepGoal, stepsInfoActiveMinutesToday, stepsInfoMilesWalkedToday, stepsFriendActiveMinutesAverageToday, stepsFriendStepsAverageToday, stepsTrendingButton, stepsUserStepsToday, trendingStepsPhraseContainer, trendingStairsPhraseContainer, userInfoDropdown, friendsStepsParagraphs} from './DOMelements.js'
-
+import {dailyOz, dropdownEmail, dropdownFriendsStepsContainer, dropdownGoal, dropdownName, headerName, hydrationCalendarCard, hydrationFriendOuncesToday, hydrationFriendsCard, hydrationInfoCard, hydrationInfoGlassesToday, hydrationMainCard, hydrationUserOuncesToday, mainPage, profileButton, sleepCalendarCard, sleepCalendarHoursAverageWeekly, sleepCalendarQualityAverageWeekly, sleepFriendLongestSleeper, sleepFriendsCard, sleepFriendWorstSleeper, sleepInfoCard, sleepInfoHoursAverageAlltime, sleepInfoQualityAverageAlltime, sleepInfoQualityToday, sleepMainCard, sleepUserHoursToday, stairsCalendarCard, stairsCalendarFlightsAverageWeekly, stairsCalendarStairsAverageWeekly, stepsMainCard, stepsInfoCard, stepsFriendsCard, stepsTrendingCard, stepsCalendarCard, stairsFriendFlightsAverageToday, stairsFriendsCard, stairsInfoCard, stairsInfoFlightsToday, stairsMainCard, stairsTrendingButton, stairsTrendingCard, stairsUserStairsToday, stepsCalendarTotalActiveMinutesWeekly, stepsCalendarTotalStepsWeekly, stepsFriendAverageStepGoal, stepsInfoActiveMinutesToday, stepsInfoMilesWalkedToday, stepsFriendActiveMinutesAverageToday, stepsFriendStepsAverageToday, stepsTrendingButton, stepsUserStepsToday, trendingStepsPhraseContainer, trendingStairsPhraseContainer, userInfoDropdown, friendsStepsParagraphs, addActivityButton, addHydrationButton, addSleepButton, submitActivityButton, submitSleepButton, submitHydrationButton, activityStepsInput, activityMinutesInput, flightStairsInput, milesWalkedInput, ouncesDrankInput, hoursSleptInput, sleepQualityInput, calendarInput, activityForm, sleepForm, hydrationForm, dropdownCalories} from './DOMelements.js'
 
 import UserRepository from './UserRepository';
 
@@ -12,12 +11,24 @@ window.onload = fetchData();
 
 let userRepository;
 let user;
-let todayDate = "2019/09/22";
+let todayDate = "2019/06/15";
 
 mainPage.addEventListener('click', showInfo);
 profileButton.addEventListener('click', showDropdown);
 stairsTrendingButton.addEventListener('click', updateTrendingStairsDays);
 stepsTrendingButton.addEventListener('click', updateTrendingStepDays);
+addActivityButton.addEventListener('click', inputActivityData);
+addHydrationButton.addEventListener('click', inputHydrationData);
+addSleepButton.addEventListener('click', inputSleepData);
+submitActivityButton.addEventListener('click',postActivityData);
+submitHydrationButton.addEventListener('click',postHydrationData);
+submitSleepButton.addEventListener('click',postSleepData);
+calendarInput.addEventListener('change', (event) => {
+  let formatDate = `${event.target.value}`.split('-');
+  todayDate = formatDate.join('/');
+  console.log(todayDate)
+  updateAllDisplays();
+});
 // stairsTrendingButton.addEventListener('click', function() {
 //   user.findTrendingStairsDays();
 //   trendingStairsPhraseContainer.innerHTML = `<p class='trend-line'>${user.trendingStairsDays[0]}</p>`;
@@ -143,6 +154,7 @@ function updateAllDisplays() {
 
 function updateUserDisplay() {
   dropdownGoal.innerText = `DAILY STEP GOAL | ${user.dailyStepGoal}`;
+  dropdownCalories.innerText = `DAILY CALORIES BURNED | ${user.activityRepository.calculateDailyCalories(todayDate)}`
   dropdownEmail.innerText = `EMAIL | ${user.email}`;
   dropdownName.innerText = user.name.toUpperCase();
   headerName.innerText = `${user.getFirstName()}'S `;
@@ -248,6 +260,54 @@ function updateTrendingStairsDays() {
 function updateTrendingStepDays() {
   user.activityRepository.findTrendingStepDays();
   trendingStepsPhraseContainer.innerHTML = `<p class='trend-line'>${user.activityRepository.trendingStepDays[0]}</p>`;
+}
+
+function inputActivityData() {
+  mainPage.classList.add('hide');
+  addActivityButton.classList.add('hide');
+  addHydrationButton.classList.add('hide');
+  addSleepButton.classList.add('hide');
+  activityForm.classList.remove('hide');
+}
+
+function postActivityData() {
+  mainPage.classList.remove('hide');
+  addActivityButton.classList.remove('hide');
+  addHydrationButton.classList.remove('hide');
+  addSleepButton.classList.remove('hide');
+  activityForm.classList.add('hide');
+}
+
+function inputHydrationData() {
+  mainPage.classList.add('hide');
+  addActivityButton.classList.add('hide');
+  addHydrationButton.classList.add('hide');
+  addSleepButton.classList.add('hide');
+  hydrationForm.classList.remove('hide');
+}
+
+function postHydrationData() {
+  mainPage.classList.remove('hide');
+  addActivityButton.classList.remove('hide');
+  addHydrationButton.classList.remove('hide');
+  addSleepButton.classList.remove('hide');
+  hydrationForm.classList.add('hide');
+}
+
+function inputSleepData() {
+  mainPage.classList.add('hide');
+  addActivityButton.classList.add('hide');
+  addHydrationButton.classList.add('hide');
+  addSleepButton.classList.add('hide');
+  sleepForm.classList.remove('hide');
+}
+
+function postSleepData() {
+  mainPage.classList.remove('hide');
+  addActivityButton.classList.remove('hide');
+  addHydrationButton.classList.remove('hide');
+  addSleepButton.classList.remove('hide');
+  sleepForm.classList.add('hide');
 }
 
 // for (var i = 0; i < dailyOz.length; i++) {
