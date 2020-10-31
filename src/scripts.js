@@ -2,7 +2,7 @@ import './css/_base.scss';
 import './css/styles.scss';
 // import apiCalls from './apiCalls.js';
 // import '/hydration-calendar.png', '/hydration-friends.png', '/hydration-goback.png' from './images'
-import {dailyOz, dropdownEmail, dropdownFriendsStepsContainer, dropdownGoal, dropdownName, headerName, hydrationCalendarCard, hydrationFriendOuncesToday, hydrationFriendsCard, hydrationInfoCard, hydrationInfoGlassesToday, hydrationMainCard, hydrationUserOuncesToday, mainPage, profileButton, sleepCalendarCard, sleepCalendarHoursAverageWeekly, sleepCalendarQualityAverageWeekly, sleepFriendLongestSleeper, sleepFriendsCard, sleepFriendWorstSleeper, sleepInfoCard, sleepInfoHoursAverageAlltime, sleepInfoQualityAverageAlltime, sleepInfoQualityToday, sleepMainCard, sleepUserHoursToday, stairsCalendarCard, stairsCalendarFlightsAverageWeekly, stairsCalendarStairsAverageWeekly, stepsMainCard, stepsInfoCard, stepsFriendsCard, stepsTrendingCard, stepsCalendarCard, stairsFriendFlightsAverageToday, stairsFriendsCard, stairsInfoCard, stairsInfoFlightsToday, stairsMainCard, stairsTrendingButton, stairsTrendingCard, stairsUserStairsToday, stepsCalendarTotalActiveMinutesWeekly, stepsCalendarTotalStepsWeekly, stepsFriendAverageStepGoal, stepsInfoActiveMinutesToday, stepsInfoMilesWalkedToday, stepsFriendActiveMinutesAverageToday, stepsFriendStepsAverageToday, stepsTrendingButton, stepsUserStepsToday, trendingStepsPhraseContainer, trendingStairsPhraseContainer, userInfoDropdown, friendsStepsParagraphs, addActivityButton, addHydrationButton, addSleepButton, submitActivityButton, submitSleepButton, submitHydrationButton, activityStepsInput, activityMinutesInput, flightStairsInput, milesWalkedInput, ouncesDrankInput, hoursSleptInput, sleepQualityInput, calendarInput, activityForm, sleepForm, hydrationForm, dropdownCalories} from './DOMelements.js'
+import {dailyOz, dropdownEmail, dropdownFriendsStepsContainer, dropdownGoal, dropdownName, headerName, hydrationCalendarCard, hydrationFriendOuncesToday, hydrationFriendsCard, hydrationInfoCard, hydrationInfoGlassesToday, hydrationMainCard, hydrationUserOuncesToday, mainPage, profileButton, sleepCalendarCard, sleepCalendarHoursAverageWeekly, sleepCalendarQualityAverageWeekly, sleepFriendLongestSleeper, sleepFriendsCard, sleepFriendWorstSleeper, sleepInfoCard, sleepInfoHoursAverageAlltime, sleepInfoQualityAverageAlltime, sleepInfoQualityToday, sleepMainCard, sleepUserHoursToday, stairsCalendarCard, stairsCalendarFlightsAverageWeekly, stairsCalendarStairsAverageWeekly, stepsMainCard, stepsInfoCard, stepsFriendsCard, stepsTrendingCard, stepsCalendarCard, stairsFriendFlightsAverageToday, stairsFriendsCard, stairsInfoCard, stairsInfoFlightsToday, stairsMainCard, stairsTrendingButton, stairsTrendingCard, stairsUserStairsToday, stepsCalendarTotalActiveMinutesWeekly, stepsCalendarTotalStepsWeekly, stepsFriendAverageStepGoal, stepsInfoActiveMinutesToday, stepsInfoMilesWalkedToday, stepsFriendActiveMinutesAverageToday, stepsFriendStepsAverageToday, stepsTrendingButton, stepsUserStepsToday, trendingStepsPhraseContainer, trendingStairsPhraseContainer, userInfoDropdown, friendsStepsParagraphs, addActivityButton, addHydrationButton, addSleepButton, submitActivityButton, submitSleepButton, submitHydrationButton, activityStepsInput, activityMinutesInput, flightStairsInput, milesWalkedInput, ouncesDrankInput, hoursSleptInput, sleepQualityInput, calendarInput, activityForm, sleepForm, hydrationForm, dropdownCalories, inputDate} from './DOMelements.js'
 
 import UserRepository from './UserRepository';
 import Service from './Service';
@@ -14,6 +14,7 @@ import HydrationService from './HydrationService';
 let userRepository;
 let user;
 let todayDate = "2019/06/15";
+let userDateInput;
 let service = new Service();
 let userService;
 let sleepService;
@@ -36,6 +37,10 @@ calendarInput.addEventListener('change', (event) => {
   todayDate = formatDate.join('/');
   console.log(todayDate)
   updateAllDisplays();
+});
+inputDate.addEventListener('change', (event) => {
+  let formatDate = `${event.target.value}`.split('-');
+  userDateInput = formatDate.join('/');
 });
 
 function instantiateServices() {
@@ -275,6 +280,8 @@ function showHomePage() {
   addActivityButton.classList.remove('hide');
   addHydrationButton.classList.remove('hide');
   addSleepButton.classList.remove('hide');
+  calendarInput.classList.remove('hide');
+  inputDate.classList.add('hide');
 }
 
 function hideHomePage() {
@@ -283,6 +290,7 @@ function hideHomePage() {
   addHydrationButton.classList.add('hide');
   addSleepButton.classList.add('hide');
   calendarInput.classList.add('hide');
+  inputDate.classList.remove('hide');
 }
 
 function showActivityForm() {
@@ -305,7 +313,7 @@ function postActivityData() {
     showHomePage();
     activityForm.classList.add('hide');
   }
-  let rawActivity = {userID: user.id, date: todayDate, numSteps: activityStepsInput.value, minutesActive: activityMinutesInput.value, flightsOfStairs: flightStairsInput.value};
+  let rawActivity = {userID: user.id, date: userDateInput, numSteps: activityStepsInput.value, minutesActive: activityMinutesInput.value, flightsOfStairs: flightStairsInput.value};
   user.activityRepository.createNewActivity(rawActivity);
   activityService.postData(rawActivity, onSuccess);
 }
@@ -315,7 +323,7 @@ function postHydrationData() {
     showHomePage();
     hydrationForm.classList.add('hide');
   }
-  let rawHydration = {userID: user.id, date: todayDate, numOunces: ouncesDrankInput.value}
+  let rawHydration = {userID: user.id, date: userDateInput, numOunces: ouncesDrankInput.value}
   user.hydrationRepository.createNewHydration(rawHydration);
   hydrationService.postData(rawHydration, onSuccess);
 }
@@ -325,7 +333,7 @@ function postSleepData() {
     showHomePage();
     sleepForm.classList.add('hide');
   }
-  let rawSleep = {userID: user.id, date: todayDate, hoursSlept: hoursSleptInput.value, sleepQuality: sleepQualityInput.value}
+  let rawSleep = {userID: user.id, date: userDateInput, hoursSlept: hoursSleptInput.value, sleepQuality: sleepQualityInput.value}
   user.sleepRepository.createNewSleep(rawSleep);
   sleepService.postData(rawSleep, onSuccess);
 }

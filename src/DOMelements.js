@@ -71,3 +71,4 @@ export let submitSleepButton = document.querySelector('#submit-sleep');
 export let trendingStairsPhraseContainer = document.querySelector('.trending-stairs-phrase-container');
 export let trendingStepsPhraseContainer = document.querySelector('.trending-steps-phrase-container');
 export let userInfoDropdown = document.querySelector('#user-info-dropdown');
+export let inputDate = document.querySelector('#input-date');
