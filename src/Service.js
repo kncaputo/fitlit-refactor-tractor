@@ -11,19 +11,19 @@ export default class Service {
       .catch(err => console.log(err))
   }
 
-  // postData(newPost, onSuccess) {
-  //   return fetch(this.url, {
-  //     method: 'POST',
-  //     headers: {
-  // 	    'Content-Type': 'application/json'
-  //     },
-  //     body: JSON.stringify(newPost)
-  //   })
-  //   .then(response => response.json())
-  //   .then(json => {
-  //     console.log(json);
-  //     onSuccess;
-  //   })
-  //   .catch(err => console.log(err))
-  // }
+  postData(newPost, onSuccess) {
+    return fetch(this.url, {
+      method: 'POST',
+      headers: {
+  	    'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newPost)
+    })
+    .then(response => response.json())
+    .then(json => {
+      console.log(json);
+      onSuccess;
+    })
+    .catch(err => console.log(err))
+  }
 }

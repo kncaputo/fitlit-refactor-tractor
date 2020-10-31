@@ -51,7 +51,7 @@ function fetchAllData() {
   let sleepPromise = sleepService.fetchData();
   let activityPromise = activityService.fetchData();
   let hydrationPromise = hydrationService.fetchData();
-  debugger
+
   Promise.all([userPromise, sleepPromise, activityPromise, hydrationPromise])
   .then(data => userRepository = new UserRepository(data[0], data[1], data[2], data[3]))
   .then(response => loadPage())
@@ -279,11 +279,16 @@ function inputActivityData() {
 }
 
 function postActivityData() {
-  mainPage.classList.remove('hide');
-  addActivityButton.classList.remove('hide');
-  addHydrationButton.classList.remove('hide');
-  addSleepButton.classList.remove('hide');
-  activityForm.classList.add('hide');
+  let onSuccess = () => {
+    mainPage.classList.remove('hide');
+    addActivityButton.classList.remove('hide');
+    addHydrationButton.classList.remove('hide');
+    addSleepButton.classList.remove('hide');
+    activityForm.classList.add('hide');
+  }
+  let rawActivity = {userID: user.id, date: todayDate, numSteps: 600, minutesActive: 48, flightsOfStairs: 6};
+  user.activityRepository.createNewActivity(rawActivity);
+  activityService.postData(rawActivity, onSuccess);
 }
 
 function inputHydrationData() {
@@ -316,11 +321,16 @@ function inputSleepData() {
 }
 
 function postSleepData() {
-  mainPage.classList.remove('hide');
-  addActivityButton.classList.remove('hide');
-  addHydrationButton.classList.remove('hide');
-  addSleepButton.classList.remove('hide');
-  sleepForm.classList.add('hide');
+  let onSuccess = () => {
+    mainPage.classList.remove('hide');
+    addActivityButton.classList.remove('hide');
+    addHydrationButton.classList.remove('hide');
+    addSleepButton.classList.remove('hide');
+    sleepForm.classList.add('hide');
+  }
+  let rawSleep = {userID: user.id, date: todayDate, hoursSlept: 700, sleepQuality: 200}
+  user.sleepRepository.createNewSleep(rawSleep);
+  sleepService.postData(rawSleep, onSuccess);
 }
 
 // for (var i = 0; i < dailyOz.length; i++) {
