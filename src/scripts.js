@@ -21,9 +21,9 @@ let activityService;
 let hydrationService;
 window.onload = instantiateServices();
 
-addActivityButton.addEventListener('click', inputActivityData);
-addHydrationButton.addEventListener('click', inputHydrationData);
-addSleepButton.addEventListener('click', inputSleepData);
+addActivityButton.addEventListener('click', showActivityForm);
+addHydrationButton.addEventListener('click', showHydrationForm);
+addSleepButton.addEventListener('click', showSleepData);
 mainPage.addEventListener('click', showInfo);
 profileButton.addEventListener('click', showDropdown);
 stairsTrendingButton.addEventListener('click', updateTrendingStairsDays);
@@ -270,115 +270,62 @@ function updateTrendingStepDays() {
   trendingStepsPhraseContainer.innerHTML = `<p class='trend-line'>${user.activityRepository.trendingStepDays[0]}</p>`;
 }
 
-function inputActivityData() {
+function showHomePage() {
+  mainPage.classList.remove('hide');
+  addActivityButton.classList.remove('hide');
+  addHydrationButton.classList.remove('hide');
+  addSleepButton.classList.remove('hide');
+}
+
+function hideHomePage() {
   mainPage.classList.add('hide');
   addActivityButton.classList.add('hide');
   addHydrationButton.classList.add('hide');
   addSleepButton.classList.add('hide');
+  calendarInput.classList.add('hide');
+}
+
+function showActivityForm() {
+  hideHomePage();
   activityForm.classList.remove('hide');
+}
+
+function showSleepData() {
+  hideHomePage();
+  sleepForm.classList.remove('hide');
+}
+
+function showHydrationForm() {
+  hideHomePage();
+  hydrationForm.classList.remove('hide');
 }
 
 function postActivityData() {
   let onSuccess = () => {
-    mainPage.classList.remove('hide');
-    addActivityButton.classList.remove('hide');
-    addHydrationButton.classList.remove('hide');
-    addSleepButton.classList.remove('hide');
+    showHomePage();
     activityForm.classList.add('hide');
   }
-  let rawActivity = {userID: user.id, date: todayDate, numSteps: 600, minutesActive: 48, flightsOfStairs: 6};
+  let rawActivity = {userID: user.id, date: todayDate, numSteps: activityStepsInput.value, minutesActive: activityMinutesInput.value, flightsOfStairs: flightStairsInput.value};
   user.activityRepository.createNewActivity(rawActivity);
   activityService.postData(rawActivity, onSuccess);
 }
 
-function inputHydrationData() {
-  mainPage.classList.add('hide');
-  addActivityButton.classList.add('hide');
-  addHydrationButton.classList.add('hide');
-  addSleepButton.classList.add('hide');
-  hydrationForm.classList.remove('hide');
-}
-
 function postHydrationData() {
   let onSuccess = () => {
-    mainPage.classList.remove('hide');
-    addActivityButton.classList.remove('hide');
-    addHydrationButton.classList.remove('hide');
-    addSleepButton.classList.remove('hide');
+    showHomePage();
     hydrationForm.classList.add('hide');
   }
-  let rawHydration = {userID: user.id, date: todayDate, numOunces: 9}
+  let rawHydration = {userID: user.id, date: todayDate, numOunces: ouncesDrankInput.value}
   user.hydrationRepository.createNewHydration(rawHydration);
   hydrationService.postData(rawHydration, onSuccess);
 }
 
-function inputSleepData() {
-  mainPage.classList.add('hide');
-  addActivityButton.classList.add('hide');
-  addHydrationButton.classList.add('hide');
-  addSleepButton.classList.add('hide');
-  sleepForm.classList.remove('hide');
-}
-
 function postSleepData() {
   let onSuccess = () => {
-    mainPage.classList.remove('hide');
-    addActivityButton.classList.remove('hide');
-    addHydrationButton.classList.remove('hide');
-    addSleepButton.classList.remove('hide');
+    showHomePage();
     sleepForm.classList.add('hide');
   }
-  let rawSleep = {userID: user.id, date: todayDate, hoursSlept: 700, sleepQuality: 200}
+  let rawSleep = {userID: user.id, date: todayDate, hoursSlept: hoursSleptInput.value, sleepQuality: sleepQualityInput.value}
   user.sleepRepository.createNewSleep(rawSleep);
   sleepService.postData(rawSleep, onSuccess);
 }
-
-// for (var i = 0; i < dailyOz.length; i++) {
-//   dailyOz[i].innerText = user.hydrationRepository.addDailyOunces(Object.keys(sortedHydrationDataByDate[i])[0])
-// }
-// for (var i = 0; i < dailyOz.length; i++) {
-//   dailyOz[i].innerText = user.hydrationRepository.addDailyOunces(Object.keys(sortedHydrationDataByDate[i])[0])
-// }
-
-//
-// stepsInfoMilesWalkedToday.innerText = user.activityRepository.activityHistory.find(activity => {
-//   return (activity.date === todayDate && activity.userId === user.id)
-// }).calculateMiles(userRepository);
-
-
-
-  //
-
-
-  // sleepInfoQualityToday.innerText = sleepData.find(sleep => {
-  //   return sleep.userID === user.id && sleep.date === todayDate;
-  // }).sleepQuality;
-  //
-  // sleepUserHoursToday.innerText = sleepData.find(sleep => {
-  //   return sleep.userID === user.id && sleep.date === todayDate;
-  // }).hoursSlept;
-
-  // stairsCalendarFlightsAverageWeekly.innerText = user.activityRepository.calculateAverageFlightsThisWeek(todayDate);
-  //
-  // stairsCalendarStairsAverageWeekly.innerText = (user.calculateAverageFlightsThisWeek(todayDate) * 12).toFixed(0);
-  //
-  // stairsFriendFlightsAverageToday.innerText = (userRepository.calculateAverageStairs(todayDate) / 12).toFixed(1);
-
-  // stairsInfoFlightsToday.innerText = activityData.find(activity => {
-  //   return activity.userID === user.id && activity.date === todayDate;
-  // }).flightsOfStairs;
-  //
-
-
-  //
-  //
-  //
-
-
-  // userRepository.findFriendsTotalStepsForWeek(userRepository.users, todayDate);
-
-  // user.friendsActivityRecords.forEach(friend => {
-  //   dropdownFriendsStepsContainer.innerHTML += `
-  //   <p class='dropdown-p friends-steps'>${friend.firstName} |  ${friend.totalWeeklySteps}</p>
-  //   `;
-  // });

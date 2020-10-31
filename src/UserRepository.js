@@ -159,7 +159,7 @@ export default class UserRepository {
     let longestSleepers = sleepsOnDate.sort((a, b) => {
       return b.hoursSlept - a.hoursSlept;
     });
-    
+
     let longestSleeper = this.getUser(longestSleepers[0].userID);
     return longestSleeper
   }

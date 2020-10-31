@@ -22,7 +22,7 @@ export default class Service {
     .then(response => response.json())
     .then(json => {
       console.log(json);
-      onSuccess;
+      onSuccess();
     })
     .catch(err => console.log(err))
   }
