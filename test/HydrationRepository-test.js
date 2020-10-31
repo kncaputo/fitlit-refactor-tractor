@@ -78,7 +78,7 @@ describe('HydrationRepository', () => {
     });
 
     it('should be able to create new instances of activities from a data object', () => {
-      const history = hydrationRepository.hydrationHistory
+      const history = hydrationRepository.hydrationHistory;
       expect(history.length).to.deep.equal(5);
       const newHydration = {
         "userID": 1,

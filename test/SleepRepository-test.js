@@ -83,14 +83,16 @@ describe('SleepRepository', () => {
   });
 
   describe('Methods', () => {
-    it('should create instances of sleep', () => {
+    beforeEach(() => {
       sleepRepository.start();
+    });
 
+    it('should create instances of sleep', () => {
       expect(sleepRepository.sleepHistory[0]).to.be.an.instanceof(Sleep);
     });
 
     it('should be able to create new instances of sleep from a data object', () => {
-      const history = sleepRepository.sleepHistory
+      const history = sleepRepository.sleepHistory;
       expect(history.length).to.deep.equal(7);
       const newSleep = {
         "userID": 1,
@@ -98,47 +100,37 @@ describe('SleepRepository', () => {
         "hoursSlept": 8.7,
         "sleepQuality": 3
       };
-      const result = sleepRepository.createNewSleep(newAsleep);
+      const result = sleepRepository.createNewSleep(newSleep);
 
       expect(history[history.length - 1]).to.be.an.instanceof(Sleep);
       expect(history.length).to.deep.equal(8);
     });
 
     it('should create a dated record of sleep hours', () => {
-      sleepRepository.start();
       const result = {date: '2019/06/10', hours: 5.4 };
 
       expect(sleepRepository.sleepHoursRecord[0]).to.deep.equal(result);
     });
 
     it('should create a dated record of sleep quality', () => {
-      sleepRepository.start();
       const result = {date: '2019/06/10', sleepQuality: 1000};
 
       expect(sleepRepository.sleepQualityRecord[0]).to.deep.equal(result);
     });
 
     it('should update user\'s average hours of sleep', () => {
-      sleepRepository.start();
-
       expect(sleepRepository.hoursSleptAverage).to.equal('7.2');
     });
 
     it('should update user\'s average quality of sleep', () => {
-      sleepRepository.start();
-
       expect(sleepRepository.sleepQualityAverage).to.equal('785.9');
     });
 
     it('should calculate the average sleep hours in a given week', () => {
-      sleepRepository.start();
-
       expect(sleepRepository.averageWeeklySleepHours('2019/06/16')).to.equal('7.2');
     });
 
     it('should calculate the average sleep quality in a given week', () => {
-      sleepRepository.start();
-
       expect(sleepRepository.averageWeeklySleepQuality('2019/06/16')).to.equal('785.9')
     });
   });

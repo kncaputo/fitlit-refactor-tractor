@@ -98,7 +98,7 @@ describe('ActivityRepository', () => {
     });
 
     it('should be able to create new instances of activities from a data object', () => {
-      const history = activityRepository.activityHistory
+      const history = activityRepository.activityHistory;
       expect(history.length).to.deep.equal(4);
       const newActivity = {
         "userID": 1,
