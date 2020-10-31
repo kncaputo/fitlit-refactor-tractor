@@ -7,7 +7,7 @@ import {dailyOz, dropdownEmail, dropdownFriendsStepsContainer, dropdownGoal, dro
 
 import UserRepository from './UserRepository';
 
-window.onload = fetchData();
+window.onload = instantiateServices();
 
 let userRepository;
 let user;
@@ -30,11 +30,16 @@ calendarInput.addEventListener('change', (event) => {
   updateAllDisplays();
 });
 
-function fetchData() {
-  let userPromise = apiCalls.fetchUserData();
-  let sleepPromise = apiCalls.fetchSleepData();
-  let activityPromise = apiCalls.fetchActivityData();
-  let hydrationPromise = apiCalls.fetchHydrationData();
+function instantiateServices() {
+  let hydrationService = new HydrationService('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData', 'hydrationData');
+  fetchAllData();
+}
+
+function fetchAllData() {
+  let userPromise = apiCalls.fetchData();
+  let sleepPromise = apiCalls.fetchData();
+  let activityPromise = apiCalls.fetchData();
+  let hydrationPromise = hydrationService.fetchData();
 
   Promise.all([userPromise, sleepPromise, activityPromise, hydrationPromise])
   .then(data => userRepository = new UserRepository(data[0], data[1], data[2], data[3]))
