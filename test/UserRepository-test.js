@@ -205,7 +205,7 @@ describe('UserRepository', () => {
       expect(userRepository.calculateAverageSleepQuality()).to.equal(3.1);
     });
 
-    it('should have a method that calculates friends average ounces of water', () => {
+    it.only('should have a method that calculates friends average ounces of water', () => {
       userRepository.users[0].hydrationRepository.ouncesRecord = [
         {"2019/06/15": 1},
         {"2019/06/15": 1},
@@ -222,14 +222,20 @@ describe('UserRepository', () => {
         {"2019/06/16": 4}
       ]
 
-      expect(userRepository.calculateAverageDailyWater("2019/06/16")).to.equal(5)
+      expect(userRepository.calculateAverageDailyWater("2019/06/16")).to.deep.equal(5)
+    });
+
+    it('should calculate all ounces drank by users when given a date', () => {
+      expect(userRepository.calculateAllOunces("2019/06/15")).to.deep.equal(159);
     });
 
     it('should find the best sleepers', () => {
-      expect(userRepository.findBestSleepers("2019/06/15")).to.deep.equal([{
+      const bestSleepers = [{
         "name": "Jarvis Considine",
         "averageWeekSleepQuality": "71.4"
-      }]);
+      }]
+
+      expect(userRepository.findBestSleepers("2019/06/15")).to.deep.equal(bestSleepers);
     });
 
     it('should find the longest sleepers', () => {
