@@ -71,3 +71,4 @@ export let calendarInput = document.querySelector('.date');
 export let activityForm = document.querySelector('.activity-form');
 export let hydrationForm = document.querySelector('.hydration-form');
 export let sleepForm = document.querySelector('.sleep-form');
+export let dropdownCalories = document.querySelector('#dropdown-calories');
