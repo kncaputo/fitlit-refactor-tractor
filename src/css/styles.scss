@@ -1,3 +1,5 @@
+@import 'base';
+
 *,
 *:after,
 *:before {
@@ -111,7 +113,7 @@ h2 {
 
 h3 {
   display: inline;
-  font-family: $secondary-font;
+  font-family: 'Work Sans', sans-serif;
   font-size: 3vw;
   font-weight: 700;
   letter-spacing: .2em;
@@ -128,7 +130,7 @@ h5 {
 }
 
 p {
-  font-family: $secondary-font;
+  font-family: 'Work Sans', sans-serif;
   font-size: 1.2vw;
   font-weight: 600;
   letter-spacing: .2vw;
