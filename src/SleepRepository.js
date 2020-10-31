@@ -11,18 +11,22 @@ export default class SleepRepository {
   }
 
   start() {
-    this.createSleep();
+    this.rawSleepData.forEach(rawSleep => {
+      this.createNewSleep(rawSleep);
+    });
+  }
+
+  createNewSleep(rawSleep) {
+    let sleep = new Sleep(rawSleep);
+    this.sleepHistory.push(sleep);
+    this.updateStats();
+  }
+
+  updateStats() {
     this.createSleepHoursRecord();
     this.createSleepQualityRecord();
     this.updateHoursSleptAverage();
     this.updateSleepQualityAverage();
-  }
-
-  createSleep() {
-    this.rawSleepData.forEach(rawSleep => {
-      let sleep = new Sleep(rawSleep);
-      this.sleepHistory.push(sleep);
-    });
   }
 
   createSleepHoursRecord() {
@@ -72,25 +76,4 @@ export default class SleepRepository {
       return sum;
     }, 0) / 7).toFixed(1);
   }
-
-  // updateSleep(date, hours, quality) {
-  //   this.sleepHoursRecord.unshift({
-  //     'date': date,
-  //     'hours': hours
-  //   });
-  //   this.sleepQualityRecord.unshift({
-  //     'date': date,
-  //     'quality': quality
-  //   });
-  //   if(this.sleepHoursRecord.length) {
-  //     this.hoursSleptAverage = ((hours + (this.hoursSleptAverage * (this.sleepHoursRecord.length - 1))) / this.sleepHoursRecord.length).toFixed(1);
-  //   } else {
-  //     this.hoursSleptAverage = hours;
-  //   }
-  //   if (this.sleepQualityRecord.length) {
-  //     this.sleepQualityAverage = ((quality + (this.sleepQualityAverage * (this.sleepQualityRecord.length - 1))) / this.sleepQualityRecord.length).toFixed(1);
-  //   } else {
-  //     this.sleepQualityAverage = quality;
-  //   }
-  // }
 }

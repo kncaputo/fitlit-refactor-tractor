@@ -13,27 +13,22 @@ export default class ActivityRepository {
   }
 
   start() {
-    this.createActivities();
+    this.rawActivityData.forEach(rawActivity => {
+      this.createNewActivity(rawActivity);
+    });
+  }
+
+  createNewActivity(rawActivity) {
+    let activity = new Activity(rawActivity);
+    this.activityHistory.push(activity);
+    this.updateStats();
+  }
+
+  updateStats() {
     this.findAccomplishedStepDays();
     this.findStairClimbingRecord();
     this.findTrendingStairsDays();
     this.findTrendingStepDays();
-  }
-
-  createActivities() {
-    this.rawActivityData.forEach(rawActivity => {
-      this.createNewInstance(rawActivity);
-    });
-  }
-
-  createNewInstance(rawActivity) {
-    let activity = new Activity(rawActivity);
-    this.updateActivities(activity);
-  }
-
-  updateActivities(activity) {
-    this.activityHistory.push(activity);
-    this.findAccomplishedStepDays()
   }
 
   calculateMilesWalked(todayDate) {
