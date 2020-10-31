@@ -1,17 +1,25 @@
 import './css/_base.scss';
 import './css/styles.scss';
-import apiCalls from './apiCalls.js';
+// import apiCalls from './apiCalls.js';
 // import '/hydration-calendar.png', '/hydration-friends.png', '/hydration-goback.png' from './images'
-
 import {dailyOz, dropdownEmail, dropdownFriendsStepsContainer, dropdownGoal, dropdownName, headerName, hydrationCalendarCard, hydrationFriendOuncesToday, hydrationFriendsCard, hydrationInfoCard, hydrationInfoGlassesToday, hydrationMainCard, hydrationUserOuncesToday, mainPage, profileButton, sleepCalendarCard, sleepCalendarHoursAverageWeekly, sleepCalendarQualityAverageWeekly, sleepFriendLongestSleeper, sleepFriendsCard, sleepFriendWorstSleeper, sleepInfoCard, sleepInfoHoursAverageAlltime, sleepInfoQualityAverageAlltime, sleepInfoQualityToday, sleepMainCard, sleepUserHoursToday, stairsCalendarCard, stairsCalendarFlightsAverageWeekly, stairsCalendarStairsAverageWeekly, stepsMainCard, stepsInfoCard, stepsFriendsCard, stepsTrendingCard, stepsCalendarCard, stairsFriendFlightsAverageToday, stairsFriendsCard, stairsInfoCard, stairsInfoFlightsToday, stairsMainCard, stairsTrendingButton, stairsTrendingCard, stairsUserStairsToday, stepsCalendarTotalActiveMinutesWeekly, stepsCalendarTotalStepsWeekly, stepsFriendAverageStepGoal, stepsInfoActiveMinutesToday, stepsInfoMilesWalkedToday, stepsFriendActiveMinutesAverageToday, stepsFriendStepsAverageToday, stepsTrendingButton, stepsUserStepsToday, trendingStepsPhraseContainer, trendingStairsPhraseContainer, userInfoDropdown, friendsStepsParagraphs, addActivityButton, addHydrationButton, addSleepButton, submitActivityButton, submitSleepButton, submitHydrationButton, activityStepsInput, activityMinutesInput, flightStairsInput, milesWalkedInput, ouncesDrankInput, hoursSleptInput, sleepQualityInput, calendarInput, activityForm, sleepForm, hydrationForm, dropdownCalories} from './DOMelements.js'
 
 import UserRepository from './UserRepository';
-
-window.onload = instantiateServices();
+import Service from './Service';
+import UserService from './UserService';
+import SleepService from './SleepService';
+import ActivityService from './ActivityService';
+import HydrationService from './HydrationService';
 
 let userRepository;
 let user;
 let todayDate = "2019/06/15";
+let service = new Service();
+let userService;
+let sleepService;
+let activityService;
+let hydrationService;
+window.onload = instantiateServices();
 
 addActivityButton.addEventListener('click', inputActivityData);
 addHydrationButton.addEventListener('click', inputHydrationData);
@@ -31,16 +39,19 @@ calendarInput.addEventListener('change', (event) => {
 });
 
 function instantiateServices() {
-  let hydrationService = new HydrationService('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData', 'hydrationData');
+  userService = new UserService('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/users/userData', 'userData');
+  sleepService = new SleepService('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/sleep/sleepData', 'sleepData');
+  activityService = new ActivityService('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/activity/activityData', 'activityData');
+  hydrationService = new HydrationService('https://fe-apps.herokuapp.com/api/v1/fitlit/1908/hydration/hydrationData', 'hydrationData');
   fetchAllData();
 }
 
 function fetchAllData() {
-  let userPromise = apiCalls.fetchData();
-  let sleepPromise = apiCalls.fetchData();
-  let activityPromise = apiCalls.fetchData();
+  let userPromise = userService.fetchData();
+  let sleepPromise = sleepService.fetchData();
+  let activityPromise = activityService.fetchData();
   let hydrationPromise = hydrationService.fetchData();
-
+  debugger
   Promise.all([userPromise, sleepPromise, activityPromise, hydrationPromise])
   .then(data => userRepository = new UserRepository(data[0], data[1], data[2], data[3]))
   .then(response => loadPage())
@@ -293,7 +304,7 @@ function postHydrationData() {
   }
   let rawHydration = {userID: user.id, date: todayDate, numOunces: 9}
   user.hydrationRepository.createNewHydration(rawHydration);
-  apiCalls.postHydrationData(rawHydration, onSuccess);
+  hydrationService.postData(rawHydration, onSuccess);
 }
 
 function inputSleepData() {
