@@ -18,10 +18,10 @@ profileButton.addEventListener('click', showDropdown);
 stairsTrendingButton.addEventListener('click', updateTrendingStairsDays);
 stepsTrendingButton.addEventListener('click', updateTrendingStepDays);
 addActivityButton.addEventListener('click', inputActivityData);
-// addHydrationButton.addEventlListener('click', inputHydrationData);
+addHydrationButton.addEventListener('click', inputHydrationData);
 // addSleepButton.addEventListener('click', inputSleepData);
-// submitActivityButton.addEventListener('click',postActivityData);
-// submitHydrationButton.addEventListener('click',postHydrationData);
+submitActivityButton.addEventListener('click',postActivityData);
+submitHydrationButton.addEventListener('click',postHydrationData);
 // submitSleepButton.addEventListener('click',postSleepData);
 // stairsTrendingButton.addEventListener('click', function() {
 //   user.findTrendingStairsDays();
@@ -261,6 +261,30 @@ function inputActivityData() {
   addHydrationButton.classList.add('hide');
   addSleepButton.classList.add('hide');
   activityForm.classList.remove('hide');
+}
+
+function postActivityData() {
+  mainPage.classList.remove('hide');
+  addActivityButton.classList.remove('hide');
+  addHydrationButton.classList.remove('hide');
+  addSleepButton.classList.remove('hide');
+  activityForm.classList.add('hide');
+}
+
+function inputHydrationData() {
+  mainPage.classList.add('hide');
+  addActivityButton.classList.add('hide');
+  addHydrationButton.classList.add('hide');
+  addSleepButton.classList.add('hide');
+  hydrationForm.classList.remove('hide');
+}
+
+function postHydrationData() {
+  mainPage.classList.remove('hide');
+  addActivityButton.classList.remove('hide');
+  addHydrationButton.classList.remove('hide');
+  addSleepButton.classList.remove('hide');
+  hydrationForm.classList.add('hide');
 }
 
 // for (var i = 0; i < dailyOz.length; i++) {
