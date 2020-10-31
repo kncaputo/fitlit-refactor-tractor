@@ -25,7 +25,7 @@ export default class UserRepository {
       let userHydrationData = this.filterUserHydrationData(rawUser.id);
       let user = new User(rawUser, userSleepData, userActivityData, userHydrationData);
       this.users.push(user);
-    });
+    })
   }
 
   filterUserSleepData(id) {
@@ -159,6 +159,7 @@ export default class UserRepository {
     let longestSleepers = sleepsOnDate.sort((a, b) => {
       return b.hoursSlept - a.hoursSlept;
     });
+    
     let longestSleeper = this.getUser(longestSleepers[0].userID);
     return longestSleeper
   }
