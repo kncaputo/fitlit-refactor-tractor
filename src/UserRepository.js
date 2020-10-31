@@ -115,7 +115,7 @@ export default class UserRepository {
     }, 0);
     return Math.round(sumOfMinutesActive / allUsersMinutesActiveCount.length);
   }
-
+// hi
   calculateAverageDailyWater(date) {
     let todaysDrinkers = this.users.filter(user => {
       return user.hydrationRepository.findOunces(date) > 0;
@@ -159,7 +159,8 @@ export default class UserRepository {
     let longestSleepers = sleepsOnDate.sort((a, b) => {
       return b.hoursSlept - a.hoursSlept;
     });
-    let longestSleeper = this.getUser(longestSleepers[0].userID);
+    let longestSleeperMan = longestSleepers[0].userID;
+    let longestSleeper = this.getUser(longestSleeperMan)
     return longestSleeper
   }
 

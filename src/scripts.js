@@ -11,7 +11,7 @@ window.onload = fetchData();
 
 let userRepository;
 let user;
-let todayDate = "2019/09/22";
+let todayDate = "2019/06/15";
 
 mainPage.addEventListener('click', showInfo);
 profileButton.addEventListener('click', showDropdown);
@@ -24,7 +24,9 @@ submitActivityButton.addEventListener('click',postActivityData);
 submitHydrationButton.addEventListener('click',postHydrationData);
 submitSleepButton.addEventListener('click',postSleepData);
 calendarInput.addEventListener('change', (event) => {
-  todayDate = `${event.target.value}`;
+  let formatDate = `${event.target.value}`.split('-');
+  todayDate = formatDate.join('/');
+  console.log(todayDate)
   updateAllDisplays();
 });
 // stairsTrendingButton.addEventListener('click', function() {
