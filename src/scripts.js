@@ -4,12 +4,12 @@ import './css/styles.scss';
 // import '/hydration-calendar.png', '/hydration-friends.png', '/hydration-goback.png' from './images'
 import {dailyOz, dropdownEmail, dropdownFriendsStepsContainer, dropdownGoal, dropdownName, headerName, hydrationCalendarCard, hydrationFriendOuncesToday, hydrationFriendsCard, hydrationInfoCard, hydrationInfoGlassesToday, hydrationMainCard, hydrationUserOuncesToday, mainPage, profileButton, sleepCalendarCard, sleepCalendarHoursAverageWeekly, sleepCalendarQualityAverageWeekly, sleepFriendLongestSleeper, sleepFriendsCard, sleepFriendWorstSleeper, sleepInfoCard, sleepInfoHoursAverageAlltime, sleepInfoQualityAverageAlltime, sleepInfoQualityToday, sleepMainCard, sleepUserHoursToday, stairsCalendarCard, stairsCalendarFlightsAverageWeekly, stairsCalendarStairsAverageWeekly, stepsMainCard, stepsInfoCard, stepsFriendsCard, stepsTrendingCard, stepsCalendarCard, stairsFriendFlightsAverageToday, stairsFriendsCard, stairsInfoCard, stairsInfoFlightsToday, stairsMainCard, stairsTrendingButton, stairsTrendingCard, stairsUserStairsToday, stepsCalendarTotalActiveMinutesWeekly, stepsCalendarTotalStepsWeekly, stepsFriendAverageStepGoal, stepsInfoActiveMinutesToday, stepsInfoMilesWalkedToday, stepsFriendActiveMinutesAverageToday, stepsFriendStepsAverageToday, stepsTrendingButton, stepsUserStepsToday, trendingStepsPhraseContainer, trendingStairsPhraseContainer, userInfoDropdown, friendsStepsParagraphs, addActivityButton, addHydrationButton, addSleepButton, submitActivityButton, submitSleepButton, submitHydrationButton, activityStepsInput, activityMinutesInput, flightStairsInput, milesWalkedInput, ouncesDrankInput, hoursSleptInput, sleepQualityInput, calendarInput, activityForm, sleepForm, hydrationForm, dropdownCalories, inputDate} from './DOMelements.js'
 
-import UserRepository from './UserRepository';
-import Service from './Service';
-import UserService from './UserService';
-import SleepService from './SleepService';
-import ActivityService from './ActivityService';
-import HydrationService from './HydrationService';
+import UserRepository from './model/UserRepository';
+import Service from './service/Service';
+import UserService from './service/UserService';
+import SleepService from './service/SleepService';
+import ActivityService from './service/ActivityService';
+import HydrationService from './service/HydrationService';
 
 let userRepository;
 let user;
@@ -20,6 +20,7 @@ let userService;
 let sleepService;
 let activityService;
 let hydrationService;
+
 window.onload = instantiateServices();
 
 addActivityButton.addEventListener('click', showActivityForm);

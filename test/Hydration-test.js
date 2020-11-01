@@ -4,7 +4,7 @@ import Hydration from '../src/Hydration';
 import UserRepository from '../src/UserRepository';
 import User from '../src/User';
 
-describe.skip('Hydration', function() {
+describe.skip('Hydration', () => {
   let hydration;
   let user1;
   let user2;
@@ -59,22 +59,22 @@ describe.skip('Hydration', function() {
       "numOunces": 91
     }, userRepository)
   })
-  it('should be a function', function() {
+  it('should be a function', () => {
     expect(Hydration).to.be.a('function');
   });
-  it('should be an instance of hydrate', function() {
+  it('should be an instance of hydrate', () => {
     expect(hydrate1).to.be.an.instanceof(Hydration);
   });
-  it('should have an id', function() {
+  it('should have an id', () => {
     expect(hydrate2.userId).to.equal(2);
   });
-  it('should have a date', function() {
+  it('should have a date', () => {
     expect(hydrate3.date).to.equal('2019/06/16');
   });
-  it('should have an amount of ounces drank', function() {
+  it('should have an amount of ounces drank', () => {
     expect(hydrate3.ounces).to.equal(91);
   });
-  describe('drink', function () {
+  describe('drink', () => {
     it('should update the average number of ounces over all time', function() {
       expect(user2.ouncesAverage).to.equal(83);
     })
