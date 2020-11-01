@@ -1,8 +1,8 @@
 import { expect } from 'chai';
 
-import Sleep from '../src/Sleep';
-import UserRepository from '../src/UserRepository';
-import User from '../src/User';
+import Sleep from '../src/model/Sleep';
+import UserRepository from '../src/model/UserRepository';
+import User from '../src/model/User';
 
 describe.skip('Sleep', () => {
   let sleep;
