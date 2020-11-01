@@ -97,7 +97,7 @@ describe('ActivityRepository', () => {
         "minutesActive": 90,
         "flightsOfStairs": 7
       }
-      const result = activityRepository.createNewInstance(newActivity);
+      const result = activityRepository.createNewActivity(newActivity);
 
       expect(act[act.length - 1]).to.be.an.instanceof(Activity);
       expect(act.length).to.deep.equal(5);
