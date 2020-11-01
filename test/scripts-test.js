@@ -7,12 +7,12 @@ import Service from '../src/service/Service';
 describe.only('Service', () => {
   before(() => {
     global.service = {};
-    chai.spy.on(Service, ['postData', 'fetchData'], () => {})
+    chai.spy.on(service, ['fetchData', 'postData'], () => {})
   })
 
   describe('Fetch', () => {
     it('should fetch user data from APIs', () => {
-      let service = new Service(url, dataKey)
+      let service = new Service();
       expect(service.fetchData()).to.have.been.called(1);
       expect(service.fetchData).to.have.been.called.with();
     })
@@ -20,8 +20,8 @@ describe.only('Service', () => {
 
   describe('Post', () => {
     it('should post user data from input', () => {
-      expect(service.fetchData()).to.have.been.called(1);
-      expect(service.fetchData).to.have.been.called.with();
+      expect(service.postData()).to.have.been.called(1);
+      expect(service.postData).to.have.been.called.with();
     })
   })
 })
