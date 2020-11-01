@@ -1,6 +1,6 @@
 import { expect } from 'chai'
-import Hydration from '../src/Hydration';
-import HydrationRepository from '../src/HydrationRepository'
+import Hydration from '../src/model/Hydration';
+import HydrationRepository from '../src/model/HydrationRepository'
 
 describe('HydrationRepository', () => {
   let hydrationRepository;

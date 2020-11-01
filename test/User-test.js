@@ -1,9 +1,9 @@
 import { expect } from 'chai';
 
-import User from '../src/User';
-import SleepRepository from '../src/SleepRepository';
-import ActivityRepository from '../src/ActivityRepository';
-import HydrationRepository from '../src/HydrationRepository';
+import User from '../src/model/User';
+import SleepRepository from '../src/model/SleepRepository';
+import ActivityRepository from '../src/model/ActivityRepository';
+import HydrationRepository from '../src/model/HydrationRepository';
 
 describe('User', () => {
   let user;
@@ -121,6 +121,6 @@ describe('User', () => {
       expect(user.friendsNames).to.deep.equal(['BEN', 'JOHN', 'NICK']);
     });
 
-    
+
   });
 });
