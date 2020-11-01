@@ -47,16 +47,16 @@ export default class UserRepository {
   }
 
   getUser(id) {
-    return this.users.find(function(user) {
+    return this.users.find(user => {
       return user.id === id;
     })
   }
 
   calculateAverageStepGoal() {
-    let goals = this.users.map(function(user) {
+    let goals = this.users.map(user => {
       return user.dailyStepGoal;
     });
-    let total = goals.reduce(function(sum, goal) {
+    let total = goals.reduce((sum, goal) => {
       sum += goal;
       return sum;
     }, 0);
@@ -115,7 +115,7 @@ export default class UserRepository {
     }, 0);
     return Math.round(sumOfMinutesActive / allUsersMinutesActiveCount.length);
   }
-// hi
+
   calculateAverageDailyWater(date) {
     let todaysDrinkers = this.users.filter(user => {
       return user.hydrationRepository.findOunces(date) > 0;
