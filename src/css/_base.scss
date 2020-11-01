@@ -1,8 +1,14 @@
-// $primary-color: white;
-// $background-color: #1F1F1F;
-// $primary-font: 'Oswald', sans-serif;
-// $secondary-font: 'Work Sans', sans-serif;
-//
-// body {
-//   background-color: $primary-background;
-// }
+$primary-color: white;
+$background-color: #1F1F1F;
+$primary-font: 'Oswald', sans-serif;
+$secondary-font: 'Work Sans', sans-serif;
+
+.button-styling {
+  background-position: center;
+  display: inline;
+  background-size: 3.4vw;
+  border: none;
+  height: 3.4vw;
+  margin-left: 1vw;
+  width: 3.4vw;
+}
