@@ -1,56 +1,26 @@
 import { expect } from 'chai';
 
 import Sleep from '../src/model/Sleep';
-import UserRepository from '../src/model/UserRepository';
-import User from '../src/model/User';
 
-describe.skip('Sleep', () => {
+describe('Sleep', () => {
   let sleep;
   let user1;
   let user2;
   let userRepository;
   beforeEach(() => {
-    user1 = new User({
-      'id': 1,
-      'name': 'Luisa Hane',
-      'address': '15195 Nakia Tunnel, Erdmanport VA 19901-1697',
-      'email': 'Diana.Hayes1@hotmail.com',
-      'strideLength': 4.3,
-      'dailyStepGoal': 10000,
-      'friends': [
-        16,
-        4,
-        8
-      ]
-    });
-    user2 = new User({
-      "id": 2,
-      "name": "Jarvis Considine",
-      "address": "30086 Kathryn Port, Ciceroland NE 07273",
-      "email": "Dimitri.Bechtelar11@gmail.com",
-      "strideLength": 4.5,
-      "dailyStepGoal": 5000,
-      "friends": [
-        9,
-        18,
-        24,
-        19
-      ]
-    })
-    userRepository = new UserRepository();
-    userRepository.users.push(user1, user2);
     sleep1 = new Sleep({
       "userID": 1,
       "date": "2019/06/15",
       "hoursSlept": 6.1,
       "sleepQuality": 2.2
-    }, userRepository);
+    });
+
     sleep2 = new Sleep({
       "userID": 2,
       "date": "2019/06/25",
       "hoursSlept": 7.3,
       "sleepQuality": 3.2
-    }, userRepository);
+    });
     sleep3 = new Sleep({
       "userID": 1,
       "date": "2019/07/17",

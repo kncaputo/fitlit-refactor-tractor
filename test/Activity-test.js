@@ -1,10 +1,10 @@
 import { expect } from 'chai'
 import Activity from '../src/model/Activity';
 
-describe.only('Activity', () => {
+describe('Activity', () => {
   let activity1;
   let activity2;
-  
+
   beforeEach(() => {
     activity1 = new Activity({
       "userID": 1,
