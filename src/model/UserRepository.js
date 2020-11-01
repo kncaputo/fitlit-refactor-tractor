@@ -1,4 +1,4 @@
-import User from './model/User';
+import User from './User';
 
 export default class UserRepository {
   constructor(userData, sleepData, activityData, hydrationData) {

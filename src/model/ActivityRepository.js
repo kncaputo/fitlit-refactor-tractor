@@ -1,4 +1,4 @@
-import Activity from './model/Activity';
+import Activity from './Activity';
 
 export default class ActivityRepository {
   constructor(activityData, userStrideLength, userStepGoal) {
