@@ -1,4 +1,4 @@
-import Hydration from './Hydration';
+import Hydration from './model/Hydration';
 
 export default class HydrationRepository {
   constructor(hydrationData) {

@@ -1,4 +1,4 @@
-import Sleep from './Sleep';
+import Sleep from './model/Sleep';
 
 export default class SleepRepository {
   constructor(sleepData) {

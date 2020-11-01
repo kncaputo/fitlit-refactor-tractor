@@ -1,6 +1,6 @@
-import SleepRepository from './SleepRepository';
-import ActivityRepository from './ActivityRepository';
-import HydrationRepository from './HydrationRepository';
+import SleepRepository from './model/SleepRepository';
+import ActivityRepository from './model/ActivityRepository';
+import HydrationRepository from './model/HydrationRepository';
 
  export default class User {
   constructor(userData, sleepData, activityData, hydrationData) {
