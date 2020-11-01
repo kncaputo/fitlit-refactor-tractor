@@ -3,7 +3,7 @@ import Activity from '../src/Activity';
 import UserRepository from '../src/UserRepository';
 import User from '../src/User';
 
-describe.skip('Activity', function() {
+describe.skip('Activity', () => {
   let activity;
   let user;
   let userRepository;
@@ -52,45 +52,45 @@ describe.skip('Activity', function() {
       "flightsOfStairs": 22
     }, userRepository);
   });
-  it('should be a function', function() {
+  it('should be a function', () => {
     expect(Activity).to.be.a('function');
   });
-  it('should be an instance of activity', function() {
+  it('should be an instance of activity', () => {
     expect(activity1).to.be.an.instanceof(Activity);
   });
-  it('should hold a userId', function() {
+  it('should hold a userId', () => {
     expect(activity2.userId).to.equal(2);
   });
-  it('should hold a date', function() {
+  it('should hold a date', () => {
     expect(activity1.date).to.equal("2019/06/15");
   });
-  it('should hold number of steps', function() {
+  it('should hold number of steps', () => {
     expect(activity1.steps).to.equal(3684);
   });
-  it('should hold minutes active', function() {
+  it('should hold minutes active', () => {
     expect(activity2.minutesActive).to.equal(280);
   });
-  it('should hold flights of stairs', function() {
+  it('should hold flights of stairs', () => {
     expect(activity2.flightsOfStairs).to.equal(22);
   });
-  it('should have a default value of 0 for miles walked', function() {
+  it('should have a default value of 0 for miles walked', () => {
     expect(activity2.milesWalked).to.equal(0);
   });
-  it('should have a default value of null for reached step goal', function() {
+  it('should have a default value of null for reached step goal', () => {
     expect(activity2.reachedStepGoal).to.equal(null);
   });
-  it('doActivity should add activities to user record', function() {
+  it('doActivity should add activities to user record', () => {
     expect(user1.activityRecord.length).to.equal(1);
   });
-  it('should have a method that calculate miles walked', function() {
+  it('should have a method that calculate miles walked', () => {
     expect(activity1.calculateMiles(userRepository)).to.equal('3.0');
   });
-  describe('compareStepGoal', function() {
-    it('should return false if goal isn\'t met', function() {
+  describe('compareStepGoal', () => {
+    it('should return false if goal isn\'t met', () => {
       activity1.compareStepGoal(userRepository);
       expect(activity1.reachedStepGoal).to.equal(false);
     });
-    it('should return true if goal is met', function() {
+    it('should return true if goal is met', () => {
       activity2.compareStepGoal(userRepository);
       expect(activity2.reachedStepGoal).to.equal(true);
     });
