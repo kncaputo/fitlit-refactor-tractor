@@ -178,17 +178,23 @@ function updateUserSleepDisplay() {
   let longestSleeper = userRepository.getLongestSleeper(todayDate);
   let worstSleeper = userRepository.getWorstSleeper(todayDate);
   sleepInfoHoursAverageAlltime.innerText = user.sleepRepository.hoursSleptAverage;
-  sleepFriendLongestSleeper.innerText = longestSleeper.getFirstName();
-  sleepFriendWorstSleeper.innerText = worstSleeper.getFirstName();
+  if (typeof longestSleeper === 'string') {
+    sleepFriendLongestSleeper.innerText = longestSleeper;
+  } else {
+    sleepFriendLongestSleeper.innerText = longestSleeper.getFirstName();
+  }
+  if (typeof worstSleeper === 'string') {
+    sleepFriendWorstSleeper.innerText = worstSleeper;
+  } else {
+    sleepFriendWorstSleeper.innerText = worstSleeper.getFirstName();
+  }
   sleepInfoQualityAverageAlltime.innerText = user.sleepRepository.sleepQualityAverage;
   sleepCalendarHoursAverageWeekly.innerText = user.sleepRepository.averageWeeklySleepHours(todayDate);
   sleepCalendarQualityAverageWeekly.innerText = user.sleepRepository.averageWeeklySleepQuality(todayDate);
-  sleepUserHoursToday.innerText = user.sleepRepository.sleepHistory.find(sleep => {
-    return sleep.date === todayDate;
-  }).hoursSlept;
-  sleepInfoQualityToday.innerText = user.sleepRepository.sleepHistory.find(sleep => {
-    return sleep.date === todayDate;
-  }).sleepQuality;
+
+  sleepUserHoursToday.innerText = user.sleepRepository.findHoursSlept(todayDate);
+
+  sleepInfoQualityToday.innerText = user.sleepRepository.findSleepQuality(todayDate);
 }
 
 function updateUserStepDisplay() {
@@ -249,7 +255,6 @@ function updateWeeklyOuncesByDay() {
 
   let hydrationDataByDate = user.hydrationRepository.findWeeklyOunces(todayDate);
   hydrationCalendarCard.innerHTML = `<button type='button' name='button' class='go-back-button hydration-go-back-button'></button>`
-  console.log(hydrationDataByDate)
   let html;
   if (hydrationDataByDate.length < 7) {
     html = `<p class="weekly-ounces">Sorry, you only have ${hydrationDataByDate.length} day(s) of data. Here is the info we have for the selected time period.</p>

@@ -41,6 +41,28 @@ export default class SleepRepository {
     })
   }
 
+  findHoursSlept(date) {
+    let sleepDate = this.sleepHistory.find(sleep => {
+      return sleep.date === date;
+    })
+    if (sleepDate !== undefined) {
+      return sleepDate.hoursSlept;
+    } else {
+      return 'N/A'
+    }
+  }
+
+  findSleepQuality(date) {
+    let sleepDate = this.sleepHistory.find(sleep => {
+      return sleep.date === date;
+    })
+    if (sleepDate !== undefined) {
+      return sleepDate.sleepQuality;
+    } else {
+      return 'N/A'
+    }
+  }
+
   updateHoursSleptAverage() {
     let totalSleepHours = this.sleepHistory.reduce((totalHours, sleep) => {
       totalHours += sleep.hoursSlept;

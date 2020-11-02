@@ -160,8 +160,12 @@ export default class UserRepository {
       return b.hoursSlept - a.hoursSlept;
     });
 
-    let longestSleeper = this.getUser(longestSleepers[0].userID);
-    return longestSleeper
+    if (longestSleepers[0] !== undefined) {
+      let longestSleeper = this.getUser(longestSleepers[0].userID);
+      return longestSleeper
+    } else {
+      return 'N/A'
+    }
   }
 
   getWorstSleeper(date) {
@@ -175,7 +179,11 @@ export default class UserRepository {
       return a.hoursSlept - b.hoursSlept;
     });
 
-    let shortestSleeper = this.getUser(shortestSleepers[0].userID);
-    return shortestSleeper
+    if (shortestSleepers[0] !== undefined) {
+      let shortestSleeper = this.getUser(shortestSleepers[0].userID);
+      return shortestSleeper
+    } else {
+      return 'N/A'
+    }
   }
 }
