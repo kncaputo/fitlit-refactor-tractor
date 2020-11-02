@@ -4,7 +4,7 @@ const spies = require('chai-spies');
 chai.use(spies);
 import Service from '../src/service/Service';
 
-describe.only('Service', () => {
+describe('Service', () => {
   describe('Fetch', () => {
     it('should fetch user data from APIs', () => {
       let service = new Service();
