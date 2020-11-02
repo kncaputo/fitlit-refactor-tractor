@@ -92,6 +92,7 @@ form {
 input {
   width: 140px;
 }
+
 /* TEXT ELEMENTS */
 h1 {
   color: $primary-color;
@@ -201,6 +202,20 @@ main {
 
 .hydration-weekly-amount {
   font-size: 2vw;
+}
+
+.hydration-calendar-card {
+  margin-top: 15px;
+}
+
+.weekly-ounces {
+  padding: 0px;
+  margin-bottom: 20px;
+  margin-left: 20px;
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  font-size: 17px;
 }
 
 .hydration-data-line {

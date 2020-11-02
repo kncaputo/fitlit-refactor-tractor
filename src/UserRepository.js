@@ -115,7 +115,7 @@ export default class UserRepository {
     }, 0);
     return Math.round(sumOfMinutesActive / allUsersMinutesActiveCount.length);
   }
-// hi
+
   calculateAverageDailyWater(date) {
     let todaysDrinkers = this.users.filter(user => {
       return user.hydrationRepository.findOunces(date) > 0;

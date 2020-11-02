@@ -31,12 +31,51 @@ export default class ActivityRepository {
     this.findTrendingStepDays();
   }
 
+  findSteps(date) {
+    let stepDate = this.activityHistory.find(activity => {
+      return activity.date === date;
+    });
+    if (stepDate !== undefined) {
+      return stepDate.steps;
+    } else {
+      return 'N/A';
+    }
+  }
+
+  findStairs(date) {
+    let stairsDate = this.activityHistory.find(activity => {
+      return activity.date === date;
+    })
+
+    if (stairsDate !== undefined) {
+      return stairsDate.flightsOfStairs;
+    } else {
+      return 'N/A'
+    }
+  }
+
+  findFlightsOfStairs(date) {
+    let flightsDate = this.activityHistory.find(activity => {
+      return activity.date === date;
+    })
+
+    if (flightsDate !== undefined) {
+      return ((flightsDate.flightsOfStairs) / 12).toFixed(1);
+    } else {
+      return 'N/A'
+    }
+  }
+
   calculateMilesWalked(todayDate) {
     let todayActivity = this.activityHistory.find(activity => {
       return activity.date === todayDate
     })
+    if (todayActivity !== undefined) {
+      return ((todayActivity.steps * this.userStrideLength) / 5280).toFixed(1)
+    } else {
+      return 'N/A';
+    }
 
-    return ((todayActivity.steps * this.userStrideLength) / 5280).toFixed(1)
   }
 
   calculateActiveMinutes(todayDate) {
@@ -44,7 +83,11 @@ export default class ActivityRepository {
       return activity.date === todayDate;
     })
 
-    return todayActivity.minutesActive;
+    if (todayActivity !== undefined) {
+      return todayActivity.minutesActive;
+    } else {
+      return 'N/A';
+    }
   }
 
   averageWeeklyMinutesActive(todayDate) {
@@ -102,6 +145,8 @@ export default class ActivityRepository {
    })
    if (this.trendingStairsDays.length > 2) {
      return `Your most recent positive climbing streak was ${this.trendingStairsDays[this.trendingStairsDays.length - 1].date} - ${this.trendingStairsDays[0].date}!`
+   } else {
+     return 'N/A';
    }
  }
 
@@ -121,6 +166,8 @@ export default class ActivityRepository {
     })
     if (this.trendingStepDays.length > 2) {
       return `Your most recent positive step streak was ${this.trendingStepDays[this.trendingStepDays.length - 1].date} - ${this.trendingStepDays[0].date}!`
+    } else {
+      return 'N/A'
     }
   }
 

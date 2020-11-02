@@ -160,8 +160,12 @@ export default class UserRepository {
       return b.hoursSlept - a.hoursSlept;
     });
 
-    let longestSleeper = this.getUser(longestSleepers[0].userID);
-    return longestSleeper
+    if (longestSleepers[0] !== undefined) {
+      let longestSleeper = this.getUser(longestSleepers[0].userID);
+      return longestSleeper
+    } else {
+      return 'N/A'
+    }
   }
 
   getWorstSleeper(date) {
@@ -175,7 +179,34 @@ export default class UserRepository {
       return a.hoursSlept - b.hoursSlept;
     });
 
-    let shortestSleeper = this.getUser(shortestSleepers[0].userID);
-    return shortestSleeper
+    if (shortestSleepers[0] !== undefined) {
+      let shortestSleeper = this.getUser(shortestSleepers[0].userID);
+      return shortestSleeper
+    } else {
+      return 'N/A'
+    }
+  }
+
+  getFriendsSteps(userID, todayDate) {
+    let userInfo = this.users.find(user => {
+      return user.id === userID;
+    })
+    let userFriends = userInfo.friends;
+    let friends = [];
+    let friendInfo = this.users.forEach(user => {
+      userFriends.forEach(friendID => {
+        if (user.id === friendID) {
+          friends.push(user)
+        }
+      })
+    })
+
+    let friendsSteps = friends.map(friend => {
+      return friend = {
+        id: friend.id, name: friend.getFirstName(), steps: friend.activityRepository.findSteps(todayDate)
+      }
+  })
+    console.log(friendsSteps);
+    return friendsSteps;
   }
 }

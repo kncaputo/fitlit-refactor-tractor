@@ -27,4 +27,5 @@ import HydrationRepository from './HydrationRepository';
       this.friendsNames.push(users.find(user => user.id === friend).getFirstName());
     })
   }
+
 }
