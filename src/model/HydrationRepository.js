@@ -44,13 +44,16 @@ export default class HydrationRepository {
       let dateKey = Object.keys(hydration)
       return dateKey[0] === todayDate
     })
-    return todayHydration[todayDate];
+    if (todayHydration !== undefined) {
+      return todayHydration[todayDate];
+    } else {
+      return 'N/A'
+    }
   }
 
   findWeeklyOunces(todayDate) {
     return this.hydrationHistory.reduce((acc, hydration) => {
       let index = this.hydrationHistory.indexOf(this.hydrationHistory.find(hydration => hydration.date === todayDate));
-      console.log(index)
       if (index <= this.hydrationHistory.indexOf(hydration) && this.hydrationHistory.indexOf(hydration) <= (index + 6)) {
         acc.unshift(hydration);
       }

@@ -40,7 +40,30 @@ export default class ActivityRepository {
     } else {
       return 'N/A';
     }
+  }
 
+  findStairs(date) {
+    let stairsDate = this.activityHistory.find(activity => {
+      return activity.date === date;
+    })
+
+    if (stairsDate !== undefined) {
+      return stairsDate.flightsOfStairs;
+    } else {
+      return 'N/A'
+    }
+  }
+
+  findFlightsOfStairs(date) {
+    let flightsDate = this.activityHistory.find(activity => {
+      return activity.date === date;
+    })
+
+    if (flightsDate !== undefined) {
+      return (flightsDate.flightsOfStairs) / 12;
+    } else {
+      return 'N/A'
+    }
   }
 
   calculateMilesWalked(todayDate) {
@@ -60,7 +83,11 @@ export default class ActivityRepository {
       return activity.date === todayDate;
     })
 
-    return todayActivity.minutesActive;
+    if (todayActivity !== undefined) {
+      return todayActivity.minutesActive;
+    } else {
+      return 'N/A';
+    }
   }
 
   averageWeeklyMinutesActive(todayDate) {
