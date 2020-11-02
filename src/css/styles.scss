@@ -1,4 +1,4 @@
-@import 'base';
+@import '_base';
 
 *,
 *:after,
@@ -9,8 +9,8 @@ padding: 0;
 }
 
 body {
-  background-color: #1F1F1F;
-  font-family: 'Oswald', sans-serif;
+  background-color: $background-color;
+  font-family: $primary-font;
 }
 
 /* HEADER */
@@ -37,15 +37,9 @@ button:active {
   width: 5.6vw;
 }
 
-// #calendar {
-//   height: 30px;
-//   margin-left: 15px;
-//   margin-top: 40px;
-// }
-
 #user-info-dropdown {
-  background-color: #1F1F1F;
-  color: white;
+  background-color: $background-color;
+  color: $primary-color;
   margin-left: 60%;
   margin-top: -1.2%;
   position: relative;
@@ -63,10 +57,10 @@ button:active {
 }
 
 .add-button {
-  background-color: #1F1F1F;
-  font-family: 'Oswald', sans-serif;
+  background-color: $background-color;
+  font-family: $primary-font;
   font-size: 14px;
-  color: white;
+  color: $primary-color;
   width: 250px;
   outline: none;
 }
@@ -78,14 +72,14 @@ button:active {
 }
 
 label {
-  color: white;
+  color: $primary-color;
 }
 
 .submit-button {
-  background-color: #1F1F1F;
-  font-family: 'Oswald', sans-serif;
+  background-color: $background-color;
+  font-family: $primary-font;
   font-size: 14px;
-  color: white;
+  color: $primary-color;
   width: 250px;
 }
 
@@ -100,7 +94,7 @@ input {
 }
 /* TEXT ELEMENTS */
 h1 {
-  color: #fff;
+  color: $primary-color;
   display: inline;
   font-size: 5.4vw;
   letter-spacing: .2em;
@@ -113,7 +107,7 @@ h2 {
 
 h3 {
   display: inline;
-  font-family: 'Work Sans', sans-serif;
+  font-family: $secondary-font;
   font-size: 3vw;
   font-weight: 700;
   letter-spacing: .2em;
@@ -130,7 +124,7 @@ h5 {
 }
 
 p {
-  font-family: 'Work Sans', sans-serif;
+  font-family: $secondary-font;
   font-size: 1.2vw;
   font-weight: 600;
   letter-spacing: .2vw;
@@ -223,52 +217,24 @@ main {
 
 /* BUTTONS */
 .info-button {
-  background-position: center;
-  background-size: 3.4vw;
-  border: none;
-  display: inline;
-  height: 3.4vw;
-  margin-left: 1vw;
-  width: 3.4vw;
+  @extend .button-styling;
 }
 
 .friends-button {
-  background-position: center;
-  background-size: 3.4vw;
-  border: none;
-  display: inline;
-  height: 3.4vw;
-  margin-right: 1vw;
-  width: 3.4vw;
+  @extend .button-styling;
 }
 
 .calendar-button {
-  background-position: center;
-  background-size: 3.4vw;
-  border: none;
-  display: inline;
+  @extend .button-styling;
   float: right;
-  height: 3.4vw;
-  margin-right: 1vw;
-  width: 3.4vw;
 }
 
 .trending-button {
-  background-position: center;
-  background-size: 3.4vw;
-  border: none;
-  height: 3.4vw;
-  margin-left: 1vw;
-  width: 3.4vw;
+  @extend .button-styling;
 }
 
 .go-back-button {
-  background-position: center;
-  background-size: 3.4vw;
-  border: none;
-  height: 3.4vw;
-  margin-left: 1vw;
-  width: 3.4vw;
+  @extend .button-styling;
 }
 
 .steps-go-back-button {
