@@ -204,13 +204,18 @@ main {
   font-size: 2vw;
 }
 
+.hydration-calendar-card {
+  margin-top: 15px;
+}
+
 .weekly-ounces {
-  padding: 5px;
-  margin: 10px;
+  padding: 0px;
+  margin: 0px;
+  margin-left: 20px;
   width: 80%;
   display: flex;
   justify-content: center;
-  font-size: 16px;
+  font-size: 13px;
 }
 
 .hydration-data-line {
