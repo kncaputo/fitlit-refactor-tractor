@@ -239,7 +239,6 @@ function updateUserStairFriendsCard() {
 }
 
 function updateUserHydrationDisplay() {
-  // let sortedHydrationDataByDate = user.hydrationRepository.findWeeklyOunces(todayDate);
   updateWeeklyOuncesByDay();
   hydrationInfoGlassesToday.innerText = user.hydrationRepository.findOunces(todayDate) / 8;
   hydrationUserOuncesToday.innerText = user.hydrationRepository.findOunces(todayDate);
@@ -249,16 +248,15 @@ function updateUserHydrationDisplay() {
 function updateWeeklyOuncesByDay() {
 
   let hydrationDataByDate = user.hydrationRepository.findWeeklyOunces(todayDate);
-  console.log('length ', hydrationDataByDate)
   hydrationCalendarCard.innerHTML = `<button type='button' name='button' class='go-back-button hydration-go-back-button'></button>`
 
   let html;
   if (hydrationDataByDate.length < 7) {
-    html = `<p>Sorry, you only have ${hydrationDataByDate.length} day/s of data. Here is the info we have for the selected time period.</p>
-  <p>${hydrationDataByDate.map(data => {return `${data[todayDate]} OZ`})}</p>`
+    html = `<p>Sorry, you only have ${hydrationDataByDate.length} day(s) of data. Here is the info we have for the selected time period.</p>
+  <p>${hydrationDataByDate.map(data => {return `${data.date} ${data.ounces}OZ`})}</p>`
 } else {
   html = `<p>Here is the info we have for the selected time period.</p>
-<p>${hydrationDataByDate.map(data => {return `${data.date}: ${data.numOunces} OZ`})}</p>`
+<p>${hydrationDataByDate.map(data => {return `${data.date} ${data.ounces}OZ`+ "<br />"})}</p>`
 }
 
   hydrationCalendarCard.insertAdjacentHTML('afterbegin', html)
