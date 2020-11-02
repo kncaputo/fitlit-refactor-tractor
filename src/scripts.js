@@ -280,13 +280,11 @@ function updateUserFriendsDisplay() {
 }
 
 function updateTrendingStairsDays() {
-  user.activityRepository.findTrendingStairsDays();
-  trendingStairsPhraseContainer.innerHTML = `<p class='trend-line'>${user.activityRepository.trendingStairsDays[0]}</p>`;
+  trendingStairsPhraseContainer.innerText = user.activityRepository.findTrendingStairsDays();
 }
 
 function updateTrendingStepDays() {
-  user.activityRepository.findTrendingStepDays();
-  trendingStepsPhraseContainer.innerHTML = `<p class='trend-line'>${user.activityRepository.trendingStepDays[0]}</p>`;
+  trendingStepsPhraseContainer.innerHTML = user.activityRepository.findTrendingStepDays();
 }
 
 function showHomePage() {

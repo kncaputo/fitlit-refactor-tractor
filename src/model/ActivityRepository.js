@@ -145,6 +145,8 @@ export default class ActivityRepository {
    })
    if (this.trendingStairsDays.length > 2) {
      return `Your most recent positive climbing streak was ${this.trendingStairsDays[this.trendingStairsDays.length - 1].date} - ${this.trendingStairsDays[0].date}!`
+   } else {
+     return 'N/A';
    }
  }
 
@@ -164,6 +166,8 @@ export default class ActivityRepository {
     })
     if (this.trendingStepDays.length > 2) {
       return `Your most recent positive step streak was ${this.trendingStepDays[this.trendingStepDays.length - 1].date} - ${this.trendingStepDays[0].date}!`
+    } else {
+      return 'N/A'
     }
   }
 
