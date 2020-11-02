@@ -51,6 +51,18 @@ export default class HydrationRepository {
     }
   }
 
+  findGlasses(todayDate) {
+    let todayHydration = this.ouncesRecord.find(hydration => {
+      let dateKey = Object.keys(hydration)
+      return dateKey[0] === todayDate
+    })
+    if (todayHydration !== undefined) {
+      return (todayHydration[todayDate]) / 8;
+    } else {
+      return 'N/A'
+    }
+  }
+
   findWeeklyOunces(todayDate) {
     return this.hydrationHistory.reduce((acc, hydration) => {
       let index = this.hydrationHistory.indexOf(this.hydrationHistory.find(hydration => hydration.date === todayDate));
