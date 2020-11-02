@@ -111,7 +111,11 @@ describe('HydrationRepository', () => {
     it('should return all ounces consumed on a given week', () => {
       const result = hydrationRepository.findWeeklyOunces("2018/06/16");
 
-      expect(result[0]).to.deep.equal({"2018/06/16": 71})
+      expect(result[0]).to.deep.equal({
+        "userId": 1,
+        "date": "2018/06/19",
+        "ounces": 99
+      })
     });
   });
 })
