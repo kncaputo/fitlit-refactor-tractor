@@ -249,19 +249,20 @@ function updateWeeklyOuncesByDay() {
 
   let hydrationDataByDate = user.hydrationRepository.findWeeklyOunces(todayDate);
   hydrationCalendarCard.innerHTML = `<button type='button' name='button' class='go-back-button hydration-go-back-button'></button>`
-
+  console.log(hydrationDataByDate)
   let html;
   if (hydrationDataByDate.length < 7) {
     html = `<p class="weekly-ounces">Sorry, you only have ${hydrationDataByDate.length} day(s) of data. Here is the info we have for the selected time period.</p>
   <p class="weekly-ounces">${hydrationDataByDate.map(data => {return `${data.date} ${data.ounces}OZ`})}</p>`
 } else {
-  html = `<p class="weekly-ounces">YESTERDAY:  ${hydrationDataByDate[0].ounces} OZ</p>
-  <p class="weekly-ounces">2 DAYS:  ${hydrationDataByDate[1].ounces} OZ</p>
-  <p class="weekly-ounces">3 DAYS:  ${hydrationDataByDate[2].ounces} OZ</p>
-  <p class="weekly-ounces">4 DAYS:  ${hydrationDataByDate[3].ounces} OZ</p>
-  <p class="weekly-ounces">5 DAYS:  ${hydrationDataByDate[4].ounces} OZ</p>
-  <p class="weekly-ounces">6 DAYS:  ${hydrationDataByDate[5].ounces} OZ</p>
-  <p class="weekly-ounces">7 DAYS:  ${hydrationDataByDate[6].ounces} OZ</p>`
+  html = `<p class="weekly-ounces">WEEK OF: ${hydrationDataByDate[6].date}</p><br>
+  <p class="weekly-ounces">YESTERDAY: ${hydrationDataByDate[0].ounces} OZ</p>
+  <p class="weekly-ounces">2 DAYS: ${hydrationDataByDate[1].ounces} OZ</p>
+  <p class="weekly-ounces">3 DAYS: ${hydrationDataByDate[2].ounces} OZ</p>
+  <p class="weekly-ounces">4 DAYS: ${hydrationDataByDate[3].ounces} OZ</p>
+  <p class="weekly-ounces">5 DAYS: ${hydrationDataByDate[4].ounces} OZ</p>
+  <p class="weekly-ounces">6 DAYS: ${hydrationDataByDate[5].ounces} OZ</p>
+  <p class="weekly-ounces">7 DAYS: ${hydrationDataByDate[6].ounces} OZ</p>`
 }
 
   hydrationCalendarCard.insertAdjacentHTML('afterbegin', html)
