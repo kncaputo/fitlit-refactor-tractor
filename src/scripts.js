@@ -252,11 +252,11 @@ function updateWeeklyOuncesByDay() {
 
   let html;
   if (hydrationDataByDate.length < 7) {
-    html = `<p>Sorry, you only have ${hydrationDataByDate.length} day(s) of data. Here is the info we have for the selected time period.</p>
-  <p>${hydrationDataByDate.map(data => {return `${data.date} ${data.ounces}OZ`})}</p>`
+    html = `<p class="weekly-ounces">Sorry, you only have ${hydrationDataByDate.length} day(s) of data. Here is the info we have for the selected time period.</p>
+  <p class="weekly-ounces">${hydrationDataByDate.map(data => {return `${data.date} ${data.ounces}OZ`})}</p>`
 } else {
-  html = `<p>Here is the info we have for the selected time period.</p>
-<p>${hydrationDataByDate.map(data => {return `${data.date} ${data.ounces}OZ`+ "<br />"})}</p>`
+  html = `<p class="weekly-ounces">Here is the info we have for the selected time period.</p>
+<p class="weekly-ounces">${hydrationDataByDate.map(data => {return `${data.date} ${data.ounces}OZ`+ "<br />"})}</p>`
 }
 
   hydrationCalendarCard.insertAdjacentHTML('afterbegin', html)
