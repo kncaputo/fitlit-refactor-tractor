@@ -49,7 +49,7 @@ export default class ActivityRepository {
     })
 
     if (stairsDate !== undefined) {
-      return stairsDate.flightsOfStairs;
+      return stairsDate.flightsOfStairs * 12
     } else {
       return 'N/A'
     }
@@ -61,8 +61,7 @@ export default class ActivityRepository {
     })
 
     if (flightsDate !== undefined) {
-      let flights = ((flightsDate.flightsOfStairs) / 12).toFixed(1);
-      return parseInt(flights);
+      return ((flightsDate.flightsOfStairs)).toFixed(1);
     } else {
       return 'N/A'
     }
@@ -73,11 +72,10 @@ export default class ActivityRepository {
       return activity.date === todayDate
     })
     if (todayActivity !== undefined) {
-      return ((todayActivity.steps * this.userStrideLength) / 5280).toFixed(1)
+      return ((todayActivity.steps * this.userStrideLength) / 5280).toFixed(1);
     } else {
       return 'N/A';
     }
-
   }
 
   calculateActiveMinutes(todayDate) {
@@ -174,15 +172,13 @@ export default class ActivityRepository {
   }
 
   calculateAverageStepsThisWeek(todayDate) {
-    let steps = (this.activityHistory.reduce((sum, activity) => {
+    return (this.activityHistory.reduce((sum, activity) => {
       let index = this.activityHistory.indexOf(this.activityHistory.find(activity => activity.date === todayDate));
       if (index >= this.activityHistory.indexOf(activity) && this.activityHistory.indexOf(activity) <= (index + 6)) {
         sum += activity.steps;
       }
       return sum;
     }, 0) / 7).toFixed(0);
-
-    return parseInt(steps);
   }
 
   calculateAverageStairsThisWeek(todayDate) {
