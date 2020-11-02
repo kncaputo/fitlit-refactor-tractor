@@ -186,4 +186,27 @@ export default class UserRepository {
       return 'N/A'
     }
   }
+
+  getFriendsSteps(userID, todayDate) {
+    let userInfo = this.users.find(user => {
+      return user.id === userID;
+    })
+    let userFriends = userInfo.friends;
+    let friends = [];
+    let friendInfo = this.users.forEach(user => {
+      userFriends.forEach(friendID => {
+        if (user.id === friendID) {
+          friends.push(user)
+        }
+      })
+    })
+
+    let friendsSteps = friends.map(friend => {
+      return friend = {
+        id: friend.id, name: friend.getFirstName(), steps: friend.activityRepository.findSteps(todayDate)
+      }
+  })
+    console.log(friendsSteps);
+    return friendsSteps;
+  }
 }

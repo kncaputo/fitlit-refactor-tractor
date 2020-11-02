@@ -164,6 +164,7 @@ function updateAllDisplays() {
   updateUserStepDisplay();
   updateUserStairDisplay();
   updateUserHydrationDisplay();
+  updateUserFriendsDisplay();
 }
 
 function updateUserDisplay() {
@@ -259,24 +260,15 @@ function updateWeeklyOuncesByDay() {
   <p class="weekly-ounces">7 DAYS: ${hydrationDataByDate[6].ounces} OZ</p>`
 }
 
-  hydrationCalendarCard.insertAdjacentHTML('afterbegin', html)
+  hydrationCalendarCard.insertAdjacentHTML('beforeend', html)
 }
 
 function updateUserFriendsDisplay() {
-  stepsFriendActiveMinutesAverageToday.innerText = userRepository.calculateAverageMinutesActive(todayDate);
-  stepsFriendStepsAverageToday.innerText = userRepository.calculateAverageSteps(todayDate);
-  hydrationFriendOuncesToday.innerText = userRepository.calculateAverageDailyWater(todayDate);
-  friendsStepsParagraphs.forEach(paragraph => {
-    if (friendsStepsParagraphs[0] === paragraph) {
-      paragraph.classList.add('green-text');
-    }
-    if (friendsStepsParagraphs[friendsStepsParagraphs.length - 1] === paragraph) {
-      paragraph.classList.add('red-text');
-    }
-    if (paragraph.innerText.includes('YOU')) {
-      paragraph.classList.add('yellow-text');
-    }
-  });
+  let friends = userRepository.getFriendsSteps(user.id, todayDate);
+
+  let html = `<p class="dropdown-p">${friends.map(friend => {return `${friend.name} | ${friend.steps}` + "<br>"}).join('')}</p>`
+
+  dropdownFriendsStepsContainer.innerHTML = html;
 }
 
 function updateTrendingStairsDays() {

@@ -60,7 +60,7 @@ export default class ActivityRepository {
     })
 
     if (flightsDate !== undefined) {
-      return (flightsDate.flightsOfStairs) / 12;
+      return ((flightsDate.flightsOfStairs) / 12).toFixed(1);
     } else {
       return 'N/A'
     }
