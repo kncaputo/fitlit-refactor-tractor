@@ -31,12 +31,28 @@ export default class ActivityRepository {
     this.findTrendingStepDays();
   }
 
+  findSteps(date) {
+    let stepDate = this.activityHistory.find(activity => {
+      return activity.date === date;
+    });
+    if (stepDate !== undefined) {
+      return stepDate.steps;
+    } else {
+      return 'N/A';
+    }
+
+  }
+
   calculateMilesWalked(todayDate) {
     let todayActivity = this.activityHistory.find(activity => {
       return activity.date === todayDate
     })
+    if (todayActivity !== undefined) {
+      return ((todayActivity.steps * this.userStrideLength) / 5280).toFixed(1)
+    } else {
+      return 'N/A';
+    }
 
-    return ((todayActivity.steps * this.userStrideLength) / 5280).toFixed(1)
   }
 
   calculateActiveMinutes(todayDate) {

@@ -191,9 +191,7 @@ function updateUserSleepDisplay() {
   sleepInfoQualityAverageAlltime.innerText = user.sleepRepository.sleepQualityAverage;
   sleepCalendarHoursAverageWeekly.innerText = user.sleepRepository.averageWeeklySleepHours(todayDate);
   sleepCalendarQualityAverageWeekly.innerText = user.sleepRepository.averageWeeklySleepQuality(todayDate);
-
   sleepUserHoursToday.innerText = user.sleepRepository.findHoursSlept(todayDate);
-
   sleepInfoQualityToday.innerText = user.sleepRepository.findSleepQuality(todayDate);
 }
 
@@ -209,12 +207,9 @@ function updateUserStepDisplay() {
 }
 
 function updateUserStepInfoCard() {
-  stepsUserStepsToday.innerText = user.activityRepository.activityHistory.find(activity => {
-    return activity.date === todayDate;
-  }).steps;
-  stepsInfoMilesWalkedToday.innerText = user.activityRepository.activityHistory.find(activity => {
-    return activity.date === todayDate;
-  }).steps / 2000;
+  stepsUserStepsToday.innerText = user.activityRepository.findSteps(todayDate);
+
+  stepsInfoMilesWalkedToday.innerText = user.activityRepository.calculateMilesWalked(todayDate);
 }
 
 function updateUserStepFriendsCard() {
