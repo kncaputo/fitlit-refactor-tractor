@@ -25,7 +25,7 @@ describe('User', () => {
     "date": "2019/06/10",
     "hoursSlept": 5.4,
     "sleepQuality": 1000
-    }
+  }
   ];
   const sampleActivityData = [
     {
