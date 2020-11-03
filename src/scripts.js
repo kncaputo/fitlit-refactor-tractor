@@ -1,11 +1,9 @@
 import './css/_base.scss';
 import './css/styles.scss';
-// import apiCalls from './apiCalls.js';
-// import '/hydration-calendar.png', '/hydration-friends.png', '/hydration-goback.png' from './images'
-import {dailyOz, dropdownEmail, dropdownFriendsStepsContainer, dropdownGoal, dropdownName, headerName, hydrationCalendarCard, hydrationFriendOuncesToday, hydrationFriendsCard, hydrationInfoCard, hydrationInfoGlassesToday, hydrationMainCard, hydrationUserOuncesToday, mainPage, profileButton, sleepCalendarCard, sleepCalendarHoursAverageWeekly, sleepCalendarQualityAverageWeekly, sleepFriendLongestSleeper, sleepFriendsCard, sleepFriendWorstSleeper, sleepInfoCard, sleepInfoHoursAverageAlltime, sleepInfoQualityAverageAlltime, sleepInfoQualityToday, sleepMainCard, sleepUserHoursToday, stairsCalendarCard, stairsCalendarFlightsAverageWeekly, stairsCalendarStairsAverageWeekly, stepsMainCard, stepsInfoCard, stepsFriendsCard, stepsTrendingCard, stepsCalendarCard, stairsFriendFlightsAverageToday, stairsFriendsCard, stairsInfoCard, stairsInfoFlightsToday, stairsMainCard, stairsTrendingButton, stairsTrendingCard, stairsUserStairsToday, stepsCalendarTotalActiveMinutesWeekly, stepsCalendarTotalStepsWeekly, stepsFriendAverageStepGoal, stepsInfoActiveMinutesToday, stepsInfoMilesWalkedToday, stepsFriendActiveMinutesAverageToday, stepsFriendStepsAverageToday, stepsTrendingButton, stepsUserStepsToday, trendingStepsPhraseContainer, trendingStairsPhraseContainer, userInfoDropdown, friendsStepsParagraphs, addActivityButton, addHydrationButton, addSleepButton, submitActivityButton, submitSleepButton, submitHydrationButton, activityStepsInput, activityMinutesInput, flightStairsInput, milesWalkedInput, ouncesDrankInput, hoursSleptInput, sleepQualityInput, calendarInput, activityForm, sleepForm, hydrationForm, dropdownCalories, inputDate} from './DOMelements.js'
+
+import {dropdownEmail, dropdownFriendsStepsContainer, dropdownGoal, dropdownName, headerName, hydrationCalendarCard, hydrationFriendOuncesToday, hydrationFriendsCard, hydrationInfoCard, hydrationInfoGlassesToday, hydrationMainCard, hydrationUserOuncesToday, mainPage, profileButton, sleepCalendarCard, sleepCalendarHoursAverageWeekly, sleepCalendarQualityAverageWeekly, sleepFriendLongestSleeper, sleepFriendsCard, sleepFriendWorstSleeper, sleepInfoCard, sleepInfoHoursAverageAlltime, sleepInfoQualityAverageAlltime, sleepInfoQualityToday, sleepMainCard, sleepUserHoursToday, stairsCalendarCard, stairsCalendarFlightsAverageWeekly, stairsCalendarStairsAverageWeekly, stepsMainCard, stepsInfoCard, stepsFriendsCard, stepsTrendingCard, stepsCalendarCard, stairsFriendFlightsAverageToday, stairsFriendsCard, stairsInfoCard, stairsInfoFlightsToday, stairsMainCard, stairsTrendingButton, stairsTrendingCard, stairsUserStairsToday, stepsCalendarTotalActiveMinutesWeekly, stepsCalendarTotalStepsWeekly, stepsFriendAverageStepGoal, stepsInfoActiveMinutesToday, stepsInfoMilesWalkedToday, stepsFriendActiveMinutesAverageToday, stepsFriendStepsAverageToday, stepsTrendingButton, stepsUserStepsToday, trendingStepsPhraseContainer, trendingStairsPhraseContainer, userInfoDropdown, addActivityButton, addHydrationButton, addSleepButton, submitActivityButton, submitSleepButton, submitHydrationButton, activityStepsInput, activityMinutesInput, flightStairsInput, ouncesDrankInput, hoursSleptInput, sleepQualityInput, calendarInput, activityForm, sleepForm, hydrationForm, dropdownCalories, inputDate} from './DOMelements.js'
 
 import UserRepository from './model/UserRepository';
-import Service from './service/Service';
 import UserService from './service/UserService';
 import SleepService from './service/SleepService';
 import ActivityService from './service/ActivityService';
@@ -15,7 +13,6 @@ let userRepository;
 let user;
 let todayDate = "2019/06/15";
 let userDateInput;
-let service = new Service();
 let userService;
 let sleepService;
 let activityService;
@@ -32,11 +29,10 @@ stairsTrendingButton.addEventListener('click', updateTrendingStairsDays);
 stepsTrendingButton.addEventListener('click', updateTrendingStepDays);
 submitActivityButton.addEventListener('click', postActivityData);
 submitHydrationButton.addEventListener('click', postHydrationData);
-submitSleepButton.addEventListener('click',postSleepData);
+submitSleepButton.addEventListener('click', postSleepData);
 calendarInput.addEventListener('change', (event) => {
   let formatDate = `${event.target.value}`.split('-');
   todayDate = formatDate.join('/');
-  console.log(todayDate)
   updateAllDisplays();
 });
 inputDate.addEventListener('change', (event) => {
@@ -60,8 +56,8 @@ function fetchAllData() {
 
   Promise.all([userPromise, sleepPromise, activityPromise, hydrationPromise])
   .then(data => userRepository = new UserRepository(data[0], data[1], data[2], data[3]))
-  .then(response => loadPage())
-  .catch(err => console.log(err))
+    .then(() => loadPage())
+    .catch(err => alert(`Sorry! Data cannot be loaded at this time ${err}`))
 }
 
 function loadPage() {
@@ -242,24 +238,22 @@ function updateUserHydrationDisplay() {
 }
 
 function updateWeeklyOuncesByDay() {
-
   let hydrationDataByDate = user.hydrationRepository.findWeeklyOunces(todayDate);
   hydrationCalendarCard.innerHTML = `<button type='button' name='button' class='go-back-button hydration-go-back-button'></button>`
   let html;
   if (hydrationDataByDate.length < 7) {
     html = `<p class="weekly-ounces">Sorry, you only have ${hydrationDataByDate.length} day(s) of data. <br> Here is the info we have for the selected time period.</p><br>
-  <p class="weekly-ounces">${hydrationDataByDate.map(data => {return `${data.date} ${data.ounces}OZ`+ "<br>"}).join('')}</p>`
-} else {
-  html = `<p class="weekly-ounces">WEEK OF: ${hydrationDataByDate[6].date}</p><br>
-  <p class="weekly-ounces">YESTERDAY: ${hydrationDataByDate[0].ounces} OZ</p>
-  <p class="weekly-ounces">2 DAYS: ${hydrationDataByDate[1].ounces} OZ</p>
-  <p class="weekly-ounces">3 DAYS: ${hydrationDataByDate[2].ounces} OZ</p>
-  <p class="weekly-ounces">4 DAYS: ${hydrationDataByDate[3].ounces} OZ</p>
-  <p class="weekly-ounces">5 DAYS: ${hydrationDataByDate[4].ounces} OZ</p>
-  <p class="weekly-ounces">6 DAYS: ${hydrationDataByDate[5].ounces} OZ</p>
-  <p class="weekly-ounces">7 DAYS: ${hydrationDataByDate[6].ounces} OZ</p>`
-}
-
+    <p class="weekly-ounces">${hydrationDataByDate.map(data => {return `${data.date} ${data.ounces}OZ` + "<br>"}).join('')}</p>`
+  } else {
+    html = `<p class="weekly-ounces">WEEK OF: ${hydrationDataByDate[6].date}</p><br>
+      <p class="weekly-ounces">YESTERDAY: ${hydrationDataByDate[0].ounces} OZ</p>
+      <p class="weekly-ounces">2 DAYS: ${hydrationDataByDate[1].ounces} OZ</p>
+      <p class="weekly-ounces">3 DAYS: ${hydrationDataByDate[2].ounces} OZ</p>
+      <p class="weekly-ounces">4 DAYS: ${hydrationDataByDate[3].ounces} OZ</p>
+      <p class="weekly-ounces">5 DAYS: ${hydrationDataByDate[4].ounces} OZ</p>
+      <p class="weekly-ounces">6 DAYS: ${hydrationDataByDate[5].ounces} OZ</p>
+      <p class="weekly-ounces">7 DAYS: ${hydrationDataByDate[6].ounces} OZ</p>`
+  }
   hydrationCalendarCard.insertAdjacentHTML('beforeend', html)
 }
 
