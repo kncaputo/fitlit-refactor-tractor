@@ -9,10 +9,10 @@ describe('Hydration', () => {
 
   beforeEach(() => {
     hydrate1 = new Hydration({
-        "userID": 1,
-        "date": "2019/06/15",
-        "numOunces": 37
-      });
+      "userID": 1,
+      "date": "2019/06/15",
+      "numOunces": 37
+    });
 
     hydrate2 = new Hydration({
       "userID": 2,

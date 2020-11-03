@@ -2,7 +2,6 @@ import { expect } from 'chai';
 
 import UserRepository from '../src/model/UserRepository';
 import User from '../src/model/User';
-import Sleep from '../src/model/Sleep';
 
 describe('UserRepository', () => {
   let userRepository;
@@ -49,7 +48,7 @@ describe('UserRepository', () => {
       ]
     }];
 
-    const sampleSleepData = [
+  const sampleSleepData = [
     {
       "userID": 1,
       "date": "2019/06/16",
@@ -69,7 +68,7 @@ describe('UserRepository', () => {
       "sleepQuality": 1.4
     }];
 
-    const sampleActivityData = [
+  const sampleActivityData = [
     {
       "userID": 1,
       "date": "2019/06/15",
@@ -92,7 +91,7 @@ describe('UserRepository', () => {
       "flightsOfStairs": 33
     }];
 
-    const sampleHydrationData = [
+  const sampleHydrationData = [
     {
       "userID": 1,
       "date": "2019/06/15",

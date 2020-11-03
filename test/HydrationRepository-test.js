@@ -86,7 +86,7 @@ describe('HydrationRepository', () => {
         "numOunces": 50
       };
 
-      const result = hydrationRepository.createNewHydration(newHydration);
+      hydrationRepository.createNewHydration(newHydration);
 
       expect(history[history.length - 1]).to.be.an.instanceof(Hydration);
       expect(history.length).to.deep.equal(6);

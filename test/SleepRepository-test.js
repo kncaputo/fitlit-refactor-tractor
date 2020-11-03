@@ -10,32 +10,32 @@ describe('SleepRepository', () => {
     "date": "2019/06/10",
     "hoursSlept": 5.4,
     "sleepQuality": 1000
-  },{
+  }, {
     "userID": 1,
     "date": "2019/06/11",
     "hoursSlept": 7.8,
     "sleepQuality": 1000
-  },{
+  }, {
     "userID": 1,
     "date": "2019/06/12",
     "hoursSlept": 8.0,
     "sleepQuality": 1000
-  },{
+  }, {
     "userID": 1,
     "date": "2019/06/13",
     "hoursSlept": 6.7,
     "sleepQuality": 1000
-  },{
+  }, {
     "userID": 1,
     "date": "2019/06/14",
     "hoursSlept": 6.1,
     "sleepQuality": 1000
-  },{
+  }, {
     "userID": 1,
     "date": "2019/06/15",
     "hoursSlept": 7.3,
     "sleepQuality": 500
-  },{
+  }, {
     "userID": 1,
     "date": "2019/06/16",
     "hoursSlept": 9.3,
@@ -100,7 +100,7 @@ describe('SleepRepository', () => {
         "hoursSlept": 8.7,
         "sleepQuality": 3
       };
-      const result = sleepRepository.createNewSleep(newSleep);
+      sleepRepository.createNewSleep(newSleep);
 
       expect(history[history.length - 1]).to.be.an.instanceof(Sleep);
       expect(history.length).to.deep.equal(8);
