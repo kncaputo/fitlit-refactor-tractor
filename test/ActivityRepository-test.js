@@ -107,7 +107,7 @@ describe('ActivityRepository', () => {
         "minutesActive": 90,
         "flightsOfStairs": 7
       }
-      const result = activityRepository.createNewActivity(newActivity);
+      activityRepository.createNewActivity(newActivity);
 
       expect(act[act.length - 1]).to.be.an.instanceof(Activity);
       expect(act.length).to.deep.equal(5);
@@ -166,15 +166,15 @@ describe('ActivityRepository', () => {
     });
 
     it('should find average steps this week when given a date', () => {
-     const result = activityRepository.calculateAverageStepsThisWeek("2019/06/18");
+      const result = activityRepository.calculateAverageStepsThisWeek("2019/06/18");
 
-     expect(result).to.deep.equal('3502');
+      expect(result).to.deep.equal('3502');
     });
 
     it('should find average flights this week when given a date', () => {
-     const result = activityRepository.calculateAverageStairsThisWeek("2019/06/18");
+      const result = activityRepository.calculateAverageStairsThisWeek("2019/06/18");
 
-     expect(result).to.deep.equal(7);
+      expect(result).to.deep.equal(7);
     });
 
     it('should find steps for a given date', () => {
