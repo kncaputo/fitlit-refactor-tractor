@@ -21,6 +21,19 @@
 - To test the code:
 
   - `cd`  into the repo, then run- `npm test`
+  
+## Functionality
+
+![fitlit-refresh](https://user-images.githubusercontent.com/67710155/97948222-28da1400-1d4d-11eb-8fdd-c65c27e02c53.gif)
+
+-
+
+![fitlit-cards](https://user-images.githubusercontent.com/67710155/97948212-24156000-1d4d-11eb-8685-c923d86badb2.gif)
+
+-
+
+![fitlit-user](https://user-images.githubusercontent.com/67710155/97948221-28417d80-1d4d-11eb-9e1d-96a0196d6f2f.gif)
+
 
 ## Built With:
 
