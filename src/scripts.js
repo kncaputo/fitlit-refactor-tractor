@@ -55,7 +55,7 @@ function fetchAllData() {
   let hydrationPromise = hydrationService.fetchData();
 
   Promise.all([userPromise, sleepPromise, activityPromise, hydrationPromise])
-  .then(data => userRepository = new UserRepository(data[0], data[1], data[2], data[3]))
+    .then(data => userRepository = new UserRepository(data[0], data[1], data[2], data[3]))
     .then(() => loadPage())
     .catch(err => alert(`Sorry! Data cannot be loaded at this time ${err}`))
 }
