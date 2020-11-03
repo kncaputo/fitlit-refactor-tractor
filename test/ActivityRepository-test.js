@@ -78,6 +78,16 @@ describe('ActivityRepository', () => {
     });
   });
 
+  describe('Start', () => {
+    it('should have a start method that populates activity history from raw data', () => {
+      expect(activityRepository.activityHistory).to.deep.equal([]);
+
+      activityRepository.start();
+
+      expect(activityRepository.activityHistory.length).to.deep.equal(4);
+    });
+  });
+
   describe('Methods', () => {
     beforeEach(() => {
       activityRepository.start();
@@ -107,6 +117,12 @@ describe('ActivityRepository', () => {
       const result = activityRepository.calculateMilesWalked('2019/06/15')
 
       expect(result).to.deep.equal('2.9');
+    });
+
+    it(`should return a string of 'N/A' if no data is available for miles walked on give day`, () => {
+      const result = activityRepository.calculateMilesWalked('2019/06/14')
+
+      expect(result).to.deep.equal('N/A');
     });
 
     it('should calculate the amount of time a user was active on a given day', () => {
@@ -158,13 +174,25 @@ describe('ActivityRepository', () => {
     it('should find average flights this week when given a date', () => {
      const result = activityRepository.calculateAverageStairsThisWeek("2019/06/18");
 
-     expect(result).to.deep.equal('7');
+     expect(result).to.deep.equal(7);
     });
 
+    it('should find steps for a given date', () => {
+      const result = activityRepository.findSteps("2019/06/18");
 
-    // it('should have a method that calculates daily calories burned', () => {
-    //   user.activityRecord = [{date: "2019/09/16", activityRecord: 78}, {date: "2019/09/17", minutesActive: 100}, {date: "2019/09/17", minutesActive: 20}];
-    //   expect(user.calculateDailyCalories("2019/09/17")).to.equal(912)
-    // });
+      expect(result).to.deep.equal(942);
+    });
+
+    it('should find stairs for a given date', () => {
+      const result = activityRepository.findStairs("2019/06/18");
+
+      expect(result).to.deep.equal(144);
+    });
+
+    it('should find flights of stairs for a given date', () => {
+      const result = activityRepository.findFlightsOfStairs("2019/06/18");
+
+      expect(result).to.deep.equal('12.0');
+    });
   });
 });

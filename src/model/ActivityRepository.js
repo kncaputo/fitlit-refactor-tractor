@@ -34,7 +34,8 @@ export default class ActivityRepository {
   findSteps(date) {
     let stepDate = this.activityHistory.find(activity => {
       return activity.date === date;
-    });
+    })
+
     if (stepDate !== undefined) {
       return stepDate.steps;
     } else {
@@ -48,7 +49,7 @@ export default class ActivityRepository {
     })
 
     if (stairsDate !== undefined) {
-      return stairsDate.flightsOfStairs;
+      return stairsDate.flightsOfStairs * 12
     } else {
       return 'N/A'
     }
@@ -60,7 +61,7 @@ export default class ActivityRepository {
     })
 
     if (flightsDate !== undefined) {
-      return ((flightsDate.flightsOfStairs) / 12).toFixed(1);
+      return ((flightsDate.flightsOfStairs)).toFixed(1);
     } else {
       return 'N/A'
     }
@@ -71,11 +72,10 @@ export default class ActivityRepository {
       return activity.date === todayDate
     })
     if (todayActivity !== undefined) {
-      return ((todayActivity.steps * this.userStrideLength) / 5280).toFixed(1)
+      return ((todayActivity.steps * this.userStrideLength) / 5280).toFixed(1);
     } else {
       return 'N/A';
     }
-
   }
 
   calculateActiveMinutes(todayDate) {
@@ -182,13 +182,15 @@ export default class ActivityRepository {
   }
 
   calculateAverageStairsThisWeek(todayDate) {
-    return (this.activityHistory.reduce((sum, activity) => {
+    let stairs = (this.activityHistory.reduce((sum, activity) => {
       let index = this.activityHistory.indexOf(this.activityHistory.find(activity => activity.date === todayDate));
       if (index >= this.activityHistory.indexOf(activity) && this.activityHistory.indexOf(activity) <= (index + 6)) {
         sum += activity.flightsOfStairs;
       }
       return sum;
     }, 0) / 7).toFixed(0);
+
+    return parseInt(stairs);
   }
 
   calculateDailyCalories(date) {
